@@ -1,0 +1,10 @@
+.top {
+  margin-top: 60px;
+  border-radius: 10px;
+}
+
+.spinnerImage {
+  position: relative;
+  top: 43%;
+}
+

@@ -1,0 +1,84 @@
+﻿{
+  "PUBLIC": {
+    "Login": {
+      "pageTitle": "Xpanxion Connexion",
+      "title": "Bienvenue à Xpanxion",
+      "emailAddressPlaceHolder": "Adresse e-mail",
+      "passwordPlaceHolder": "Mot de passe",
+      "loginButton": "S'identifier"
+    },
+    "ForgotPassword": {
+      "pageTitle": "mot de passe oublié",
+      "title": "réinitialiser le mot de passe",
+      "confirmPassword": "Confirmez le mot de passe",
+      "newPassword": "nouveau mot de passe",
+      "emailAddressPlaceHolder": "espace réservé pour l'adresse e-mail",
+      "passwordPlaceHolder": "Mot de passe",
+      "reset": "Réinitialiser"
+    },
+    "Home": {
+      "title": "Accueil"
+    },
+    "Adminhome": {
+      "user": "Bienvenue à administrer le tableau de bord"
+    }
+  },
+  "SHARED": {
+    "NAVIGATION": {
+      "homeMenu": "home"
+    },
+    "HEADER": {
+      "logoutConfirmation": {
+        "dialogTitle": "Connectez - Out",
+        "dialogMessage": "Voulez-vous quitter l'application?",
+        "primaryButton": "Oui",
+        "secondaryButton": "Non"
+      },
+      "userMenu": {
+        "profileMenu": "Profile",
+        "helpMenu": "Help",
+        "logoutMenu": "Connectez - Out",
+        "userMessage": "salut"
+      }
+    },
+    "FOOTER": {
+      "proweredBy": "Powered By:",
+      "copyRight": "© Xpanxion",
+      "customerSupport": "Customer Support at",
+      "supportEmail": "test"
+    }
+  },
+  "MESSAGES": {
+    "Alert": {
+      "message1": "vous vous êtes déconnecté",
+      "message2": "Les données ont bien été enregistrées"
+    },
+    "Confirmation": {
+      "message1": "êtes-vous sûr de vouloir vous déconnecter"
+    },
+    "Dialog": {
+      "AuthFailedInvalidAuthResponse": {
+        "title": "Authentication Failed",
+        "message": "Echec de l'authentification pour l'utilisateur spécifié. Veuillez entrer des informations d'identification valides et réessayer. Si vous rencontrez toujours le même problème, contactez l'équipe de support technique.",
+        "primaryButton": "D'accord",
+        "secondaryButton": "",
+        "isShowSecondaryButton": "false",
+        "isLogoutOnPrimaryButton": "false"
+      }
+    },
+    "Toastr": {
+      "Fatal": {
+        "message": "Une erreur s'est produite lors du traitement de votre demande. Réessayez ultérieurement ou contactez l'équipe du support client.",
+        "messageType": "Error"
+      },
+      "EmptyEmailAddress": {
+        "message": "Veuillez entrer l'adresse e-mail.",
+        "messageType": "Warning"
+      },
+      "EmptyPassword": {
+        "message": "Veuillez entrer le mot de passe.",
+        "messageType": "Warning"
+      }
+    }
+  }
+}

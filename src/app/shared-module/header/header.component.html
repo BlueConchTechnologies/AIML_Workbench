@@ -1,0 +1,30 @@
+﻿<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+
+    <div class="navbar-nav-scroll">
+        <ul class="navbar-nav bd-navbar-nav flex-row">
+            <li class="nav-item">
+                <a class="nav-link " [routerLink]="['/home']">{{'SHARED.NAVIGATION.homeMenu' | translate }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " routerLink="/">AI-workbench</a>
+            </li>
+        </ul>
+    </div>
+    <ul class="navbar-nav ml-md-auto">
+        <li class="nav-item">
+            <a class="nav-link " href="/">Test User</a>
+        </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0 navbar-nav">
+        <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{'SHARED.HEADER.userMenu.userMessage' | translate }} {{userName}}
+                </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" (click)="showLogoutConfirmation()">
+                        {{'SHARED.HEADER.userMenu.logoutMenu' | translate }} </a>
+            </div>
+        </div>
+    </form>
+</header>
+<logout (logoutConfirmation)="onLogoutConfirmation($event)" #logout></logout>

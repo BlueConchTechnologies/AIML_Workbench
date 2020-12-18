@@ -1,0 +1,75 @@
+<div id="top" class="row">
+    <div class="col-md-4"></div>
+    <div id="f1" class="col-md-4 top">
+        <h3 style="text-align: center;">Reactive Form</h3>
+        <form [formGroup]="registerForm">
+            <div class="form-group">
+                <label for="name">Name</label>&nbsp;<span class="mandatory">*</span>
+                <input type='text' formControlName='name' class='form-control' placeholder="name" required
+                    [(ngModel)]="reactiveformModel.name" />
+            </div>
+            <div class="dvloginErrMsg"
+                *ngIf="registerForm.controls.name.invalid && (registerForm.controls.name.dirty || registerForm.controls.name.touched )"
+                class="alert alert-danger">
+                {{getUserNameErrorMessage()}}
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>&nbsp;<span class="mandatory">*</span>
+                <input type='email' formControlName='email' class='form-control' placeholder="e.g-name@y.com" required
+                    [(ngModel)]="reactiveformModel.email" />
+            </div>
+            <div *ngIf="registerForm.controls.email.invalid && (registerForm.controls.email.dirty || registerForm.controls.email.touched )"
+                class="alert alert-danger">
+                {{getEmailErrorMessage()}}
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>&nbsp;<span class="mandatory">*</span>
+                <input type='number' formControlName='age' class='form-control' placeholder="age" required
+                    [(ngModel)]="reactiveformModel.age" />
+            </div>
+            <div *ngIf="registerForm.controls.age.invalid && (registerForm.controls.age.dirty || registerForm.controls.age.touched)"
+                class="alert alert-danger">
+                {{getAgeErrorMessage()}}
+            </div>
+
+            <div class="form-group">
+                <label for="city">City</label>&nbsp;<span class="mandatory">*</span>
+                <select formControlName="city" class="form-control" required [(ngModel)]="reactiveformModel.city">
+                    <option selected disabled value="">Select one option</option>
+                    <option *ngFor="let dropdownValue of dropdownValues" [value]="dropdownValue.Id">
+                        {{dropdownValue.Name}}</option>
+                </select>
+            </div>
+            <div *ngIf="registerForm.controls.city.touched && registerForm.controls.city.invalid"
+                class="alert alert-danger">
+                Please select one option from the dropdown.
+            </div>
+
+            <div class='form-group'>
+                <div>
+                    <label class="required">Gender</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class='form-check-input' type='radio' formControlName='gender' id='male' value='Male'
+                         [(ngModel)]="reactiveformModel.gender" />
+                    <label class='form-check-label' for='male'>Male</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input class='form-check-input' type='radio' formControlName='gender' id='female' value='Female'
+                         [(ngModel)]="reactiveformModel.gender" />
+                    <label class='form-check-label' for='female'>Female</label>
+                </div>
+            </div>
+
+            <div class='form-check form-group'>
+                <input class='form-check-input' type="checkbox" id='sendNotification'
+                    formControlName='sendNotification' [(ngModel)]="reactiveformModel.sendNotification">
+                <label class='form-check-label' for='sendNotification'>&nbsp;Send Notification</label>
+            </div>
+
+            <div id="btn" class="form-group" >
+                <button type='submit' class='btn btn-primary' name="send"
+                    [disabled]="!registerForm.valid" (click)="onSubmit(registerForm)">Send</button>&nbsp;
+                <button type='reset' class='btn btn-secondary' (click)="onCancel()" name="cancel">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>

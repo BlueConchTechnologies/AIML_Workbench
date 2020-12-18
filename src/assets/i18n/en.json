@@ -1,0 +1,81 @@
+﻿{
+    "PUBLIC": {
+        "Login": {
+            "pageTitle": "Xpanxion Login",
+            "title": "Welcome to Xpanxion",
+            "emailAddressPlaceHolder": "Email Address",
+            "passwordPlaceHolder": "Password",
+            "loginButton": "Login"
+        },
+        "ForgotPassword": {
+            "pageTitle": "Forgot Password",
+            "title": "Reset Password",
+            "confirmPassword": "Confirm Password",
+            "newPassword": "New Password",
+            "reset": "Reset",
+            "emailAddressPlaceHolder": "Email Address"
+        },
+        "Home": {
+            "title": "Home"
+        },
+        "Adminhome": {
+            "user": "Welcome to admin dashboard"
+        }
+    },
+    "SHARED": {
+        "NAVIGATION": {
+            "homeMenu": "Home",
+            "adminMenu": "adminMenu"
+        },
+        "HEADER": {
+            "logoutConfirmation": {
+                "dialogTitle": "Logout",
+                "dialogMessage": "Do you want to exit the application?",
+                "primaryButton": "Yes",
+                "secondaryButton": "No"
+            },
+            "userMenu": {
+                "profileMenu": "Profile",
+                "helpMenu": "Help",
+                "logoutMenu": "Logout",
+                "userMessage": "Hi"
+            }
+        },
+        "FOOTER": {
+            "proweredBy": "Powered By:",
+            "copyRight": "© Xpanxion",
+            "customerSupport": "Customer Support at",
+            "supportEmail": "test"
+        }
+    },
+    "MESSAGES": {
+        "Alert": {
+            "message1": "You have logged out",
+            "message2": "Data saved successfully"
+        },
+        "Confirmation": {
+            "message1": "Are you sure you want to log out?"
+        },
+        "Dialog": {
+            "AuthFailedInvalidAuthResponse": {
+                "title": "Authentication Failed",
+                "message": "Authentication Failed for specified user. Please enter valid credentials and try again. If you still see same problem , contact customer support team.",
+                "primaryButton": "OK",
+                "secondaryButton": "",
+                "isShowSecondaryButton": "false",
+                "isLogoutOnPrimaryButton": "false"
+            }
+        },
+        "Toastr": {
+            "Fatal": "Error occurred while processing your request. Please try again later or contact customer support team.",
+            "EmptyEmailAddress": "Please enter Email Address.",
+            "EmptyPassword": "Please enter Password.",
+            "EmailSentSuccessfully": "Reset password link is sent to your email.",
+            "PasswordReset": "Password has been reset",
+            "PasswordNotMatched": "Passwords dont match",
+            "InvalidUser": "User is invalid",
+            "DesignedFinalized": "Design Finalized Successfully",
+            "FlowRunSuccess": "Workflow Runs Successfully"
+        }
+    }
+}

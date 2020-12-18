@@ -1,0 +1,45 @@
+.container{
+  margin-top: 1rem;
+  background-color:#f4faff;
+  height: auto;
+}
+.create-design-header {
+  color: #545454;
+  line-height: inherit;
+  font-family: sans-serif;
+}
+.btn-outline-primary {
+  border-color: #15BAF3;
+  color: #15BAF3;
+  font-family: sans-serif;
+  font-size: 0.80rem;
+}
+.btn-outline-primary:hover {
+  border-color: #15BAF3;
+  background-color: #15BAF3;
+  font-family: sans-serif;
+  color: #FFF;
+}
+.btn-outline-primary:not(:disabled):not(.disabled).active, .btn-outline-primary:not(:disabled):not(.disabled):active, .show>.btn-outline-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #15BAF3;
+  border-color: #15BAF3;
+}
+label {
+  font-family: sans-serif;
+  display: block;
+  margin-bottom: 1rem;
+}
+.startFlow {
+  margin-top: 10px;
+  margin-bottom: 7px;
+  background-color: brown;
+  color: antiquewhite;
+}
+.button-wrapper {
+  display: flow-root;
+}
+.flow-button {
+  float: right;
+}
+

@@ -1,0 +1,53 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
+.sitefooter {
+    border-top: gray 1px solid;
+    background-color: #fafafa;
+    height: 50px;
+}
+
+
+/* global common Css */
+
+.main-Div {
+    background-color: #F4F9FC;
+}
+
+.mt {
+    margin: 15px 15px;
+}
+
+.operation-btn {
+    height: 24px;
+    width: 59px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    padding-top: 2px;
+    background-color: none;
+    margin-right: 5px;
+}
+
+.modal-action-button {
+    height: 40px;
+    min-width: 105px;
+    max-width: 115px;
+    border-radius: 6px;
+    font-size: 1rem;
+    padding-top: 2px;
+    background-color: none;
+    margin-right: 10px;
+    color: #01BAF2;
+    background-color: white;
+    border: 1px solid #01BAF2
+}
+
+.header-label {
+    background-color: #01BAF2;
+    color: #ffffff;
+}
+
+.active-btn {
+    border-color: #01BAF2;
+    color: #01BAF2;
+    background-color: white;
+}

@@ -1,0 +1,63 @@
+.container{
+    margin-top: 1.2rem;
+    background-color:#f4faff;
+    height: auto;
+}
+h5.modal-title {
+    font-size: 1.10rem;
+}
+.card-header{
+    font-weight: bold;    
+    font-family: sans-serif;
+    font-weight: 500;
+    color:#15BAF3;
+}
+.usecase-header {
+    color: #545454;
+    line-height: inherit;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.card {
+    box-shadow:0px 2px 6px #00000029;
+    opacity:1;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    border-bottom: 0.3rem solid #15BAF3;
+    padding: 0.75rem;
+    font-family: sans-serif;
+}
+.fa-round-bg {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    background-color: #DEF6FD;
+    padding: 0.50rem;
+}
+.bg-none{ 
+    background:none; 
+}
+a {
+    color: #2bc5f4;
+    text-decoration: none;
+    background-color: transparent;
+}
+.btn-outline-primary {
+    border-color: #15BAF3;
+    color: #15BAF3;
+    font-family: sans-serif;
+    font-size: 0.80rem;
+}
+.btn-outline-primary:hover {
+    border-color: #15BAF3;
+    background-color: #15BAF3;
+    font-family: sans-serif;
+    color: #FFF;
+}
+.dropdown-toggle::after {
+    display: none;
+}
+

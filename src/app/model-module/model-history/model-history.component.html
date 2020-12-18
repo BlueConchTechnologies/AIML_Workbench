@@ -1,0 +1,55 @@
+
+
+
+<button type="button" class="btn btn-outline-primary btn-lg mr-2" 
+        [ngClass]="{'model-tab-active' : showHistoryType == 'Config'}"
+        (click)='switchTab("Config")'>
+        Config
+</button>
+<button type="button" class="btn btn-outline-primary btn-lg mr-2"  
+        [ngClass]="{'model-tab-active' : showHistoryType == 'Graph'}"
+        (click)='switchTab("Graph")'>
+        Graph
+</button>
+  <div [ngSwitch]="showHistoryType">
+    <ng-template [ngSwitchCase]="'Config'">
+      <div class="col-md-4 shadow my-3 px-0">
+        <table class="w-100">
+          <tr class="odd_table">
+            <td class="w-50 p-2">Status</td>
+            <td class="w-50 p-2">{{receiveHistoryData.status}}</td>
+          </tr>
+          <tr class="even_table">
+            <td class="w-50 p-2">Learning Rate</td>
+            <td class="w-50 p-2">{{receiveHistoryData.learning_rate}}</td>
+          </tr>
+          <tr class="odd_table">
+            <td class="w-50 p-2">Batch size</td>
+            <td class="w-50 p-2">{{receiveHistoryData.batch_size}}</td>
+          </tr>
+
+          <tr class="even_table">
+            <td class="w-50 p-2">Epochs</td>
+            <td class="w-50 p-2">{{receiveHistoryData.epochs}}</td>
+          </tr>
+          <tr class="odd_table">
+            <td class="w-50 p-2">Dropout</td>
+            <td class="w-50 p-2">{{receiveHistoryData.dropout}}</td>
+          </tr>
+          <tr class="even_table">
+            <td class="w-50 p-2">Accuracy</td>
+            <td class="w-50 p-2">{{receiveHistoryData.accuracy}}</td>
+          </tr>
+
+        </table>
+      </div>
+
+    </ng-template>
+    <ng-template [ngSwitchCase]="'Graph'">
+        Graph Tab
+    </ng-template>
+  </div>    
+  
+
+
+  

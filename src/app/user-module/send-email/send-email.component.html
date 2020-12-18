@@ -1,0 +1,30 @@
+
+<div class="container-fluid">
+    <div class="showLink">
+        <a *ngIf="confirmUser" (click)="gotoForgotPassword()"
+        href="javascript:">Just for demo - Link from email - click here to reset password</a>
+    </div>
+    <div class="row">
+        <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="login-base-container">
+                <h1 class="login-title">Send Email Link</h1>
+                <div class="login-form">
+                    <form role="form">
+                        <div class="form-group pos-relative">
+                            <i class="fa fa-envelope-o login-ico" aria-hidden="true"></i>
+                            <input focusIndex="1"
+                                [attr.aria-label]="'SHARED.ARIALABLES.emailvalue' | translate" type="email"
+                                name="emailvalue" class="form-control" id="email"
+                                placeholder="{{'PUBLIC.ForgotPassword.emailAddressPlaceHolder' | translate }}"
+                                [(ngModel)]="emailvalue">
+                        </div>
+                        <button type="button" class="btn btn-default" id="loadButton" (click)="onSubmit()"
+                            focusIndex="2">Submit<span *ngIf="model.isAuthInitiated == true"> ... <i
+                                    class='fa fa-spinner fa-spin'>
+                                </i></span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

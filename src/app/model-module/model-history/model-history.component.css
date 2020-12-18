@@ -1,0 +1,11 @@
+.model-tab-active{
+    border-color: #15BAF3;
+    background-color: #15BAF3;
+    color: #FFF;
+}
+.odd_table{
+    background-color: #fcfcfc;
+}
+.even_table{
+    background-color: #f6f6f6;
+}

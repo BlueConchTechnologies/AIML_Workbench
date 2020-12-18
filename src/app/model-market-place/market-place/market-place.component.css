@@ -1,0 +1,154 @@
+.container {
+    padding-top: 0.75rem;
+}
+
+[type="checkbox"] {
+    vertical-align: middle;
+    display: none;
+}
+
+.inner-addon {
+    position: relative;
+}
+
+.inner-addon #innerSearch {
+    position: absolute;
+    padding: 0.65rem;
+    color: #D3D3D3;
+    pointer-events: none;
+}
+
+.left-addon #innerSearch {
+    left: 0rem;
+}
+
+.left-addon input {
+    padding-left: 2rem;
+}
+
+.card {
+    cursor: pointer;
+    border-radius: .35rem;
+}
+
+.card-body {
+    padding: 0.50rem;
+    font-family: sans-serif;
+    overflow: hidden;
+    height: 6rem;
+}
+
+.card-header {
+    font-weight: bold;
+    text-align: center;
+    font-size: 1rem;
+    font-family: sans-serif;
+    font-weight: 500;
+    color: #2bc5f4;
+}
+
+.card-footer {
+    height: 3.3rem;
+    text-align: center;
+    cursor: auto;
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    background-color: transparent;
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    padding: 0.50rem 1.25rem;
+    border-bottom: 0.3rem solid #01baf2;
+}
+
+.marketplace-header {
+    color: #545454;
+    line-height: inherit;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.card-header:hover {
+    background-color: #15BAF3;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.modal-title {
+    color: #FFF;
+    font-family: sans-serif;
+}
+
+.modal-header {
+    background-color: #23C3F4;
+}
+
+#model-market-place {
+    padding-top: 1rem;
+}
+
+.btn-outline-primary {
+    border-color: #15BAF3;
+    color: #15BAF3;
+    font-family: sans-serif;
+    font-size: 0.80rem;
+}
+
+.btn-outline-primary:hover {
+    border-color: #15BAF3;
+    background-color: #15BAF3;
+    font-family: sans-serif;
+    color: #FFF;
+}
+
+.btn-primary {
+    border-color: #15BAF3;
+    background-color: #15BAF3;
+    font-family: sans-serif;
+    font-size: 0.75rem;
+}
+
+.btn-primary:hover {
+    border-color: #15BAF3;
+    background-color: #15BAF3;
+    font-family: sans-serif;
+    color: #FFF;
+    font-size: 0.75rem;
+}
+
+.toggle-checkbox {
+    cursor: pointer;
+}
+
+.inner {
+    overflow: hidden;
+}
+
+.inner {
+    transition: all 1.5s ease;
+}
+
+.inner:hover {
+    transform: scale(1.1);
+}
+
+.fa-checkout {
+    position: absolute;
+    top: 0.15rem;
+    font-size: 0.80rem;
+}
+
+.highlight {
+    opacity: 0.5;
+}
+
+.market-pagination {
+    text-align: center;
+    font-family: sans-serif;
+}
+
+.robot-icon {
+    height: 1.5625rem;
+    width: 1.5625rem;
+    float: left;
+    border-radius: 50%;
+    background-color: #def6fd;
+}

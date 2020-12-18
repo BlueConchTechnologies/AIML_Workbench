@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <h6 class="create-design-header"><a class="nav-link" routerLink="/casestudy" ><i class="fa fa-chevron-left" aria-hidden="true"></i> All Use Case </a></h6>
+        </div>
+        <div class="col-md-8 text-right mb-2">
+          <div class="dropdown">
+            <button class="btn btn-outline-primary" routerLink="/create-design"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Your Workflow</button>
+            <ul class="dropdown-menu">
+              <li><a href="#">Select Label</a></li>
+              <li><a href="#">Text Field</a></li>
+              <li><a href="#">Text Area</a></li>
+              <li><a href="#">File Browse</a></li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <form class="mt-5">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Model Name</label>
+                <input type="input" value="{{modelName}}" class="form-control" id="inputEmail4" readonly="true">
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Model Description</label>
+                <input type="input" value="{{modelDesc}}" class="form-control" id="inputPassword4" readonly="true">
+              </div>
+            </div>
+            <div class="form-row">
+            <div class="form-group col-md-6" *ngFor="let dynamic of dynamicFieldData">
+              <label for="description1">{{dynamic.textFieldKey}}</label>
+              <input type="text" value="{{dynamic.textFieldValue}}" class="form-control" id="description1" placeholder="">
+            </div>
+          </div>
+        
+          
+          <div class="form-row float-right">
+            <div class="form-group col-md-12">
+              <button type="submit" (click)= "runYourWorkflow()" class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+            </div>
+          </div>     
+          </form>
+    </div>
+
+    <div class="container">
+        <form class="mt-5">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                <label for="exampleFormControlTextarea1">Output</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [value]="workflowData"></textarea>
+                </div>
+            </div>              
+        </form>
+    </div>
+</div>
+

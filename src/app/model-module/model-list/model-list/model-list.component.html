@@ -1,0 +1,70 @@
+<div class="data-Container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 top">
+            <spinner *ngIf="spinnerActive"></spinner>
+        </div>
+    </div>
+    <ng-container *ngIf="!viewHistory">
+        <p-table [columns]="cols" [value]="result" #dt [rowHover]="true" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" pageLinks="3">
+            <ng-template pTemplate="caption">
+                Model List
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr class="header-label">
+                    <th style="width: 2%;"></th>
+                    <th *ngFor="let col of columns" class="table-head header-label">
+                        {{col.header}}
+                    </th>
+                    <th>
+                        Operations
+                        <i class="fa fa-refresh fa-1x btn-refresh" (click)="getTableData()"></i>
+                    </th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-result let-columns="columns" *ngIf="!spinnerActive">
+                <!-- result.isExpanded=!result.isExpanded -->
+                <tr (click)="getModelHistory(result)">
+                    <td class="table-data">
+                        <i class="fa fa-1x" [ngClass]="{'fa-chevron-right': !result.isExpanded, 'fa-chevron-down': result.isExpanded}" (click)="getTableData()"></i>
+                    </td>
+                    <td *ngFor="let col of columns" class="table-data">
+                        <ng-container *ngIf="col.field == 'status'; else otherFields">
+                            <i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': result[col.field] == 'Trained', 'fa-exclamation-circle status-not-trained': result[col.field] != 'Trained'}"></i>
+                        </ng-container>
+                        <ng-template #otherFields>
+                            {{result[col.field]}}
+                        </ng-template>
+                    </td>
+
+                    <td>
+                        <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" [disabled]="result.trainable != true">Train</button>
+                        <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="openTestModal('http://dah.xpanxion.co.in:9008/text-summarization');$event.stopPropagation();" [disabled]="result.status != 'Trained'">Test </button>
+                    </td>
+                </tr>
+                <ng-container *ngIf="result.isExpanded">
+                    <ng-container *ngFor="let historyRow of result.history">
+                        <tr (click)="getModelHistoryDetail(historyRow)"> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': historyRow.status == 'Trained', 'fa-exclamation-circle status-not-trained': historyRow.status != 'Trained'}"></i></td>
+                            <td>{{historyRow.accuracy}}</td>
+                            <td>{{historyRow.training_start_time}}</td>
+                            <td></td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+            </ng-template>
+        </p-table>
+    </ng-container>
+    <ng-container *ngIf="viewHistory">
+        <p-table class="table_model_cpation">
+            <ng-template pTemplate="caption">
+                <i class="fa fa-1x fa-chevron-left pointer" (click)="closeHistory()"></i>&nbsp;  Model Table
+            </ng-template>
+        </p-table>
+        <app-model-history [receiveHistoryData]="passHistoryData"></app-model-history>
+    </ng-container>
+</div>

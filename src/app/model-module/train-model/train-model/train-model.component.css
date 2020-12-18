@@ -1,0 +1,126 @@
+@import "../../../../styles.css";
+.wrapper {
+    width: 100%;
+    height: 100%;
+    color: white;
+    overflow: hidden;
+}
+
+#modal-content-wrapper {
+    width: 100%;
+    height: 100%;
+    color: white;
+    height: 350px;
+    overflow-y: auto;
+}
+
+.model-Data {
+    padding: 0px 15px;
+}
+
+.header-title {
+    font-size: 1.2rem;
+    background-color: #01BAF2;
+    padding: 10px 0px 10px 15px;
+    color: #ffffff;
+}
+
+.modal-title {
+    font-size: 1rem;
+    color: #01BAF2;
+    margin-bottom: 7px;
+}
+
+.inputTitle {
+    color: #00000099;
+    font-size: 0.8rem;
+}
+
+.pull-right {
+    float: right;
+}
+
+.show-Model {
+    display: block;
+}
+
+.hide-model {
+    display: none;
+}
+
+.drop-arrow {
+    background-color: #ffffff;
+    color: #01BAF2;
+    cursor: pointer;
+}
+
+.footer {
+    justify-self: right;
+    align-self: center;
+}
+
+.hyper-Model {
+    background-clip: padding-box;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.upload-button-wrapper {
+    margin-top: -24px;
+    display: block;
+}
+
+.upload-button {
+    background: #fff;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: grey;
+    border: 1px solid grey;
+    text-align: left;
+    width: 100%;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+}
+
+.upload-icon {
+    float: right;
+    color: #01BAF2;
+}
+
+.mandatory {
+    color: red;
+}
+
+
+/* //mat-dialog CSS override */
+
+::ng-deep .mat-dialog-container {
+    padding: 0px;
+    min-height: 400px;
+    max-height: 500px;
+}
+
+::ng-deep .mat-button[disabled] {
+    border: 1px solid rgba(0, 0, 0, .26)
+}
+
+::ng-deep .mat-horizontal-stepper-header .mat-step-icon {
+    background-color: #01BAF2;
+}
+
+.mat-stepper-horizontal {
+    margin-top: 8px;
+}
+
+.mat-form-field {
+    margin-top: 16px;
+}
+
+.btn-close {
+    float: right;
+    padding-right: 2%;
+    cursor: pointer;
+}

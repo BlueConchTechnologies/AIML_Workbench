@@ -1,0 +1,16 @@
+.tblSender {
+    border: 1px solid black;
+    border-collapse: collapse;
+    width:45%;
+    text-align: center;
+    margin-left: 30%;
+  }
+
+  .tdSender {
+    border: 1px solid black;
+  }
+
+  .spntitle {
+    text-align: center;
+  }
+  

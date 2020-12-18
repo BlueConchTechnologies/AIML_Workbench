@@ -1,0 +1,331 @@
+<div class="container-fluid mt-3">
+  <section class="mb-3">
+    <button type="button" class="btn btn-outline-primary btn-lg mr-2"
+      (click)="switchForm(myFieldlabels.trainingserver)">
+      {{ myFieldlabels.trainingserver }}
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-lg mr-2" (click)="switchForm(myFieldlabels.storageserver)">
+      {{ myFieldlabels.storageserver }}
+    </button>
+    <button type="button" class="btn btn-outline-primary btn-lg mr-2"
+      (click)="switchForm(myFieldlabels.databaseserver)">
+      {{ myFieldlabels.databaseserver }}
+    </button>
+  </section>
+  <div [ngSwitch]="isShowserverForm">
+
+    <ng-template [ngSwitchCase]="myFieldlabels.databaseserver">
+      <section class="white-section-with-shadow mb-5 py-4 px-3">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-lg-6">
+
+                <div class="form-group">
+                  <label for="usernamelabel">{{myFieldlabels.username}}</label>
+                  <input type="text" formControlName="username" class="form-control" id="username" required>
+                  <div *ngIf="formdata.username.touched && formdata.username.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.username.errors?.required">Name is required.</div>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-password">{{myFieldlabels.password }}</label>
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    required />
+                  <div *ngIf="formdata.password.touched && formdata.password.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">Password is required.</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-accesskey">{{ myFieldlabels.accesskey }}</label>
+                  <input type="text" formControlName="accesskey" id="accesskey" class="form-control" name="accesskey"
+                    required />
+                  <div *ngIf="formdata.accesskey.touched && formdata.accesskey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">accesskey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-secretkey">{{ myFieldlabels.secretkey}}</label>
+                  <input type="text" id="secretkey" formControlName="secretkey" class="form-control" name="secretkey"
+                    required />
+                  <div *ngIf="formdata.secretkey.touched && formdata.secretkey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.secretkey.errors?.required">secretkey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="miniohost">{{ myFieldlabels.miniohost }}</label>
+                  <input type="text" id="miniohost" formControlName="miniohost" class="form-control" name="miniohost"
+                    required />
+                  <div *ngIf="formdata.miniohost.touched && formdata.miniohost.invalid" class="alert alert-danger p-2">
+
+                    <div *ngIf="formdata.miniohost.errors?.required">miniohost is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group ">
+                  <label for="bucketname">{{ myFieldlabels.bucketname }}
+                  </label>
+                  <input type="text" id="bucketname" formControlName="bucketname" class="form-control" name="bucketname"
+                    required />
+                  <div *ngIf="formdata.bucketname.touched && formdata.bucketname.invalid"
+                    class="alert alert-danger p-2">
+                    <div *ngIf="formdata.bucketname.errors?.required">bucketname is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 text-right mb-12">
+                <button type="submit" class="btn btn-outline-primary btn-lg mr-2" [disabled]="form.invalid" float-right>
+                  {{ myFieldlabels.savecredentials }}
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-lg mr-2" float-right>
+                  {{ myFieldlabels.testconnection }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="myFieldlabels.storageserver">
+      <section class="white-section-with-shadow mb-5 py-4 px-3">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-lg-6">
+
+                <div class="form-group">
+                  <label for="usernamelabel">{{myFieldlabels.username}}</label>
+                  <input type="text" formControlName="username" class="form-control" id="username" required>
+                  <div *ngIf="formdata.username.touched && formdata.username.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.username.errors?.required">Name is required.</div>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-password">{{myFieldlabels.password }}</label>
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    required />
+                  <div *ngIf="formdata.password.touched && formdata.password.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">Password is required.</div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-accesskey">{{ myFieldlabels.accesskey }}</label>
+                  <input type="text" formControlName="accesskey" id="accesskey" class="form-control" name="accesskey"
+                    required />
+                  <div *ngIf="formdata.accesskey.touched && formdata.accesskey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">accesskey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-secretkey">{{ myFieldlabels.secretkey}}</label>
+                  <input type="text" id="secretkey" formControlName="secretkey" class="form-control" name="secretkey"
+                    required />
+                  <div *ngIf="formdata.secretkey.touched && formdata.secretkey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.secretkey.errors?.required">secretkey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="miniohost">{{ myFieldlabels.miniohost }}</label>
+                  <input type="text" id="miniohost" formControlName="miniohost" class="form-control" name="miniohost"
+                    required />
+                  <div *ngIf="formdata.miniohost.touched && formdata.miniohost.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.miniohost.errors?.required">miniohost is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group ">
+                  <label for="bucketname">{{ myFieldlabels.bucketname }}
+                  </label>
+                  <input type="text" id="bucketname" formControlName="bucketname" class="form-control" name="bucketname"
+                    required />
+                  <div *ngIf="formdata.bucketname.touched && formdata.bucketname.invalid"
+                    class="alert alert-danger p-2">
+                    <div *ngIf="formdata.bucketname.errors?.required">bucketname is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 text-right mb-12">
+                <button type="submit" class="btn btn-outline-primary btn-lg mr-2" [disabled]="form.invalid" float-right>
+                  {{ myFieldlabels.savecredentials }}
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-lg mr-2" float-right>
+                  {{ myFieldlabels.testconnection }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </section>
+    </ng-template>
+
+    <ng-template [ngSwitchCase]="myFieldlabels.trainingserver">
+      <section class="white-section-with-shadow mb-5 py-4 px-3">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="usernamelabel">{{myFieldlabels.username}}</label>
+                  <input type="text" formControlName="username" class="form-control" id="username" required>
+                  <div *ngIf="formdata.username.touched && formdata.username.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.username.errors?.required">Name is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-password">{{myFieldlabels.password }}</label>
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    required />
+                  <div *ngIf="formdata.password.touched && formdata.password.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">Password is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 text-right mb-12">
+                <button type="submit" class="btn btn-outline-primary btn-lg mr-2" [disabled]="form.invalid" float-right>
+                  {{ myFieldlabels.savecredentials }}
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-lg mr-2" float-right>
+                  {{ myFieldlabels.testconnection }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+    </ng-template>
+
+    <ng-template [ngSwitchDefault]>
+      <section class="white-section-with-shadow mb-5 py-4 px-3">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="container-fluid">
+
+            <div class="row">
+              <div class="col-lg-6">
+
+                <div class="form-group">
+                  <label for="usernamelabel">{{myFieldlabels.username}}</label>
+                  <input type="text" formControlName="username" class="form-control" id="username" required>
+                  <div *ngIf="formdata.username.touched && formdata.username.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.username.errors?.required">Name is required.</div>
+
+                  </div>
+                </div>
+
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-password">{{myFieldlabels.password }}</label>
+                  <input type="password" formControlName="password" class="form-control" id="password" name="password"
+                    required />
+                  <div *ngIf="formdata.password.touched && formdata.password.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">Password is required.</div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-accesskey">{{ myFieldlabels.accesskey }}</label>
+                  <input type="text" formControlName="accesskey" id="accesskey" class="form-control" name="accesskey"
+                    required />
+                  <div *ngIf="formdata.accesskey.touched && formdata.accesskey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.password.errors?.required">accesskey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="input-secretkey">{{ myFieldlabels.secretkey}}</label>
+                  <input type="text" id="secretkey" formControlName="secretkey" class="form-control" name="secretkey"
+                    required />
+                  <div *ngIf="formdata.secretkey.touched && formdata.secretkey.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.secretkey.errors?.required">secretkey is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label for="miniohost">{{ myFieldlabels.miniohost }}</label>
+                  <input type="text" id="miniohost" formControlName="miniohost" class="form-control" name="miniohost"
+                    required />
+                  <div *ngIf="formdata.miniohost.touched && formdata.miniohost.invalid" class="alert alert-danger p-2">
+                    <div *ngIf="formdata.miniohost.errors?.required">miniohost is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group ">
+                  <label for="bucketname">{{ myFieldlabels.bucketname }}
+                  </label>
+                  <input type="text" id="bucketname" formControlName="bucketname" class="form-control" name="bucketname"
+                    required />
+                  <div *ngIf="formdata.bucketname.touched && formdata.bucketname.invalid"
+                    class="alert alert-danger p-2">
+                    <div *ngIf="formdata.bucketname.errors?.required">bucketname is required.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12 text-right mb-12">
+                <button type="submit" class="btn btn-outline-primary btn-lg mr-2" [disabled]="form.invalid" float-right>
+                  {{ myFieldlabels.savecredentials }}
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-lg mr-2" float-right>
+                  {{ myFieldlabels.testconnection }}
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </section>
+    </ng-template>
+
+
+
+
+  </div>
+
+
+
+</div>

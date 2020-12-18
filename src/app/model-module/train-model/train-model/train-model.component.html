@@ -1,0 +1,74 @@
+<div class="wrapper">
+    <h1 class="header-title">
+        Train model
+        <i class="fa fa-close fa-1x btn-close" (click)="onClose()"></i>
+    </h1>
+    <spinner *ngIf="spinnerActive"></spinner>
+    <div class="model-Data">
+        <mat-horizontal-stepper #stepper linear>
+            <mat-step>
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel class="modal-title">Model Details</ng-template>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="modelName" class="inputTitle">Model Name</label>&nbsp;<span class="mandatory">*</span>
+                            <input type="text" class="form-control" name="modelName" formControlName="modelName" id="modelName">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="fileUpload" class="inputTitle">Model Data</label>&nbsp;<span class="mandatory">*</span>
+                          <div class="input-group">
+                            <select id="upload" class="form-control" name="upload" formControlName="upload">
+                              <option *ngFor="let file of modelData.modelHistory"
+                                      value="{{file._id}}">
+                                {{file.file_name}}
+                              </option>
+                            </select>
+                            <div class="input-group-append">
+                              <input #fileId type="file" name="upload" hidden (change)="
+                            handleUpload($event, fileId.files);" class="form-control">
+                              <button class="btn ml-1 upload-button " id="buttonid" value="Upload" (click)="openDialog()"><i class="fa fa-upload upload-icon" aria-hidden="true"></i></button>
+
+                            </div>
+                          </div>
+
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="Model Description" class="inputTitle">Model Description</label>&nbsp;<span class="mandatory">*</span>
+                            <input type="text" class="form-control" name="modelDescription" id="description" formControlName="modelDescription">
+                        </div>
+                        <!-- <div class="form-group col-md-6"> 
+                            <label class="inputTitle">Algorithms</label>&nbsp;<span class="mandatory">*</span>
+                            <select class="form-control" formControlName="algorithm">
+                                <option [ngValue]="'*'">All</option>
+                                <option [ngValue]="'ar_model'">ar_model</option>
+                                <option [ngValue]="'lstm'">lstm</option>
+                            </select>
+                        </div> -->
+                    </div>
+                    <div>
+                        <button type="submit" mat-button class="ui-button-raised modal-action-button active-btn" (click)="uploadData()">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+              <form [formGroup]="secondFormGroup">
+                <ng-template matStepLabel>Model Trainings</ng-template>
+                <div class="container">
+                  <div class="row" formArrayName="TrainingParamValues">
+                    <div class="col-md-6 pl-4" *ngFor="let param of trainingParamValues.controls; let i = index">
+                      <input class="form-check-input" type="checkbox" value="{{modelData.modelTrainingParamValues[i]}}" id="{{i}}"
+                             [formControlName]="i">
+                      <label class="text-secondary" for="{{i}}">{{modelData.modelTrainingParamValues[i]}}</label>
+                    </div>
+                  </div>
+                </div>
+                  <button mat-button matStepperPrevious class="ui-button-raised modal-action-button active-btn" (click)="reset()">Back</button>
+                  <button type="submit" mat-button matStepperNext class="ui-button-raised modal-action-button active-btn" (click)="addModelParam()">Train Model</button>
+                <!--</div>-->
+              </form>
+            </mat-step>
+        </mat-horizontal-stepper>
+    </div>
+</div>

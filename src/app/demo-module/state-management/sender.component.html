@@ -1,0 +1,20 @@
+<div class=".table-responsive container "><br/>
+    
+    <span class="spntitle"><h4>State Management using Ngrx</h4></span>
+
+    <table class="tblSender">
+        <tr>
+            <td class="tdSender">
+                <b>Sender</b>
+                <form #sampleForm="ngForm" (ngSubmit)="onAddToCardClick(sampleForm)"><br/>
+                    <input type="text" [(ngModel)]="fname" name="fname" class="form-control" />
+                    <br />
+                    <button class="btn btn-info">Send</button>
+                </form>
+            </td>
+            <td>
+                <router-outlet></router-outlet>
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,75 @@
+.operation-btn {
+    height: 24px;
+    width: 59px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    padding-top: 2px;
+    background-color: none;
+    margin-right: 5px;
+}
+
+.header-label {
+    background-color: #01BAF2;
+    color: #ffffff;
+}
+
+.active-btn {
+    border-color: #01BAF2;
+    color: #01BAF2;
+    background-color: white;
+}
+
+
+/* Primng Data Table CSS */
+
+ ::ng-deep body .ui-table .ui-table-thead>tr>th {
+    border: none!important;
+    background-color: #01BAF2;
+    color: #ffffff
+}
+
+ ::ng-deep body .ui-table .ui-table-tbody>tr>td {
+    border: none!important;
+}
+
+ ::ng-deep body .ui-table .ui-table-tbody>tr:hover {
+    background: #EFEFEF 0% 0% no-repeat padding-box;
+    box-shadow: 2px 2px 0px #ffffff;
+    opacity: 1;
+    cursor: pointer;
+    z-index: 1;
+}
+
+ ::ng-deep body .ui-table .ui-table-caption {
+    border: none!important;
+    text-align: left;
+    font-size: 1rem;
+    padding: 15px 0px;
+}
+
+ ::ng-deep .ui-table table {
+    border: 1px solid #ccc;
+}
+
+ ::ng-deep .ui-dropdown .ui-dropdown-trigger {
+    border-left: 0
+}
+
+.btn-refresh {
+    float: right;
+    cursor: pointer;
+}
+
+.status-trained {
+    color: green;
+}
+
+.status-not-trained {
+    color: red;
+}
+.pointer {
+    cursor: pointer;
+}
+::ng-deep .table_model_cpation .ui-table-caption{
+    background-color: #f4f9fc !important;
+}

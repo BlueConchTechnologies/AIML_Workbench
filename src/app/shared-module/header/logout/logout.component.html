@@ -1,0 +1,19 @@
+﻿<ng-template #contentLogoutModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            {{'SHARED.HEADER.logoutConfirmation.dialogTitle' | translate }}</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <p>{{'SHARED.HEADER.logoutConfirmation.dialogMessage' | translate }}</p>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary"
+            (click)="closeConfirmationModal()">{{'SHARED.HEADER.logoutConfirmation.primaryButton' | translate }}</button>
+        <button type="button" class="btn btn-default"
+            (click)="modal.dismiss()">{{'SHARED.HEADER.logoutConfirmation.secondaryButton' | translate }}</button>
+    </div>
+</ng-template>

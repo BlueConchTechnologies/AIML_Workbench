@@ -1,0 +1,25 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "xp-ng-kit",
+    "installMode": "prefetch",
+    "resources": {
+      "files": [
+        "/favicon.ico",
+        "/index.html",
+        "/*.js",
+        "/*.css",
+          "/manifest.webmanifest"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**"
+      ]
+    }
+  }]
+}
