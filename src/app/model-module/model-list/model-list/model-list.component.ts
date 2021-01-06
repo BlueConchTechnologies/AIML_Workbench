@@ -24,7 +24,7 @@ export class ModelListComponent implements OnInit {
   passHistoryData;
   trainingParam: string;
   trainingParamValues: any[];
-  modelUploadHistory: any[];
+  modelUploadHistory: any;
 
   constructor(private modalService: MatDialog, private modelDataService: ModelDataService,
     private toastrService: ToastrService, private spinner: SpinnerService) { }
@@ -59,7 +59,7 @@ export class ModelListComponent implements OnInit {
       modelDiscription: modelData.model_description,
       modelTrainingParam: this.trainingParam,
       modelTrainingParamValues: this.trainingParamValues,
-      modelHistory: Object.assign([], this.modelUploadHistory?.sort(this.comp))
+      modelHistory: Object.assign([], this.modelUploadHistory ? (this.modelUploadHistory.message ? null : this.modelUploadHistory.sort(this.comp)): null)
     };
   }
   comp(a, b) {
