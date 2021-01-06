@@ -30,5 +30,7 @@ export class DesignWorkflowService {
     const url: string = this.apiUrl + 'traintracker';
     return this.httpClient.get(url);
   }
-
+  checkDesign(){
+    return this.httpClient.get(this.nodeRedUrl + 'flows');
+  }
 }

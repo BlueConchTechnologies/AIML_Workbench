@@ -31,7 +31,7 @@ export class DesignWorkflowComponent implements OnInit {
     }
 
   createNode() {
-    this.designWorkflowService.createFlow(this.nodeRedConstant.documentClassificationSubflow).subscribe(data => {
+    this.designWorkflowService.createFlow(this.nodeRedConstant.allSubflow).subscribe(data => {
     });
   }
 
@@ -41,6 +41,21 @@ export class DesignWorkflowComponent implements OnInit {
   }
 
   finalizedDesign() {
+    this.designWorkflowService.checkDesign().subscribe(
+      (successResponse) => {
+        console.log(successResponse);
+        var sJson = JSON.stringify(successResponse);
+        var element = document.createElement('a');
+        element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
+        element.setAttribute('download', "download_subflow.json");
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        element.click(); // simulate click
+        document.body.removeChild(element);
+      },
+      (errorResponse) => {
+      });
+
     this.useCaseData.url = this.nodeRedConstant.flowURL.DocumentClassification;
     const useCaseDataList = [];
     useCaseDataList.push(this.useCaseData);
