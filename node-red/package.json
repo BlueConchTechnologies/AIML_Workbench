@@ -1,0 +1,15 @@
+{
+    "name": "node-red",
+    "node-red": {
+        "nodes": {
+            "lower-case": "custom-nodes.js"
+        }
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "form-data": "^3.0.0",
+        "node-fetch": "^2.6.1",
+        "request": "^2.88.2",
+        "xmlhttprequest": "^1.8.0"
+    }
+}

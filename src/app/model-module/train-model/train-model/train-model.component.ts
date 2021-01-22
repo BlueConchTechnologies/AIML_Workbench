@@ -96,7 +96,7 @@ export class TrainModelComponent implements OnInit {
     this.fileObj = e.target.files[0];
     let modal = {
       "_id": "Test123",
-      "user_id": "akamble",
+      "user_id": "banu",
       "model_name": this.modelData.modelName,
       "file_name": this.fileObj.name,
       "created_date_time": this.fileObj.lastModifiedDate

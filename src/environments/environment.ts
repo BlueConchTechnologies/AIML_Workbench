@@ -14,7 +14,7 @@ export const environment = {
   workbenchUrl: 'http://121.244.33.115:5672',
   workbenchPublicUrl: 'http://121.244.33.115:5672',
   
-  testUserId: 'akamble', //'akamble',
+  testUserId: 'banu', //'akamble',
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',

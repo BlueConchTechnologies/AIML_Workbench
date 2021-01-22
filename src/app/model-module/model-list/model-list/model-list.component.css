@@ -7,7 +7,9 @@
     background-color: none;
     margin-right: 5px;
 }
-
+.data-Container{
+    height: 100vh;
+}
 .header-label {
     background-color: #01BAF2;
     color: #ffffff;

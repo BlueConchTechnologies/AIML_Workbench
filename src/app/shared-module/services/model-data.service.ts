@@ -32,6 +32,7 @@ export class ModelDataService {
   //Create the record
   selectedModels(request: any): Observable<any> {
     const url: string = this.API_URL + '/api/traintracker';
+    console.log("request traintracker",request)
     return this.http.post(url, request);
   }
   //Get The Selected Model List
