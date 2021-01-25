@@ -1,6 +1,4 @@
 <script type="text/javascript">
- 
-// get trained and nom trainable model list
 var url_data_str = window.location.href.split("?");
 var url_data_arr = url_data_str[1].split(',');
     RED.nodes.registerType(url_data_arr[0],{
@@ -40,40 +38,15 @@ var url_data_arr = url_data_str[1].split(',');
         }
     });
 
-    // RED.nodes.registerType('DocumentClassification',{
-    //     category: 'Header',
-    //     defaults: {
-    //         name: {value:""}
-    //     },
-    //     inputs:1,
-    //     outputs:1,
-    //     icon: "file.png",
-    //     label: function() {
-    //         return this.name||'DocumentClassification';
-    //     }
-    // });
-
-    
 </script>
 
-
-<!-- assigned content to nodes -->
-<!-- <script type="text/html" data-template-name="AnamolyDetection">
+<script type="text/html" data-template-name="lower-case">
     <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 </script>
-<script type="text/html" data-help-name="AnamolyDetection">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
-</script>
 
-<script type="text/html" data-template-name="classification">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-</script>
-<script type="text/html" data-help-name="classification">
+<script type="text/html" data-help-name="lower-case">
     <p>A simple node that converts the message payloads into all lower-case characters</p>
-</script> -->
+</script>
