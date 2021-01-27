@@ -42,8 +42,9 @@
                         <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" [disabled]="result.trainable != true">Train</button>
                         <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="openTestModal('http://dah.xpanxion.co.in:9008/text-summarization');$event.stopPropagation();" [disabled]="result.status != 'Trained'">Test </button>
                     </td>
+                    
                 </tr>
-                <ng-container *ngIf="result.isExpanded">
+                <!-- <ng-container *ngIf="result.isExpanded">
                     <ng-container *ngFor="let historyRow of result.history">
                         <tr (click)="getModelHistoryDetail(historyRow)"> 
                             <td></td>
@@ -52,9 +53,32 @@
                             <td><i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': historyRow.status == 'Trained', 'fa-exclamation-circle status-not-trained': historyRow.status != 'Trained'}"></i></td>
                             <td>{{historyRow.accuracy}}</td>
                             <td>{{historyRow.training_start_time}}</td>
-                            <td></td>
+                            <td> 
+                                <a (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn">Test</button></a>
+                            </td>
+                           
                         </tr>
                     </ng-container>
+                </ng-container> -->
+                <ng-container *ngIf="result.isExpanded">
+                    <ng-container *ngIf="historyArray != undefined; else noHistoryData">
+                    <ng-container *ngFor="let historyRow of result.history">
+                        <tr (click)="getModelHistoryDetail(historyRow)"> 
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': historyRow.status == 'Trained', 'fa-exclamation-circle status-not-trained': historyRow.status != 'Trained'}"></i></td>
+                            <td>{{historyRow.accuracy}}</td>
+                            <td>{{historyRow.training_start_time}}</td>
+                            <td> 
+                                <a (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn">Test</button></a>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <ng-template #noHistoryData>
+                    <!-- History data is absent -->
+                 </ng-template>
                 </ng-container>
             </ng-template>
         </p-table>

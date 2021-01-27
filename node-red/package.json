@@ -1,0 +1,8 @@
+{
+    "name": "nodered_customnode",
+    "node-red": {
+        "nodes": {
+            "lower-case": "nr-custom-node.js"
+        }
+    }
+}

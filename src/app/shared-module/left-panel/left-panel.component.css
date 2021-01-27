@@ -1,11 +1,30 @@
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 .page-container{ height: 100%;}
-.sidebar{ height:86vh; width:15.75rem; background:white; position: absolute; left:0;}
+.sidebar{ height:86vh; width:15.75rem; background:white; position: absolute; left:20px;}
+
 .list-items{ margin-top:0;}
-.list-item { display: flex;  position: relative;  font-size: 1rem;  color: grey;  padding: 1.25rem;  font-family: sans-serif;  cursor:pointer;}
+.list-item { display: flex;  position: relative;  font-size: 1rem;  padding: 1.25rem;  font-family: sans-serif;  cursor:pointer; width: 15rem;}
 .list-item a:hover{color:#1ecfeb;}
 .list-item:hover::before{ opacity:1;}
 .list-item i.fa{ margin-right: 1.25rem;  margin-top:0.25rem;}
 .list-item a{ color:#545454;}
 a .list-item:hover{ color:#1ecfeb;  text-decoration: none;}
 a:hover{text-decoration: none;}
+
+.nav-item{
+    border-bottom: 1px solid #1ecfeb;
+} 
+ .nav-link{
+    padding: 0rem 0rem;
+ }
+.nav-item .active{
+    border-left: 7px solid #1ecfeb;
+    box-sizing: border-box;
+    color: #1ecfeb !important;
+}
+a {
+    color: grey;
+}
+
+
+
