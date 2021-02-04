@@ -10,6 +10,7 @@ import { ToastrService } from "@core/services";
 import { ModelDataService } from "@shared/services/model-data.service";
 import { MarketmodelDataService } from "@shared/services/marketplace-data.service";
 import { environment } from '@env';
+import * as request from "request";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class MarketPlaceComponent implements OnInit {
   checkedList: any;
   checkedStatus: string;
   config: any;
+  checked = false;
  
 
   constructor(
@@ -58,7 +60,7 @@ export class MarketPlaceComponent implements OnInit {
       return item.trainable === true;
     });
      // this.getModelsData();
-   this.getCheckedItemList();
+  //  this.getCheckedItemList();
   }
 
   getCheckedItemList() {
@@ -75,8 +77,11 @@ export class MarketPlaceComponent implements OnInit {
           trainable:this.checklist[i].trainable
         };
         this.checkedList.push(data);
+        console.log("**************************trainable")
       }
+      
     }
+    console.log("picked model list",this.checkedList)
     this.checkedCount = this.checkedList.length;
   }
 

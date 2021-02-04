@@ -1,4 +1,5 @@
 <script type="text/javascript">
+console.log("window.location.href",window.location.href)
 var url_data_str = window.location.href.split("?");
 var url_data_arr = url_data_str[1].split(',');
     RED.nodes.registerType(url_data_arr[0],{
@@ -35,6 +36,30 @@ var url_data_arr = url_data_str[1].split(',');
         icon: "file.png",
         label: function() {
             return this.name||url_data_arr[2];
+        }
+    });
+    RED.nodes.registerType(url_data_arr[3],{
+        category: 'Header',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||url_data_arr[3];
+        }
+    });
+    RED.nodes.registerType(url_data_arr[4],{
+        category: 'Header',
+        defaults: {
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||url_data_arr[4];
         }
     });
 

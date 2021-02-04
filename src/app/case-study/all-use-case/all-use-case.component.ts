@@ -25,14 +25,20 @@ export class AllUseCaseComponent implements OnInit {
   ngOnInit(): void {
     this._caseStudyService.getAllUseCases().subscribe(resp => {
       this.usecaseList = resp.records;
+      console.log('usecaseList',this.usecaseList)
     });
   }
 
-  editUsecase(id:number): void {
-    this.usecaseID = id;
+  editUsecase(event): void {
+    console.log("*************************")
+    var idAttr = event.srcElement.attributes.id;
+    this.usecaseID = idAttr.nodeValue;
+    // this.usecaseID = id;
     window.localStorage.removeItem("usecaseID");
     window.localStorage.setItem("usecaseID", this.usecaseID);
-    this.router.navigate(['create-usecase']);
+    // this.router.navigate(['create-usecase']);
+    this.router.navigate(['design-workflow']);
+    console.log('this.usecaseID',this.usecaseID)
   };
 
   ngOnDestroy() { 

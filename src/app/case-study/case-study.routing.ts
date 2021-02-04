@@ -6,6 +6,7 @@ import { AllUseCaseComponent } from './all-use-case/all-use-case.component';
 import { CreateDesignComponent } from './create-design/create-design.component';
 import { CreateUseCaseComponent } from './create-use-case/create-use-case.component';
 import { DesignWorkflowComponent } from './design-workflow/design-workflow.component';
+import { RunworkflowComponent } from './runworkflow/runworkflow.component';
 
 const appRoutes: Routes = [
 
@@ -24,6 +25,10 @@ const appRoutes: Routes = [
   {
     path: Constants.uiRoutes.designWorkflow,
     component: DesignWorkflowComponent
+  },
+  {
+    path: Constants.uiRoutes.runworkflow,
+    component: RunworkflowComponent
   }
 ];
 export const routing: ModuleWithProviders<RouterModule> = RouterModule.forChild(appRoutes);

@@ -1,0 +1,111 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+          <h6 class="create-design-header"><a class="nav-link" routerLink="/casestudy" ><i class="fa fa-chevron-left" aria-hidden="true"></i> All Use Case </a></h6>
+        </div>
+        <div class="col-md-8 text-right mb-2">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="labelDropdown" ngbDropdownToggle><i class="fa fa-plus"
+                aria-hidden="true"></i> Add Label</button>
+            <div ngbDropdownMenu aria-labelledby="labelDropdown">
+              <button (click)="addTextField($event)" id="textField" ngbDropdownItem>Text Field</button>
+              <button (click)="addTextField($event)" id="textArea" ngbDropdownItem>Text Area</button>
+              <button (click)="addTextField($event)" id="fileBrowse" ngbDropdownItem>File Browse</button>
+            </div>
+            <button class="btn btn-outline-primary ml-2" routerLink="/design-workflow"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Your Workflow</button>
+
+          </div>
+    
+        </div>
+        
+    </div>
+    <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+    <div class="container">
+        <form class="mt-5" [formGroup]="runWorkflowForm" (ngSubmit)="runYourWorkflow()">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Name</label>
+                <input type="input" formControlName="name" [(ngModel)]="workflow_data.label" class="form-control" readonly >
+              </div>
+              <div class="form-group col-md-6">
+                <label for="inputPassword4">Description</label>
+                <input type="input" formControlName="description"  class="form-control" readonly>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-12"   #textFieldInput style="display: none;" >
+               <div class="row">
+                 <div class="col-md-12">
+                <label>Text Field</label>
+              </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                  <input type="text" formControlName="textField" class="form-control label-input"   />
+                 </div>
+                 <div class="col-md-6">
+                  <!-- <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(textFieldInput)" ><i class="fa fa-times" id="removeTextField" aria-hidden="true"></i></button> -->
+                 </div>
+               </div>
+              </div>
+            </div> 
+      
+           
+            <div class="form-row">
+              <div class="form-group col-md-12" #textAreaInput style="display: none;"  >
+               <div class="row">
+                 <div class="col-md-12">
+                  <label>Text Area</label>
+              </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                  <textarea type="text" formControlName="textArea" rows="5" class="form-control label-input"   > </textarea>
+                 </div>
+                 <div class="col-md-6">
+                  <!-- <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(textAreaInput)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button> -->
+                 </div>
+               </div>
+              </div>
+            </div>
+
+           
+            <div class="form-row">
+              <div class="form-group col-md-12" #fileBrowseInput style="display: none;" >
+               <div class="row">
+                 <div class="col-md-12">
+                  <label>File Browse</label>
+              </div>
+               </div>
+               <div class="row">
+                 <div class="col-md-6">
+                  <input type="file" id="myFile" formControlName="fileBrowse" >
+                </div>
+                 <div class="col-md-6">
+                  <!-- <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField($event)"  ><i class="fa fa-times" id="removeFileBrowse" aria-hidden="true"></i></button> -->
+                 </div>
+               </div>
+              </div>
+            </div>
+           
+          <div class="form-row float-right">
+            <div class="form-group col-md-12">
+              <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+            </div>
+          </div>     
+          </form>
+    </div>
+
+    <div class="container">
+        <form class="mt-5">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                <label for="exampleFormControlTextarea1">Output</label>
+                <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+                </div>
+            </div>              
+        </form>
+    </div>
+</div>
+

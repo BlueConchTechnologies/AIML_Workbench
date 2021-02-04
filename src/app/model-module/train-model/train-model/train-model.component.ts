@@ -203,7 +203,7 @@ export class TrainModelComponent implements OnInit {
       if (this.firstFormGroup.controls.upload.value && this.firstFormGroup.controls.upload.value != "Test123") {
         modelData.dataTracker_id = this.firstFormGroup.controls.upload.value;
       }
-
+      console.log("modeldata",modelData)
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {

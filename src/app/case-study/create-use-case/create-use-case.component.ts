@@ -25,6 +25,7 @@ export class CreateUseCaseComponent implements OnInit {
     let usecaseID = window.localStorage.getItem("usecaseID");
     this._caseStudyService.getAllUseCases().subscribe(resp => {
       this.usecaseDetails = resp.records;
+      console.log("resp.records",resp.records)
       this.findedData = this.usecaseDetails.find(i => i._id === usecaseID);
       this.modelName = this.findedData.model_name;
       this.modelDesc = this.findedData.model_description;

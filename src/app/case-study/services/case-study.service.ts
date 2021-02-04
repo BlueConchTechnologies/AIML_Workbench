@@ -4,6 +4,7 @@ import { Constants } from '@shared';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -23,6 +24,9 @@ export class CaseStudyService {
 
   createRunWorkflow(request: any): Observable<any> {
     return this._http.post(this.NODE_URL + 'documentClassification', request);
+  }
+  runWorkflow(request: any): Observable<any> {
+    return this._http.post('http://121.244.33.115:5672/api/predict', request);
   }
   
 }

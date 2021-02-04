@@ -4,7 +4,7 @@
             <h6 class="usecase-header"> All Use Case</h6>
           </div>
           <div class="col-md-8 text-right mb-2">
-            <button type="button" [routerLink]="['/create-design']" class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
+            <button type="button" [routerLink]="['/design-workflow']" class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
           </div>
       </div>
     <div class="row">
@@ -12,12 +12,12 @@
                <div class="card">
                     <div class="card-header bg-none">
                          <h5 class="modal-title ng-binding">
-                              <a (click)="editUsecase(usecase._id)"><i class="fa fa-files-o fa-round-bg" aria-hidden="true"></i> {{usecase.model_name}} </a> 
+                              <a id={{usecase._id}} (click)="editUsecase($event)" ><i class="fa fa-files-o fa-round-bg" aria-hidden="true"></i> {{usecase.model_name}} </a> 
                               <a class="icon-arrow-right pull-right">
                                    <div ngbDropdown class="d-inline-block">
                                         <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i></button>
                                         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                        <button ngbDropdownItem [routerLink]="['/create-design']"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
+                                        <button ngbDropdownItem  id={{usecase._id}} (click)="editUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
                                         <button ngbDropdownItem><i class="fa fa-trash" aria-hidden="true"></i> Delete Use Case</button>
                                         <button ngbDropdownItem><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
                                         </div>
