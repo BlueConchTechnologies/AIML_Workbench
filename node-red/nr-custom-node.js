@@ -1,6 +1,6 @@
 module.exports = function(RED) {
     
-    //model 1
+    //model 1 //done
     function functionTermsExtraction(config) {
         RED.nodes.createNode(this,config);
         
@@ -21,19 +21,19 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType('SpeakerDiarization',functionSpeakerDiarization); 
 
-    //model 4
+    //model 4   // done
     function functionTextExtraction(config) {
         RED.nodes.createNode(this,config);
     }
     RED.nodes.registerType('TextExtraction',functionTextExtraction);
 
-    //model 5
+    //model 5   // done
     function functionInvoiceExtraction(config) {
         RED.nodes.createNode(this,config);
     }
     RED.nodes.registerType('InvoiceExtraction',functionInvoiceExtraction);
 
-     //model 6
+     //model 6 // done
      function functionInstanceSegmentation(config) {
         RED.nodes.createNode(this,config);
     }
@@ -51,14 +51,14 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType('ObjectDetection',functionObjectDetection);
 
-    //model 9
+    //model 9   // done
     function functionTableExtractor(config) {
         RED.nodes.createNode(this,config);
         
     }
     RED.nodes.registerType('TableExtractor',functionTableExtractor); 
 
-     // //model 10 (trainable)
+     // //model 10 (trainable)   
      function functionClassification(config) {
         RED.nodes.createNode(this,config);
     }
@@ -71,7 +71,7 @@ module.exports = function(RED) {
     }
      RED.nodes.registerType('AnamolyDetection',functionAnamolyDetection);
 
-     // //model 12
+     // //model 12   // done
      function functionDocumentClassification(config) {
         RED.nodes.createNode(this,config);
       
@@ -85,20 +85,20 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType('TimeSeries',functionTimeSeries);
 
-   //model 14
+   //model 14  // done
     function functionTextSummarization(config) {
         RED.nodes.createNode(this,config);
       
     }
     RED.nodes.registerType('TextSummarization',functionTextSummarization); 
 
-     //model 15
+     //model 15   // done
      function functionSentimentClassification(config) {
         RED.nodes.createNode(this,config);
     }
     RED.nodes.registerType('SentimentClassification',functionSentimentClassification);
 
-    //model 16
+    //model 16   
     function functionQNA_KB(config) {
         RED.nodes.createNode(this,config);
     }
