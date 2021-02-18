@@ -7,6 +7,8 @@ import {
 } from '@angular/router';
 import { ToastrService } from '@core/services';
 import { CaseStudyService } from '../services/case-study.service';
+import { DesignWorkflowService } from '../services/design-workflow.service';
+
 
 
 @Component({
@@ -19,7 +21,7 @@ export class AllUseCaseComponent implements OnInit {
   usecaseList:any;
   usecaseID:any;
   
-  constructor(private _caseStudyService: CaseStudyService, private router: Router,private toastService: ToastrService) { 
+  constructor(private _caseStudyService: CaseStudyService, private router: Router,private toastService: ToastrService,private designWorkflowService: DesignWorkflowService) { 
   }
 
   ngOnInit(): void {
@@ -27,6 +29,19 @@ export class AllUseCaseComponent implements OnInit {
       this.usecaseList = resp.records;
       console.log('usecaseList',this.usecaseList)
     });
+  }
+
+  createUseCase(){
+    // set empty workflow to localstorage
+    var workFlow = [{"id":"5750b22f.6cdecc","type":"tab","label":"Flow 1","disabled":false,"info":""}]
+    localStorage.setItem("workflow_to_nodered",JSON.stringify (workFlow) );
+    this.router.navigate(['design-workflow']);
+
+    // add empty flow to nodered
+     var allSubflow = [{"id":"5750b22f.6cdecc","type":"tab","label":"Flow 1","disabled":false,"info":""}]
+    this.designWorkflowService.createFlow(allSubflow).subscribe(data => {
+    });
+
   }
 
   editUsecase(event): void {
@@ -41,7 +56,6 @@ export class AllUseCaseComponent implements OnInit {
     console.log('this.usecaseID',this.usecaseID)
   };
 
-  ngOnDestroy() { 
-  }
+ 
 
 }

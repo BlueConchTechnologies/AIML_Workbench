@@ -37,7 +37,7 @@ export class ModelListComponent implements OnInit {
       { field: 'model_description', header: 'Model Details', isShowInHistory: false },
       { field: 'status', header: 'Status', isShowInHistory: true },
       { field: 'accuracy', header: 'Accuracy', isShowInHistory: true },
-      { field: 'last_trained_date', header: 'Last Trained Date', isShowInHistory: true },
+      { field: 'training_end_time', header: 'Last Trained Date', isShowInHistory: true },
     ];
     this.getTableData();
   }

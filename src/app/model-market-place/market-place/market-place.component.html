@@ -6,7 +6,7 @@
         <div class="col-md-8 text-right mb-2">
             <button type="button" class="btn btn-outline-primary btn-sm mr-2"><i class="fa fa-upload" aria-hidden="true"></i>
             Upload Custom Model</button>
-            <button type="button" (click)="modelCheckout()" [disabled]="checkedCount == 0" class="btn btn-outline-primary btn-sm mr-2" style="position: relative;"> {{checkedCount}}<i class="fa fa-check fa-checkout" aria-hidden="true"></i>
+            <button type="button" (click)="nonTrainableModelCheckout()" [disabled]="checkedCount == 0" class="btn btn-outline-primary btn-sm mr-2" style="position: relative;"> {{checkedCount}}<i class="fa fa-check fa-checkout" aria-hidden="true"></i>
             &nbsp;&nbsp;Checkout</button>
 
         </div>
@@ -21,46 +21,103 @@
             </div>
         </div>
     </div>
-    <div class="row" id="model-market-place">
-        <div class="col-md-4 mb-4" *ngFor="let model of checklist | filter:searchText | paginate: config">
-            <div class="card inner shadow p-0 mb-2 bg-white rounded" [ngClass]="{'highlight': model.trainable === true}">
-                <div class="card-header"><img src="../../../assets/Images/robot-solid.svg" class="robot-icon">{{model.original_model_name}}</div>
-                <div class="card-body" data-toggle="modal" data-target="#myModal">{{model.model_description}}
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active font-weight-bold" id="pills-trainable-tab" data-toggle="pill" href="#pills-trainable" role="tab" aria-controls="pills-trainable" aria-selected="true">Trainable Model</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link font-weight-bold" id="pills-non-trainable-tab" data-toggle="pill" href="#pills-non-trainable" role="tab" aria-controls="pills-non-trainable" aria-selected="false">Non-Trainable Model</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-trainable" role="tabpanel" aria-labelledby="pills-trainable-tab">
+            <div class="row" id="model-market-place">
+                <div class="col-md-4 mb-4" *ngFor="let model of trainable_model | filter:searchText | paginate: config">
+                    <div class="card inner shadow p-0 mb-2 bg-white rounded"  [ngClass]="{'highlight': model.trainable === true}">
+                        <div class="card-header"><img src="../../../assets/Images/robot-solid.svg" class="robot-icon">{{model.original_model_name}}</div>
+                        <div class="card-body" >{{model.model_description}}
+                        </div>
+                        <div class="card-footer">
+                            <!-- <button class="btn btn-outline-primary btn-md toggle-checkbox" (click)="unPickModel(model)" *ngIf="model.checkedStatus">
+                                <span class="font-weight-bold" >
+                                    <i class="fa fa-check" aria-hidden="true"></i> Picked 
+                                </span>
+                            </button> -->
+                           <button class="btn btn-outline-primary btn-md toggle-checkbox" (click)="pickTrainableModel(model)" *ngIf="!model.checkedStatus" >
+                                <span class="font-weight-bold" >
+                                    Pick
+                                </span> 
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <label class="btn btn-outline-primary btn-md toggle-checkbox">
-                    <input type="checkbox" [(ngModel)]="model.trainable" name="list_name" value="{{model.id}}" (change)="isAllSelected()" />
-                    <span class="font-weight-bold" *ngIf="model.trainable">
-                        <i class="fa fa-check" aria-hidden="true"></i> Picked 
-                    </span>
-                    <span class="font-weight-bold" *ngIf="!model.trainable">
-                        Pick
-                    </span> 
-                </label>
+            </div>
+            <div class="row">
+                <div class="col-md-12 market-pagination">
+                    <pagination-controls (pageChange)="pageChanged_trainable_model($event)"></pagination-controls>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12 market-pagination">
-            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+        <div class="tab-pane fade" id="pills-non-trainable" role="tabpanel" aria-labelledby="pills-non-trainable-tab">
+            <div class="row" id="model-market-place">
+                <div class="col-md-4 mb-4" *ngFor="let model of non_trainable_model | filter:searchText | paginate: config">
+                    <div class="card inner shadow p-0 mb-2 bg-white rounded" [ngClass]="{'highlight': model.trainable === true}">
+                        <div class="card-header"><img src="../../../assets/Images/robot-solid.svg" class="robot-icon">{{model.original_model_name}}</div>
+                        <div class="card-body" >{{model.model_description}}
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-outline-primary btn-md toggle-checkbox" (click)="unPickNontrainbleModel(model)" *ngIf="model.checkedStatus" [disabled]="model.activeInChecklist">
+                                <span class="font-weight-bold" >
+                                    <i class="fa fa-check" aria-hidden="true"></i> Picked 
+                                </span>
+                            </button>
+                           <button class="btn btn-outline-primary btn-md toggle-checkbox" (click)="pickNontrainblekModel(model)" *ngIf="!model.checkedStatus" >
+                                <span class="font-weight-bold" >
+                                    Pick
+                                </span> 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 market-pagination">
+                    <pagination-controls (pageChange)="pageChanged_nontrainable_model($event)"></pagination-controls>
+                </div>
+            </div>
         </div>
-    </div>
+      </div>
 
+    
     <!-- The Modal -->
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal" id="displayModelDetails" >
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h6 class="modal-title">Model-1 Name</h6>
+                    <h6 class="modal-title">Edit Model</h6>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <h5>Documents Classification </h5>
-                     <!-- <p id="json" [innerHtml]="jsonData | json"></p>  -->
+                     <form [formGroup]="modelDetailsForm" (ngSubmit)="trainableModelCheckout()">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="modelName" class="inputTitle">Model Name</label>&nbsp;<span class="mandatory">*</span>
+                                <input type="text" class="form-control" formControlName="model_name" >
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="Model Description" class="inputTitle">Model Description</label>&nbsp;<span class="mandatory">*</span>
+                                <input type="text" class="form-control" formControlName="model_description" id="description" >
+                            </div>
+                        </div>
+                        <div>
+                            <button type="submit"  class="ui-button-raised modal-action-button active-btn" >Checkout</button>
+                        </div>
+                    </form>
 
                 </div>
                 <!-- Modal footer -->
@@ -71,3 +128,6 @@
         </div>
     </div>
 </div>
+
+
+ 
