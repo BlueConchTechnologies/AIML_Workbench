@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient ,HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { HttpParams } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
@@ -27,8 +27,16 @@ export class ModelDataService {
   // },{
   //   id:8,"header":"Eighth Component","content":"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",isSelected:false
   // }];
+  // header_node:any
+  constructor(private http: HttpClient,) {
+    // this.header_node = {
+    //   headers: new HttpHeaders(
+    //       { 'rejectUnauthorized': 'false' })
+    //   };
+   }
 
-  constructor(private http: HttpClient,) { }
+
+
   //Create the record
   selectedModels(request: any): Observable<any> {
     const url: string = this.API_URL + '/api/traintracker';
@@ -50,7 +58,6 @@ export class ModelDataService {
     const url: string = this.API_URL + '/api/upload/history?trainTracker_id=' + trainTracker_id;
     return this.http.get(url);
   }
-
 
   getModelDetails(originalModelName: any): Observable<any> {
     const url: string = this.API_URL + '/api/modeldetails?original_model_name=' + originalModelName;

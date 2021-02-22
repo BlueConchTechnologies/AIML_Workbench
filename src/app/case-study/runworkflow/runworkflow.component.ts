@@ -168,8 +168,10 @@ runYourWorkflow_1() {
           formData.append('file', this.fileToUpload);
           this.runworkflowCallApi(formData) 
 
-          console.log("flow 2 works")
-          console.log(formData)    
+          console.log("flow 1 works")
+          formData.forEach((value,key) => {
+           console.log("formdata_new",key+" "+value)
+            });
 }
 
 // Classification ,AnamolyDetection
@@ -297,7 +299,9 @@ runYourWorkflow_9() {
          (successResponse) => {
            const respData = successResponse;
            console.log('successResponse', successResponse)
+           if (this.trainTrackerIdLength <= 1) {
            this.Output_result = successResponse
+           console.log('this.Output_result',this.Output_result)
            this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
  
            // patch the empty value to from control
@@ -308,7 +312,10 @@ runYourWorkflow_9() {
            });
  
            this.spinnerActive = this.spinner.stop()
- 
+          }
+          else{
+            this.secondFlow(successResponse.response.text)
+          }
          },
          (errorResponse) => {
            this.toastService.showError('Something went wrong');
@@ -321,56 +328,23 @@ runYourWorkflow_9() {
 
   //*********************************** */ for two traintrackerId*****************
   // *************************************************************************************//*
-         // first model
-  runworkflowCallApiMultipleModel(formData) { 
-    this.spinnerActive = this.spinner.start();
-
-   this._caseStudyService.runWorkflow(formData)
-     .subscribe(
-       (successResponse) => {
-         const respData = successResponse;
-         console.log('MultipleModel-successResponse', successResponse)
-         console.log('MultipleModel-successResponse.response.text', successResponse.response.text)
-         this.secondFlow(successResponse.response.text)
-       },
-       (errorResponse) => {
-         this.toastService.showError('Something went wrong');
-         console.log('ERROR', errorResponse);
-         this.spinnerActive = this.spinner.stop()
-
-       });
-
-  }
-          //  second flow 
+ //  second flow 
   secondFlow(firstflowResponse) {
        const formData_new = new FormData();
        formData_new.append('trainingTracker_id', this.SecondModelTrainTrackerId);
        formData_new.append('text', firstflowResponse);
-       formData_new.forEach((value,key) => {
-         console.log("formdata_new",key+" "+value)
-          });
        this._caseStudyService.runWorkflow(formData_new)
       .subscribe(
         (successResponse) => {
-          const respData = successResponse;
           this.Output_result = successResponse
           this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
- 
-          // patch the empty value to from control
-          this.runWorkflowForm.patchValue({
-            textField: '',
-            textArea: '',
-            file: ''
-          });
- 
           this.spinnerActive = this.spinner.stop()
- 
         },
         (errorResponse) => {
           this.toastService.showError('Something went wrong');
           console.log('ERROR', errorResponse);
           this.spinnerActive = this.spinner.stop()
- 
+
         });
   }
 

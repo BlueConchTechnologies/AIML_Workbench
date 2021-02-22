@@ -27,7 +27,7 @@ export class CaseStudyService {
   }
   runWorkflow(request: any): Observable<any> {
     console.log("modeldta to api",request)
-    return this._http.post('http://121.244.33.115:5672/api/predict', request);
+    return this._http.post(this.API_URL + '/api/predict', request);
   }
   
 }
