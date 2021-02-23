@@ -1,42 +1,24 @@
 <script type="text/javascript">
+console.log("window.location.href",window.location.href)
 var url_data_str = window.location.href.split("?");
 var url_data_arr = url_data_str[1].split(',');
-    RED.nodes.registerType(url_data_arr[0],{
+var url_data_arr_decode = decodeURIComponent(url_data_arr)
+var modelData = JSON.parse(url_data_arr_decode) 
+console.log("modelData in nodered",modelData)
+console.log("url_data_parsed_json",modelData[0]['_id'])
+
+for (var i = 0; i < this.modelData.length; i++) {
+RED.nodes.registerType(modelData[i]['original_model_name'],{
         category: 'Header',
-        defaults: {
-            name: {value:""}
-        },
         inputs:1,
         outputs:1,
         icon: "file.png",
-        label: function() {
-            return this.name||url_data_arr[0];
-        }
-    });
-    RED.nodes.registerType(url_data_arr[1],{
-        category: 'Header',
         defaults: {
-            name: {value:""}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "file.png",
-        label: function() {
-            return this.name||url_data_arr[1];
-        }
+            trainingTracker_id: {value:modelData[i]['_id']},
+            prediction_params: {value:modelData[i]['prediction_params']}
+          },
     });
-    RED.nodes.registerType(url_data_arr[2],{
-        category: 'Header',
-        defaults: {
-            name: {value:""}
-        },
-        inputs:1,
-        outputs:1,
-        icon: "file.png",
-        label: function() {
-            return this.name||url_data_arr[2];
-        }
-    });
+}
 
 </script>
 

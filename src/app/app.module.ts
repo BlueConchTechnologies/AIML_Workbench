@@ -35,7 +35,6 @@ import { TrainModelComponent } from './model-module/train-model/train-model/trai
 import {AccountComponent} from './account-info/account/account/account.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,

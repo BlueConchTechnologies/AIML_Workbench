@@ -6,10 +6,15 @@ import {
   RouterStateSnapshot,
 } from "@angular/router";
 import { ToastrService } from "@core/services";
+import { SpinnerService } from '@core'
 
 import { ModelDataService } from "@shared/services/model-data.service";
 import { MarketmodelDataService } from "@shared/services/marketplace-data.service";
 import { environment } from '@env';
+import * as request from "request";
+import { FormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+
+declare var $: any;
 
 
 @Component({
@@ -29,81 +34,242 @@ export class MarketPlaceComponent implements OnInit {
   checkedList: any;
   checkedStatus: string;
   config: any;
+  checked = false;
+  trainable_model:any;
+  non_trainable_model:any;
+  modelFormData:any;
+  // showModelDetailPopup = false
+  modelDetailsForm:FormGroup
+  trainableCheckoutData = []
+  nonTrainableCheckoutData = []
+  checkedoutModelList :any
+  spinnerActive = false;
+  // modelCheckList:any
  
 
   constructor(
     private modelDataService: ModelDataService,
     private modelService: MarketmodelDataService,
     private router: Router,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private formBuilder: FormBuilder,
+    private spinner: SpinnerService
   ) {
     this.masterSelected = false;
-  
-    // this.getCheckedItemList();
-    //this.getModelsData();
     this.config = {
-      itemsPerPage: 5,
+      itemsPerPage: 6,
       currentPage: 1,
-     // totalItems: this.checklist.length,
     };
+   
   }
 
   ngOnInit(): void {
-    // this.modelData = this.modelDataService.modelData;
     this.getModelsData();
-  }
+    
+    //runWorkflowForm form validation
+    this.modelDetailsForm = this.formBuilder.group({
+      user_id:'',
+      _id:'',
+      model_name: '',
+      model_description: '',
+      original_model_name:'',
+      trainable:'',
+      prediction_params:'',
+      training_params:''
 
-  isAllSelected() {
-    this.masterSelected = this.checklist.every(function (item: any) {
-      return item.trainable === true;
     });
-     // this.getModelsData();
-   this.getCheckedItemList();
   }
 
-  getCheckedItemList() {
-    this.checkedList = [];
-    for (var i = 0; i < this.checklist.length; i++) {
-      var modelDescription = (this.checklist[i].model_description == undefined) ? '' : this.checklist[i].model_description;
-      var ModelName = (this.checklist[i].model_name == undefined) ? this.checklist[i].original_model_name : this.checklist[i].model_name;
-      if (this.checklist[i].trainable) {
-        const data = {
-          user_id: environment.testUserId,
-          model_description: modelDescription,
-          model_name: ModelName,
-          original_model_name: this.checklist[i].original_model_name,
-          trainable:this.checklist[i].trainable
-        };
-        this.checkedList.push(data);
-      }
-    }
-    this.checkedCount = this.checkedList.length;
-  }
+  // modelCheckout() {
+  //   // removed _id from checkedModelData array
+  //   let checkoutModelList = this.checkedModelData.map(({_id,...rest}) => rest)
+  //   console.log("checkoutModelList",checkoutModelList); 
+    
+  //   // api integration
+  //   this.modelDataService.selectedModels(checkoutModelList).subscribe(
+  //     (successResponse) => {
+  //       console.log("SUCCESS", successResponse);
+  //       this.router.navigate(["/model-list"]);
+  //     },
+  //     (errorResponse) => {
+  //       console.log("ERROR", errorResponse);
+  //     }
+  //   );
+  // }
 
-  modelCheckout() {
-    console.log("picked model list",this.checkedList)
-    this.modelDataService.selectedModels(this.checkedList).subscribe(
-      (successResponse) => {
-        console.log("SUCCESS", successResponse);
-        this.router.navigate(["/model-list"]);
-      },
-      (errorResponse) => {
-        console.log("ERROR", errorResponse);
-      }
-    );
+  pageChanged_trainable_model(event: any) {
+    this.config.currentPage = event;
   }
-
-  pageChanged(event: any) {
+  pageChanged_nontrainable_model(event: any) {
     this.config.currentPage = event;
   }
   getModelsData() {
     this.modelService.showData().subscribe(( marketmodeldata : any) => {
-      console.log("model data maket palce",marketmodeldata);
       this.marketshowdata = marketmodeldata;
     this.checklist=marketmodeldata.records;
+    console.log("model data maket palce",this.checklist);
+    let trainable = [];
+    let non_trainable = [];
+
+    // new property added to picked the model
     for (var i = 0; i < this.checklist.length; i++) {
-      this.checklist[i].trainable = false;
+      this.checklist[i].checkedStatus = false;
+      if (this.checklist[i].trainable === true){
+        trainable.push(this.checklist[i]) 
+      
+      }
+      else{
+        non_trainable.push(this.checklist[i]) 
+        
+      }
     }
+    this.trainable_model = trainable
+    this.non_trainable_model = non_trainable
+
+
+
+     console.log ("trainable-model",this.trainable_model)
+    console.log ("non-trainable-model",this.non_trainable_model)
+    this.disableCheckBtnNonTrainableModel ();
+
+
     });
+
   }
+
+  /*************************checkout trainable mode***********************
+   * ******************************************************************** */
+            // display trainable model Details on popup
+            pickTrainableModel(getData: object): void {
+                  this.modelFormData = getData
+                  this.modelDetailsForm.get('user_id').setValue(environment.testUserId);
+                  this.modelDetailsForm.get('_id').setValue(this.modelFormData._id);
+                  this.modelDetailsForm.get('model_name').setValue(this.modelFormData.original_model_name);
+                  this.modelDetailsForm.get('model_description').setValue(this.modelFormData.model_description);
+                  this.modelDetailsForm.get('original_model_name').setValue(this.modelFormData.original_model_name);
+                  this.modelDetailsForm.get('trainable').setValue(this.modelFormData.trainable);
+                  this.modelDetailsForm.get('prediction_params').setValue(this.modelFormData.prediction_params);
+                  this.modelDetailsForm.get('training_params').setValue(this.modelFormData.training_params);
+                  $("#displayModelDetails").modal("show");
+                  console.log ("piched Data",getData)
+
+            }
+
+            // trainable model checkout
+            trainableModelCheckout () {
+                  this.trainableCheckoutData.push(this.modelDetailsForm.value)
+                  // removed _id from checkedModelData array
+                  let checkoutTrainableModelList = this.trainableCheckoutData.map(({_id,...rest}) => rest)
+                  console.log("checkoutTrainableModelList",checkoutTrainableModelList); 
+                  
+                  // api integration
+                  this.modelDataService.selectedModels(checkoutTrainableModelList).subscribe(
+                    (successResponse) => {
+                      console.log("SUCCESS", successResponse);
+                      this.router.navigate(["/model-list"]);
+                    },
+                    (errorResponse) => {
+                      console.log("ERROR", errorResponse);
+                    }
+                  );
+
+                  $("#displayModelDetails").modal("hide"); 
+            }
+
+     /*********************************non trainable model checkout***************
+      * ***************************************************************************** */  
+
+          pickNontrainblekModel(getData: object): void {
+                this.modelFormData = getData
+                this.modelDetailsForm.get('user_id').setValue(environment.testUserId);
+                this.modelDetailsForm.get('_id').setValue(this.modelFormData._id);
+                this.modelDetailsForm.get('model_name').setValue(this.modelFormData.original_model_name);
+                this.modelDetailsForm.get('model_description').setValue(this.modelFormData.model_description);
+                this.modelDetailsForm.get('original_model_name').setValue(this.modelFormData.original_model_name);
+                this.modelDetailsForm.get('trainable').setValue(this.modelFormData.trainable);
+                this.modelDetailsForm.get('prediction_params').setValue(this.modelFormData.prediction_params);
+                this.modelDetailsForm.get('training_params').setValue(this.modelFormData.training_params);
+
+                // add non trainable mode data in array
+                this.nonTrainableCheckoutData.push(this.modelDetailsForm.value)
+                console.log ("non trainable model Data",this.nonTrainableCheckoutData)
+
+                // change the status of non trainable model
+                for (var i = 0; i < this.checklist.length; i++) {
+                  if (this.checklist[i]._id === this.modelDetailsForm.value._id){
+                      this.checklist[i].checkedStatus = true;
+                  }
+                  }
+                  // checkcount status 
+                  this.checkedCount = this.nonTrainableCheckoutData.length;
+          }
+
+            // unpick Nontrainable model
+            unPickNontrainbleModel (getData: object) {
+                for (var i = 0; i <  this.nonTrainableCheckoutData.length; i++) {
+                  if ( getData['_id'] ===  this.nonTrainableCheckoutData[i]._id ) {
+                    this.nonTrainableCheckoutData.splice(i, 1);
+                  }
+                }
+                 // trainable model
+                 for (var i = 0; i < this.non_trainable_model.length; i++) {
+                    if (this.non_trainable_model[i]._id === getData['_id']) {
+                      this.non_trainable_model[i].checkedStatus = false
+                      console.log(this.non_trainable_model[i])
+                    }
+                } 
+                console.log(" this.nonTrainableCheckoutData", this.nonTrainableCheckoutData)
+
+              // checkcount status 
+              this.checkedCount = this.nonTrainableCheckoutData.length;
+
+              }
+
+              nonTrainableModelCheckout () {
+                // removed _id from checkedModelData array
+                let checkoutNonTrainableModelList = this.nonTrainableCheckoutData.map(({_id,...rest}) => rest)
+                console.log("checkoutTrainableModelList",checkoutNonTrainableModelList); 
+                
+                // api integration
+                this.modelDataService.selectedModels(checkoutNonTrainableModelList).subscribe(
+                  (successResponse) => {
+                    console.log("SUCCESS", successResponse);
+                    this.router.navigate(["/model-list"]);
+                  },
+                  (errorResponse) => {
+                    console.log("ERROR", errorResponse);
+                  }
+                );
+              }
+
+      /*******************************************************************************
+       **************** disable check button of nontrainable model*******************
+       * ************************************************************************** */  
+      disableCheckBtnNonTrainableModel () {
+        this.spinnerActive = this.spinner.start() 
+
+        // add property activeInChecklist
+        for ( var i = 0; i < this.non_trainable_model.length; i++ ) {
+          this.non_trainable_model[i].activeInChecklist = false
+        }
+
+         this.modelDataService.getModelList(environment.testUserId).subscribe((response: any) => {
+              this.checkedoutModelList = response.records;
+              for (var i = 0; i < this.non_trainable_model.length; i++) {
+                 for (var j = 0; j < this.checkedoutModelList.length; j++) {
+                           if (this.non_trainable_model[i].original_model_name == this.checkedoutModelList[j].original_model_name) {    
+                            this.non_trainable_model[i].checkedStatus = true
+                            this.non_trainable_model[i].activeInChecklist = true
+                         }
+                 }
+              }  
+           
+          }
+         )
+        this.spinnerActive = this.spinner.stop()
+
+      }      
+  
+
+ 
 }

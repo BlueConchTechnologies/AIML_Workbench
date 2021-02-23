@@ -19,5 +19,6 @@ export const environment = {
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',
   nodeRedUrl: 'http://localhost:1880/',
+  dahUrl:'http://dah.xpanxion.co.in:9008/'
   
 };

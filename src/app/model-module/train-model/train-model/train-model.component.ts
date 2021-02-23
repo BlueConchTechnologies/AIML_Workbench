@@ -53,9 +53,9 @@ export class TrainModelComponent implements OnInit {
 
   ngOnInit(): void {
     this.firstFormGroup = this.fb.group({
-      modelName: [this.modelData.modelName, Validators.required],
+      experiment_name: [this.modelData.modelName, Validators.required],
       upload: ['', Validators.required],
-      modelDescription: [this.modelData.modelDiscription, Validators.required]
+      experiment_description: [this.modelData.modelDiscription, Validators.required]
     });
 
     this.secondFormGroup = this.fb.group({
@@ -203,14 +203,19 @@ export class TrainModelComponent implements OnInit {
       if (this.firstFormGroup.controls.upload.value && this.firstFormGroup.controls.upload.value != "Test123") {
         modelData.dataTracker_id = this.firstFormGroup.controls.upload.value;
       }
+      modelData.experiment_name = this.firstFormGroup.controls.experiment_name.value;
+      modelData.experiment_description = this.firstFormGroup.controls.experiment_description.value;
+      console.log("train model post data",modelData)
 
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {
             this.toastrService.showSuccess(ToastrCode.Success)
           }
-          this.spinnerActive = this.spinner.stop();
           this.onClose();
+          window.location.reload();
+          this.spinnerActive = this.spinner.stop();
+
         },
         (error) => {
           console.log(error);

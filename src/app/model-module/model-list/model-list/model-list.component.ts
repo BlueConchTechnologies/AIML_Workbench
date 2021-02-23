@@ -25,7 +25,9 @@ export class ModelListComponent implements OnInit {
   trainingParam: string;
   trainingParamValues: any[];
   modelUploadHistory: any;
-
+  urlParameter:any[];
+  historyArray:any;
+  modelHistory:any;
   constructor(private modalService: MatDialog, private modelDataService: ModelDataService,
     private toastrService: ToastrService, private spinner: SpinnerService) { }
 
@@ -35,7 +37,7 @@ export class ModelListComponent implements OnInit {
       { field: 'model_description', header: 'Model Details', isShowInHistory: false },
       { field: 'status', header: 'Status', isShowInHistory: true },
       { field: 'accuracy', header: 'Accuracy', isShowInHistory: true },
-      { field: 'last_trained_date', header: 'Last Trained Date', isShowInHistory: true },
+      { field: 'training_end_time', header: 'Last Trained Date', isShowInHistory: true },
     ];
     this.getTableData();
   }
@@ -61,11 +63,14 @@ export class ModelListComponent implements OnInit {
       modelTrainingParamValues: this.trainingParamValues,
       modelHistory: Object.assign([], this.modelUploadHistory ? (this.modelUploadHistory.message ? null : this.modelUploadHistory.sort(this.comp)): null)
     };
+    console.log('modalDialog.componentInstance.modelData',modalDialog.componentInstance.modelData)
   }
   comp(a, b) {
     return new Date(b.created_date_time).getTime() - new Date(a.created_date_time).getTime();
   }
   getModelDetailsAndTrainModel(modelData: any) {
+    console.log("modelData",modelData)
+    console.log("modelData._id",modelData._id)
     const originalModelName = modelData.original_model_name ? modelData.original_model_name : modelData.Ori_modelname;
     let getModelUploadHistory = this.modelDataService.getModelUploadHistory(modelData._id);
     let getModelDetails = this.modelDataService.getModelDetails(originalModelName);
@@ -96,6 +101,12 @@ export class ModelListComponent implements OnInit {
     this.modelDataService.getModelList(environment.testUserId).subscribe(
       (response: any) => {
         this.result = response.records;
+        console.log("All model",this.result)
+        var trainedModel = []
+        for (var i = 0; i < this.result.length; i++){
+            if (this.result[i].original_model_name == 'TimeSeries'){ this.result[i].model_route = "time-series"; }
+            else if (this.result[i].original_model_name == 'AnamolyDetection'){this.result[i].model_route = "anamoly-detection"; } 
+        }
         this.result.map(obj=> ({ 
           ...obj, 
           isExpanded: false
@@ -107,13 +118,18 @@ export class ModelListComponent implements OnInit {
   }
 
   getModelHistory(model: any) {
+    
     model.isExpanded = !model.isExpanded;
     if (model.isExpanded) {
-      this.spinnerActive = this.spinner.start() 
+      this.spinnerActive = this.spinner.start()
       this.modelDataService.getModelHistory(model._id).subscribe(
       //this.modelDataService.getModelHistory('5f3bb5c881b5511339a74749').subscribe(
         (response: any) => {
           model.history = response;
+          this.modelHistory = response
+          console.log("model.history",model.history)
+
+          this.historyArray = model.history.length
         }
       );
       this.spinnerActive = this.spinner.stop()
@@ -121,9 +137,26 @@ export class ModelListComponent implements OnInit {
   }
 
   getModelHistoryDetail(History){
-    console.log(History);
+    // console.log('history',History);
     this.passHistoryData = History;
     this.viewHistory = true;
+    
+                        
+  }
+
+  open_trained_model_new_page(History,modelRoute_url){
+    console.log('history',History);
+    this.passHistoryData = History;
+    this.viewHistory = true;
+    
+    var model_array = [];
+        for (var i = 0; i < this.passHistoryData.minio_trained_model.length; i++){
+              var split_model_array = this.passHistoryData.minio_trained_model[i].split(".");
+              var n =split_model_array[0].split("/");
+              model_array.push(n[n.length - 1]);             
+            }
+        this.urlParameter = model_array
+        window.open("http://localhost:4201/" + modelRoute_url  +'?'+ this.urlParameter, "_blank");
   }
   receiveModelHistoryEvent($event){
     console.log($event);
