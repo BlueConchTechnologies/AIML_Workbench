@@ -20,6 +20,7 @@ Angular 9 project for AI Workbench app
 * Open new command Prompt.
 * `npm install -g --unsafe-perm node-red` To install Node-RED.
 * `node-red` To run node-red
+* `npm link` To register trained and non-trainable model into node-red
 
 ## Stack
 * Angular

@@ -15,232 +15,6 @@
   </div>
   <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
   <div class="container">
-       <!-- <form class="mt-5" [formGroup]="runWorkflowForm" (ngSubmit)="runYourWorkflow()">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="inputEmail4">Name</label>
-              <input type="input" formControlName="name" [(ngModel)]="workFlowName" class="form-control" readonly >
-            </div>
-            <div class="form-group col-md-6">
-              <label for="inputPassword4">Description</label>
-              <input type="input" formControlName="description"  class="form-control" readonly>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12"  *ngIf="textFieldInput">
-             <div class="row">
-               <div class="col-md-12">
-              <label>Text Field</label>
-            </div>
-             </div>
-             <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="textField" class="form-control label-input"   />
-               </div>
-               <div class="col-md-6">
-                <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(textFieldInput)" ><i class="fa fa-times" id="removeTextField" aria-hidden="true"></i></button>
-               </div>
-             </div>
-            </div>
-          </div> 
-         
-       
-           
-          <div class="form-row">
-            <div class="form-group col-md-12" id="ratio" #ratio style="display: none;"  >
-             <div class="row">
-               <div class="col-md-12">
-                <label>Ratio</label>
-            </div>
-             </div>
-             <div class="row">
-               <div class="col-md-6">
-                <input type="number" formControlName="ratio" rows="5" class="form-control label-input"   >
-               </div>
-               <div class="col-md-6">
-                <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(ratio)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-               </div>
-             </div>
-            </div>
-          </div>
-
-          
-           <div class="form-row">
-            <div class="form-group col-md-12" id="type_of_summary" #type_of_summary style="display: none;"  >
-             <div class="row">
-               <div class="col-md-12">
-                <label>Type of summary</label>
-            </div>
-             </div>
-             <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="type_of_summary" rows="5" class="form-control label-input"   >
-               </div>
-               <div class="col-md-6">
-                <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(type_of_summary)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-               </div>
-             </div>
-            </div>
-          </div>
-
-          
-           <div class="form-row">
-            <div class="form-group col-md-12" id="algorithmname" #algorithmname style="display: none;"  >
-             <div class="row">
-               <div class="col-md-12">
-                <label>Algorithm Name</label>
-            </div>
-             </div>
-             <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="algorithmname" rows="5" class="form-control label-input"   >
-               </div>
-               <div class="col-md-6">
-                <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(algorithmname)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-               </div>
-             </div>
-            </div>
-          </div>
-
-        
-           <div class="form-row">
-            <div class="form-group col-md-12" id="number_of_indexes" #number_of_indexes style="display: none;"  >
-             <div class="row">
-               <div class="col-md-12">
-                <label>Number of indexes</label>
-            </div>
-             </div>
-             <div class="row">
-               <div class="col-md-6">
-                <input type="number" formControlName="number_of_indexes" rows="5" class="form-control label-input"   >
-               </div>
-               <div class="col-md-6">
-                <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(number_of_indexes)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-               </div>
-             </div>
-            </div>
-          </div>
-
-            
-            <div class="form-row">
-              <div class="form-group col-md-12" id="question" #question style="display: none;"  >
-               <div class="row">
-                 <div class="col-md-12">
-                  <label>Question</label>
-              </div>
-               </div>
-               <div class="row">
-                 <div class="col-md-6">
-                  <input type="text" formControlName="question" rows="5" class="form-control label-input"   >
-                 </div>
-                 <div class="col-md-6">
-                  <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(question)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-                 </div>
-               </div>
-              </div>
-            </div>
-
-           
-            <div class="form-row">
-              <div class="form-group col-md-12" id="query" #query style="display: none;"  >
-               <div class="row">
-                 <div class="col-md-12">
-                  <label>Query</label>
-              </div>
-               </div>
-               <div class="row">
-                 <div class="col-md-6">
-                  <input type="text" formControlName="query" rows="5" class="form-control label-input"   >
-                 </div>
-                 <div class="col-md-6">
-                  <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(query)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-                 </div>
-               </div>
-              </div>
-            </div>
-
-             
-              <div class="form-row">
-                <div class="form-group col-md-12" id="org" #org style="display: none;"  >
-                 <div class="row">
-                   <div class="col-md-12">
-                    <label>Organisation</label>
-                </div>
-                 </div>
-                 <div class="row">
-                   <div class="col-md-6">
-                    <input type="text" formControlName="org" rows="5" class="form-control label-input"   >
-                   </div>
-                   <div class="col-md-6">
-                    <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(org)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-                   </div>
-                 </div>
-                </div>
-              </div>
-
-             
-              <div class="form-row">
-                <div class="form-group col-md-12" id="kb_id" #kb_id style="display: none;"  >
-                 <div class="row">
-                   <div class="col-md-12">
-                    <label>Knowledge base id</label>
-                </div>
-                 </div>
-                 <div class="row">
-                   <div class="col-md-6">
-                    <input type="text" formControlName="kb_id" rows="5" class="form-control label-input"   >
-                   </div>
-                   <div class="col-md-6">
-                    <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(kb_id)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-                   </div>
-                 </div>
-                </div>
-              </div>
-
-               
-                <div class="form-row">
-                  <div class="form-group col-md-12" id="top_n" #top_n style="display: none;"  >
-                   <div class="row">
-                     <div class="col-md-12">
-                      <label>Top Results</label>
-                  </div>
-                   </div>
-                   <div class="row">
-                     <div class="col-md-6">
-                      <input type="text" formControlName="top_n" rows="5" class="form-control label-input"   >
-                     </div>
-                     <div class="col-md-6">
-                      <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(top_n)" ><i class="fa fa-times" id="removeTextArea"  aria-hidden="true"></i></button>
-                     </div>
-                   </div>
-                  </div>
-                </div>
-
-                <div class="form-row">
-                  <div class="form-group col-md-12" id="fileBrowseInput" #fileBrowseInput style="display: none;" >
-                   <div class="row">
-                     <div class="col-md-12">
-                      <label>File Browse</label>
-                  </div>
-                   </div>
-                   <div class="row">
-                     <div class="col-md-6">
-                      <input  formControlName="fileBrowse" type="file" id="file" (change)="uploadFileInput($event.target.files)">
-                    </div>
-                     <div class="col-md-6">
-                      <button type="button" class="btn btn-outline-danger btn-sm " (click)="removeField(fileBrowseInput)"  ><i class="fa fa-times" id="removeFileBrowse" aria-hidden="true"></i></button>
-                     </div>
-                   </div>
-                  </div>
-                </div>
-         
-                <div class="form-row float-right">
-                  <div class="form-group col-md-12">
-                    <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
-                  </div>
-                </div>     
-        </form> -->
-
         <!-- display name and description  -->
         <form class="mt-5" [formGroup]="runWorkflowForm">
           <div class="form-row">
@@ -256,7 +30,7 @@
         </form>
   
         <!-- 1] TermsExtraction, VoiceClassification, SpeakerDiarization, TextExtraction,
-           InvoiceExtraction, InstanceSegmentation, VideoAnalytics, ObjectDetection, TableExtractor -->
+            InstanceSegmentation, VideoAnalytics, ObjectDetection, TableExtractor -->
 
         <form  [formGroup]="workflowForm_1" (ngSubmit)="runYourWorkflow_1()" *ngIf = 'display_workflowForm_1'>
           <div class="form-row">
@@ -330,8 +104,8 @@
             </div>
              </div>
              <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="text" class="form-control label-input"   >
+               <div class="col-md-12">
+                <textarea type="text" formControlName="text" class="form-control label-input"  rows="8" ></textarea>
                </div>
              </div>
             </div>
@@ -392,8 +166,8 @@
             </div>
              </div>
              <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="text" class="form-control label-input"   >
+               <div class="col-md-12">
+                <textarea type="text" formControlName="text" class="form-control label-input"  rows="8" ></textarea>
                </div>
              </div>
             </div>
@@ -520,8 +294,8 @@
             </div>
              </div>
              <div class="row">
-               <div class="col-md-6">
-                <input type="text" formControlName="question" class="form-control label-input"   >
+               <div class="col-md-12">
+                <textarea type="text" formControlName="question" class="form-control label-input"  rows="3" ></textarea>
                </div>
              </div>
             </div>
@@ -535,8 +309,7 @@
              </div>
              <div class="row">
                <div class="col-md-6">
-                <input type="text" formControlName="
-                " class="form-control label-input"   >
+                <input type="text" formControlName="org" class="form-control label-input"   >
                </div>
              </div>
             </div>
@@ -580,6 +353,30 @@
             </div>
           </div>
 
+          <div class="form-row">
+            <div class="form-group col-md-12">
+             <div class="row">
+               <div class="col-md-12">
+                <label>File Browse</label>
+            </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6">
+                <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)">
+              </div>
+             </div>
+            </div>
+          </div>
+   
+          <div class="form-row float-right">
+            <div class="form-group col-md-12">
+              <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+            </div>
+          </div> 
+        </form>
+
+        <!-- invoice extraction  -->
+        <form  [formGroup]="workflowForm_10" (ngSubmit)="runYourWorkflow_10()" *ngIf = 'display_workflowForm_10'>
           <div class="form-row">
             <div class="form-group col-md-12">
              <div class="row">

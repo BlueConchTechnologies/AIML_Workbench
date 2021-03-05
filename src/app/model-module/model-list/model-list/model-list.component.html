@@ -1,10 +1,5 @@
 <div class="data-Container">
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 top">
-            <spinner *ngIf="spinnerActive"></spinner>
-        </div>
-    </div>
+    <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
     <ng-container *ngIf="!viewHistory">
         <p-table [columns]="cols" [value]="result" #dt [rowHover]="true" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" pageLinks="3">
             <ng-template pTemplate="caption">
