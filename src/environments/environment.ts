@@ -11,8 +11,8 @@ export const environment = {
   domain: '.client1.com',
   appUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:9043/api/',
-  workbenchUrl: 'http://121.244.33.115:5672',
-  workbenchPublicUrl: 'http://121.244.33.115:5672',
+  workbenchUrl: 'https://121.244.33.115:5672',
+  workbenchPublicUrl: 'https://121.244.33.115:5672',
   
   testUserId: 'banu', //'akamble',
   logLevel: NgxLoggerLevel.TRACE,

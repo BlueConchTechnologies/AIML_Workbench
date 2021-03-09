@@ -116,6 +116,18 @@ module.exports = function(RED) {
     }
     RED.nodes.registerType('NER',functionNER);
 
+    //model 19
+    function functionDuplicatePrediction(config) {
+        RED.nodes.createNode(this,config);
+    }
+    RED.nodes.registerType('DuplicatePrediction',functionDuplicatePrediction);
+
+    //model 20
+    function functionFaceRecognition(config) {
+        RED.nodes.createNode(this,config);
+    }
+    RED.nodes.registerType('FaceRecognition',functionFaceRecognition);
+
 
 
    

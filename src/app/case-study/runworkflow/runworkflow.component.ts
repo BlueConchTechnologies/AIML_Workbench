@@ -47,6 +47,7 @@ export class RunworkflowComponent implements OnInit {
   SecondModelTrainTrackerId:any;
   input_fields_prediction_arr:any;
   firstModel_type:any;
+  secondModel_type:any;
 
 
   ngOnInit(): void {
@@ -111,6 +112,12 @@ export class RunworkflowComponent implements OnInit {
       file: ''
     })
 
+    //19] InvoiceExtraction
+    this.workflowForm_10 = this.formBuilder.group({
+      file: '',
+      input : ''
+    })
+
   }
 
 
@@ -139,7 +146,8 @@ export class RunworkflowComponent implements OnInit {
           } 
           else if (this.workflow_data[i].wires != null) {
               if (this.workflow_data[i].wires[0].length == 0) {
-                this.SecondModelTrainTrackerId = this.workflow_data[i].trainingTracker_id   
+                this.SecondModelTrainTrackerId = this.workflow_data[i].trainingTracker_id  
+                this.secondModel_type =  this.workflow_data[i].type
 
               }
               else{
@@ -287,6 +295,20 @@ runYourWorkflow_9() {
      });   
 }
 
+//invoice Extraction
+runYourWorkflow_10() {
+  const formData = new FormData();
+   formData.append('trainingTracker_id', this.FirstModelTrainTrackerId);
+   formData.append('file', this.fileToUpload);
+   formData.append('input', '');
+   this.runworkflowCallApi(formData) 
+
+   console.log("flow 1 works")
+   formData.forEach((value,key) => {
+    console.log("formdata_new",key+" "+value)
+     });
+}
+
 
     //*********************************** */ for one traintrackerId*****************
   // *************************************************************************************//*
@@ -300,8 +322,58 @@ runYourWorkflow_9() {
            const respData = successResponse;
            console.log('successResponse', successResponse)
            if (this.trainTrackerIdLength <= 1) {
-           this.Output_result = successResponse
-           console.log('this.Output_result',this.Output_result)
+
+            // TableExtractor
+             if (this.firstModel_type == 'TableExtractor') {
+              this.Output_result = successResponse.response.tables
+             }
+
+             // TextSummarization
+             else if (this.firstModel_type == 'TextSummarization' ) {
+              this.Output_result = successResponse.response.summary
+             }
+
+              // documentclassification
+              else if (this.firstModel_type == 'DocumentClassification' ) {
+                this.Output_result = 'Document Type'+' :- '+successResponse.response.Result
+               }
+
+               // sentimentclassification
+              else if (this.firstModel_type == 'SentimentClassification' ) {
+                this.Output_result = 'Sentiment Type'+' :- '+successResponse.response.Prediction
+                
+               }
+
+                // Ticketclassification
+              else if (this.firstModel_type == 'TicketClassification' || this.firstModel_type == 'QNA-KB') {
+                this.Output_result = successResponse.response 
+               }
+
+                 // TermsExtraction
+              else if (this.firstModel_type == 'TermsExtraction' ) {
+                this.Output_result = successResponse.response.entities 
+               }
+
+                // TextExtraction
+              else if (this.firstModel_type == 'TextExtraction' ) {
+                this.Output_result = successResponse.response.text.trim()
+               }
+
+                 // InvoiceExtraction
+              else if (this.firstModel_type == 'InvoiceExtraction' ) {
+                this.Output_result = successResponse.response.result
+               }
+
+                // InstanceSegmentation
+              else if (this.firstModel_type == 'InstanceSegmentation' ) {
+                this.Output_result = successResponse.response
+               }
+
+             else {
+              this.Output_result = successResponse
+              
+             }
+             console.log('this.Output_result',this.Output_result)
            this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
  
            // patch the empty value to from control
@@ -313,8 +385,21 @@ runYourWorkflow_9() {
  
            this.spinnerActive = this.spinner.stop()
           }
-          else{
-            this.secondFlow(successResponse.response.text)
+
+          // for flow of two models
+          else {
+
+            // TextExtraction
+            if (this.firstModel_type == 'TextExtraction') {
+              this.secondFlow(successResponse.response.text)
+            }
+
+              // InstanceSegmentation
+              else if (this.firstModel_type == 'InstanceSegmentation' ) {
+                this.secondFlow(successResponse.response)
+               }
+
+           
           }
          },
          (errorResponse) => {
@@ -331,12 +416,43 @@ runYourWorkflow_9() {
  //  second flow 
   secondFlow(firstflowResponse) {
        const formData_new = new FormData();
-       formData_new.append('trainingTracker_id', this.SecondModelTrainTrackerId);
-       formData_new.append('text', firstflowResponse);
+
+        // documentClassification
+        if (this.secondModel_type == 'DocumentClassification') {
+          formData_new.append('trainingTracker_id', this.SecondModelTrainTrackerId);
+          formData_new.append('text', firstflowResponse);
+         
+        }
+
+       // invoice Extraction
+       else if (this.secondModel_type == 'InvoiceExtraction' ) {
+           formData_new.append('trainingTracker_id', this.SecondModelTrainTrackerId);
+           formData_new.append('file', '');
+           formData_new.append('input', firstflowResponse);
+        }
+
+          formData_new.forEach((value,key) => {
+        console.log("formdata_new",key+" "+value)
+        });
+
+
        this._caseStudyService.runWorkflow(formData_new)
       .subscribe(
         (successResponse) => {
-          this.Output_result = successResponse
+          console.log('this.secondModel_type',this.secondModel_type)
+          // documentclassification
+          if (this.secondModel_type == 'DocumentClassification') {
+            this.Output_result = 'Document Type'+' :- '+successResponse.response.Result
+           }
+
+           // InvoiceExtraction
+           else if (this.secondModel_type == 'InvoiceExtraction') {
+            this.Output_result = successResponse.response.result
+           }
+           else {
+            this.Output_result = successResponse
+           }
+          
           this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
           this.spinnerActive = this.spinner.stop()
         },
@@ -355,7 +471,7 @@ runYourWorkflow_9() {
       displayFormByModelname () {
         console.log('this.firstModel_type',this.firstModel_type)
         if (this.firstModel_type == 'TermsExtraction' || this.firstModel_type == 'VoiceClassification' || this.firstModel_type == 'SpeakerDiarization' 
-        || this.firstModel_type == 'TextExtraction'  || this.firstModel_type == 'InvoiceExtraction' || this.firstModel_type == 'InstanceSegmentation' 
+        || this.firstModel_type == 'TextExtraction'  || this.firstModel_type == 'InstanceSegmentation' 
         || this.firstModel_type == 'VideoAnalytics' || this.firstModel_type == 'ObjectDetection'   || this.firstModel_type == 'TableExtractor'
         ) {
           this.display_workflowForm_1 = true
@@ -383,6 +499,9 @@ runYourWorkflow_9() {
         }
         else if (this.firstModel_type == 'NER' ) {
           this.display_workflowForm_9 = true
+        }
+        else if (this.firstModel_type == 'InvoiceExtraction' ) {
+          this.display_workflowForm_10 = true
         }
       }
 
