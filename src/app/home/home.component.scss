@@ -4,3 +4,22 @@
     margin-bottom: 20px;
     height: 100vh;
 }
+.background{
+    // height: 100vh;
+    background:url("../../assets/Images/bg_img.jpg") #003964;
+    background-size:cover;
+    background-blend-mode: multiply;
+   opacity: 0.84;
+  }
+  .custom_card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #003964;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    padding: 2rem;
+}

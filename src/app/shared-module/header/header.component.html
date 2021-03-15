@@ -1,28 +1,29 @@
-﻿<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
+﻿
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar">
 
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav bd-navbar-nav flex-row">
             <li class="nav-item">
-                <a class="nav-link " [routerLink]="['/home']">{{'SHARED.NAVIGATION.homeMenu' | translate }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " routerLink="/">AI-workbench</a>
-            </li>
+                <img src="../../../assets/Images/logo_new.png" height="45">         </li>
         </ul>
     </div>
     <ul class="navbar-nav ml-md-auto">
         <li class="nav-item">
-            <a class="nav-link " href="/">Test User</a>
+            <a class="nav-link " routerLink="/account">{{loggedUser}}</a>
         </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0 navbar-nav">
+    <form class="form-inline my-3 my-lg-0 navbar-nav mr-4">
         <div class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{'SHARED.HEADER.userMenu.userMessage' | translate }} {{userName}}
+                    <!-- {{'SHARED.HEADER.userMenu.userMessage' | translate }} -->
+                    <i class="fa fa-user-circle fa-2x text-white"></i>
                 </a>
-            <div class="dropdown-menu">
+            <div class="dropdown-menu dropdown-menu_custom ">
                 <a class="dropdown-item" (click)="showLogoutConfirmation()">
-                        {{'SHARED.HEADER.userMenu.logoutMenu' | translate }} </a>
+                    Logout
+                        <!-- {{'SHARED.HEADER.userMenu.logoutMenu' | translate }}  -->
+                        <!-- <i class="fa fa-user-circle fa-2x"></i> -->
+                    </a>
             </div>
         </div>
     </form>

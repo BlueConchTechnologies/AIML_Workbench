@@ -8,6 +8,7 @@ import {
 import { ToastrService } from '@core/services';
 import { CaseStudyService } from '../services/case-study.service';
 import { DesignWorkflowService } from '../services/design-workflow.service';
+import { ToastrCode, SpinnerService } from '@core';
 
 
 
@@ -20,14 +21,46 @@ export class AllUseCaseComponent implements OnInit {
 
   usecaseList:any;
   usecaseID:any;
-  
-  constructor(private _caseStudyService: CaseStudyService, private router: Router,private toastService: ToastrService,private designWorkflowService: DesignWorkflowService) { 
+  preBuiltUsecases:any;
+  mytUsecases:any;
+  spinnerActive = false;
+  constructor(private _caseStudyService: CaseStudyService, private router: Router,private designWorkflowService: DesignWorkflowService, private toastService: ToastrService, private spinner: SpinnerService) { 
   }
 
   ngOnInit(): void {
-    this._caseStudyService.getAllUseCases().subscribe(resp => {
-      this.usecaseList = resp.records;
-      console.log('usecaseList',this.usecaseList)
+    // this._caseStudyService.getAllUseCases().subscribe(resp => {
+    //   this.usecaseList = resp.records;
+    //   console.log('usecaseList',this.usecaseList)
+    // });
+    
+    this.getPrebuiltUsecases()
+    this.getMyUsecases()
+  }
+
+
+  getPrebuiltUsecases(){
+    var preBuilt_usecaseId = "xpanxion"
+    this.spinnerActive = this.spinner.start() 
+    this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
+      this.spinnerActive = this.spinner.stop()
+      this.preBuiltUsecases = resp.records;
+      console.log('preBuiltusecaseList',this.preBuiltUsecases)
+    },
+    (errorResponse) => {
+      console.log(errorResponse)
+    });
+    
+  }
+  getMyUsecases(){
+    var my_usecaseId = localStorage.getItem('logedInUsername')
+    this.spinnerActive = this.spinner.start() 
+    this._caseStudyService.getPrebuiltUseCases(my_usecaseId).subscribe(resp => {
+      this.spinnerActive = this.spinner.stop()
+      this.mytUsecases = resp.records;
+      console.log('MyusecaseList',this.mytUsecases)
+    },
+    (errorResponse) => {
+      console.log(errorResponse)
     });
   }
 

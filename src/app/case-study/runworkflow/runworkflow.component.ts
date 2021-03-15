@@ -20,6 +20,7 @@ export class RunworkflowComponent implements OnInit {
   constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder,private designWorkflowService: DesignWorkflowService) { }
   workflow_data: any;
   workFlowName:any
+  workflowDescription:any;
   Output_result: any;
   spinnerActive = false;
   display_workflowForm_1 = false;
@@ -31,6 +32,9 @@ export class RunworkflowComponent implements OnInit {
   display_workflowForm_7 = false;
   display_workflowForm_8 = false;
   display_workflowForm_9 = false;
+  display_workflowForm_10 = false;
+  display_workflowForm_11 = false;
+
   runWorkflowForm:FormGroup
   workflowForm_1: FormGroup;
   workflowForm_2: FormGroup;
@@ -41,6 +45,9 @@ export class RunworkflowComponent implements OnInit {
   workflowForm_7: FormGroup;
   workflowForm_8: FormGroup;
   workflowForm_9: FormGroup;
+  workflowForm_10: FormGroup;
+  workflowForm_11: FormGroup;
+
   fileToUpload: File = null;
   trainTrackerIdLength = 0
   FirstModelTrainTrackerId:any;
@@ -118,6 +125,13 @@ export class RunworkflowComponent implements OnInit {
       input : ''
     })
 
+    //20] DuplicatePrediction
+    this.workflowForm_11 = this.formBuilder.group({
+      query:'',
+      org: '',
+      threshold : ''
+    })
+
   }
 
 
@@ -132,6 +146,7 @@ export class RunworkflowComponent implements OnInit {
 
     // set workflowname to UI
     this.workFlowName = this.workflow_data[0]['label']
+    this.workflowDescription = this.workflow_data[0]['info']
 
     // get trainingrackerId from nodered flow data
     var wire_data;
@@ -309,6 +324,23 @@ runYourWorkflow_10() {
      });
 }
 
+//DuplicatePrediction
+runYourWorkflow_11() {
+  const formData = new FormData();
+   formData.append('trainingTracker_id', this.FirstModelTrainTrackerId);
+   formData.append('query', this.workflowForm_11.value.query);
+   formData.append('org', this.workflowForm_11.value.org);
+   formData.append('threshold', this.workflowForm_11.value.threshold);
+   this.runworkflowCallApi(formData) 
+
+   console.log("flow 1 works")
+   formData.forEach((value,key) => {
+    console.log("formdata_new",key+" "+value)
+     });
+}
+
+
+ 
 
     //*********************************** */ for one traintrackerId*****************
   // *************************************************************************************//*
@@ -369,6 +401,10 @@ runYourWorkflow_10() {
                 this.Output_result = successResponse.response
                }
 
+                 // DuplicatePrediction
+              else if (this.firstModel_type == 'DuplicatePrediction' ) {
+                this.Output_result = successResponse.response
+               }
              else {
               this.Output_result = successResponse
               
@@ -502,6 +538,9 @@ runYourWorkflow_10() {
         }
         else if (this.firstModel_type == 'InvoiceExtraction' ) {
           this.display_workflowForm_10 = true
+        }
+        else if (this.firstModel_type == 'DuplicatePrediction' ) {
+          this.display_workflowForm_11 = true
         }
       }
 

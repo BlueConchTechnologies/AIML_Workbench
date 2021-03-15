@@ -33,4 +33,10 @@ export class DesignWorkflowService {
   checkDesign(){
     return this.httpClient.get(this.nodeRedUrl + 'flows');
   }
+  saveWorkflow (user_id,usecase_name,usecase_description,flow) {
+    console.log(user_id,usecase_name,usecase_description,flow)
+    return this.httpClient.post(this.apiUrl + '/api/usecases',[ { user_id,usecase_name,usecase_description,flow}] );
+  }
+  
+
 }

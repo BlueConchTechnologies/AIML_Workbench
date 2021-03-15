@@ -97,6 +97,7 @@ export class TrainModelComponent implements OnInit {
     let modal = {
       "_id": "Test123",
       "user_id": "banu",
+      // "user_id": "xpanxion",
       "model_name": this.modelData.modelName,
       "file_name": this.fileObj.name,
       "created_date_time": this.fileObj.lastModifiedDate

@@ -125,14 +125,18 @@ export class ModelListComponent implements OnInit {
       this.modelDataService.getModelHistory(model._id).subscribe(
       //this.modelDataService.getModelHistory('5f3bb5c881b5511339a74749').subscribe(
         (response: any) => {
+          this.spinnerActive = this.spinner.stop()
           model.history = response;
           this.modelHistory = response
           console.log("model.history",model.history)
 
           this.historyArray = model.history.length
-        }
+        },
+        (error) => {
+          console.log(error);
+          this.spinnerActive = this.spinner.stop()        }
       );
-      this.spinnerActive = this.spinner.stop()
+      
     }
   }
 
@@ -142,6 +146,11 @@ export class ModelListComponent implements OnInit {
     this.viewHistory = true;
     
                         
+  }
+
+  open_model_new_page(model_route) {
+console.log(model_route)
+window.open("http://localhost:4201/" + model_route, "_blank");
   }
 
   open_trained_model_new_page(History,modelRoute_url){

@@ -70,6 +70,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this.isUserLoggedIn = this._authService.isUserLoggedIn();
+        console.log('this.isUserLoggedIn',this.isUserLoggedIn)
     }
 
     onWindowResized(event: any) {

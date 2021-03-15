@@ -16,6 +16,9 @@ export class CaseStudyService {
 
   getAllUseCases(): Observable<any> {
     return this._http.get(this.API_URL + '/api/dynamicfields');
+  }
+  getPrebuiltUseCases(userId): Observable<any> {
+    return this._http.get(this.API_URL + `/api/usecases?user_id=${userId}`);
   } 
 
   createUsecase(request: any): Observable<any> {

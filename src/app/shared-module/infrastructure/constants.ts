@@ -69,7 +69,8 @@ export class Constants {
     invoice: 'invoice',
     modellist: 'model-list',
     account: 'account',
-    runworkflow: 'runworkflow'
+    runworkflow: 'runworkflow',
+    runModels: 'run-models'
   };
 
   static webApis = {

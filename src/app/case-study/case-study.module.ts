@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { routing } from './case-study.routing';
 import { SharedModule } from '@shared/shared.module';
-import {ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AllUseCaseComponent } from './all-use-case/all-use-case.component';
 import { CreateDesignComponent } from './create-design/create-design.component';
 import { CreateUseCaseComponent } from './create-use-case/create-use-case.component';
@@ -17,7 +17,15 @@ import { ReloadIframeDirective } from './reload-iframe.directive';
 
 
 @NgModule({
-  declarations: [AllUseCaseComponent, CreateDesignComponent, CreateUseCaseComponent, DesignWorkflowComponent, RunworkflowComponent, ReloadIframeDirective],
+  declarations: [
+    AllUseCaseComponent,
+    CreateDesignComponent,
+    CreateUseCaseComponent,
+    DesignWorkflowComponent,
+    RunworkflowComponent,
+    ReloadIframeDirective, 
+   
+  ],
   imports: [
     CommonModule,
     routing,
@@ -25,7 +33,7 @@ import { ReloadIframeDirective } from './reload-iframe.directive';
     FormsModule,
     NgxPaginationModule,
     NgbDropdownModule,
-    ButtonModule,ReactiveFormsModule
+    ButtonModule, ReactiveFormsModule
   ]
 })
 export class CaseStudyModule { }
