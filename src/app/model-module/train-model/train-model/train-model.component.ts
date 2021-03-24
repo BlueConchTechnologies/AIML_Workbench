@@ -146,10 +146,6 @@ export class TrainModelComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', this.fileObj);
       formData.append('trainTracker_id', this.modelData.trainTrackerId);
-      // formData.append('user_id', environment.testUserId);
-      // formData.append('model_name', this.firstFormGroup.get('modelName').value);
-      // formData.append('model_description', this.firstFormGroup.get('modelDescription').value);
-      // formData.append('algorithmname', "*");
       this.modelDataService.uploadData(formData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {
@@ -181,6 +177,7 @@ export class TrainModelComponent implements OnInit {
       this.secondFormGroup.controls.TrainingParamValues.setValidators(null);;
       this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
       this.toastrService.showError(ToastrCode.RequiredFeilds)
+      console.log("add model details if condition call")
     }
     else {
       this.spinnerActive = this.spinner.start();

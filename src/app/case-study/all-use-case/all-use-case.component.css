@@ -60,4 +60,39 @@ a {
 .dropdown-toggle::after {
     display: none;
 }
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    border-bottom: 1px solid lightgray !important;
+    padding: 0.75rem;
+    font-family: sans-serif;
+}
+.card-footer {
+    height: 3.3rem;
+    text-align: center;
+    cursor: auto;
+    font-family: sans-serif;
+    font-size: 0.75rem;
+    background-color: transparent;
+    border-top: 0px solid rgba(0, 0, 0, .125);
+    padding: 0.50rem 1.25rem;
+    border-bottom: 0.3rem solid #01baf2;
+}
+.prebuiltCasesBg{
+    background-color: #B4C33A;
+    color: white;
+}
+.badge_custom {
+    display: inline-block;
+    padding: .30em .5em;
+    /* font-size: 75%; */
+    margin-bottom: 15px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    /* border-radius: .25rem !important; */
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 

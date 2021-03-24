@@ -2,44 +2,52 @@
 <div class="container">
      <div class="row">
           <div class="col-md-4">
-            <!-- <h6 class="usecase-header"> Pre-Built Use Case</h6> -->
           </div>
           <div class="col-md-8 text-right mb-2">
             <button type="button" (click)='createUseCase()' class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
           </div>
       </div>
-     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active font-weight-bold" id="prebuilt-tab" data-toggle="pill" href="#prebuilt" role="tab" aria-controls="prebuilt" aria-selected="true">Pre-Built Use Case</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link font-weight-bold" id="userCreated-tab" data-toggle="pill" href="#userCreated" role="tab" aria-controls="userCreated" aria-selected="false">My Use Cases</a>
-          </li>
-          
+        <form [formGroup]="displayworkflowForm">
+          <div class="form-row align-items-center">
+            
+            <div class="col-auto">
+              <div class="custom-control custom-checkbox mr-sm-2">
+                <input type="checkbox" formControlName="display_prebuiltUsecase" (change)="displayPrebuiltusecaseChange($event)" value="prebuiltusecase" class="custom-control-input" id="prebuiltusecase">
+                <label class="custom-control-label font-weight-bold" for="prebuiltusecase">Pre-Built Use Cases</label>
+              </div>
+            </div>
+            <div class="col-auto">
+               <div class="custom-control custom-checkbox mr-sm-2">
+                 <input type="checkbox" formControlName="display_myUsecase" (change)="displayMyusecaseChange($event)" value="myusecase" class="custom-control-input" id="myusecase">
+                 <label class="custom-control-label font-weight-bold" for="myusecase">My Use Cases</label>
+               </div>
+             </div>
+          </div>
+        </form><br>
          
-        </ul>
-        <div class="tab-content" id="pills-tabContent">
-          <div class="tab-pane fade show active" id="prebuilt" role="tabpanel" aria-labelledby="prebuilt-tab">
-               <div class="row">
+               <div  *ngIf="display_prebuiltUseCase">
+                    <p class="font-weight-bold "><u>Pre-Built Use Cases</u></p>
+                    <!-- <span class="badge_custom badge-pill badge-primary">Pre-Built Use Cases</span><br> -->
+                    <div class="row">
                     <div class="col-sm-4 mb-4" *ngFor="let usecase of preBuiltUsecases">
-                         <div class="card">
+                         <div class="card " style="height: 16rem;">
                               <div class="card-header bg-none">
                                    <h5 class="modal-title ng-binding">
                                         <div class="row">
                                              <div class="col-md-2">
                                                   <a  ><i class="fa fa-files-o fa-round-bg" aria-hidden="true"></i></a> 
                                              </div>
-                                             <div class="col-md-8">
-                                                  <a id={{usecase._id}} (click)="editUsecase($event)" >{{usecase.usecase_name}} </a> 
+                                             <div class="col-md-8 ">
+                                                  <a >{{usecase.usecase_name}} </a> 
                                              </div>
                                              <div class="col-md-2">
                                                   <a class="icon-arrow-right pull-right">
                                                        <div ngbDropdown class="d-inline-block">
                                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i></button>
                                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                            <button ngbDropdownItem  id={{usecase._id}} (click)="editUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
-                                                            <button ngbDropdownItem><i class="fa fa-trash" aria-hidden="true"></i> Delete Use Case</button>
-                                                            <button ngbDropdownItem><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
+                                                            <button ngbDropdownItem  id={{usecase._id}} (click)="editPrebuiltUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
+                                                            <!-- <button ngbDropdownItem><i class="fa fa-trash" aria-hidden="true"></i> Delete Use Case</button> -->
+                                                            <button ngbDropdownItem id={{usecase._id}} (click)='pinTpHomeScreenPreBuiltUsecase($event)'><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
                                                             </div>
                                                        </div>
                                                   </a> 
@@ -52,46 +60,58 @@
                               <div class="card-body">                  
                               <p>{{usecase.usecase_description}}</p>                   
                               </div>
+                              <div class="card-footer">
+                                  <button class="btn btn-outline-primary btn-md toggle-checkbox " id={{usecase._id}} (click)="runPrebuiltUsecase($event)" >
+                                           Run
+                                   </button>
+                               </div>
                          </div>
                     </div> 
                </div>
-          </div>
-          <div class="tab-pane fade" id="userCreated" role="tabpanel" aria-labelledby="userCreated-tab">
-               <div class="row">
+               </div>
+         
+               <div  *ngIf="display_myUseCase">
+                    <p class="font-weight-bold"><u>My Use Cases</u></p>
+                    <!-- <span class="badge_custom badge-pill badge-primary">My Use Cases</span><br> -->
+                    <div class="row">
                     <div class="col-sm-4 mb-4" *ngFor="let usecase of mytUsecases">
-                         <div class="card">
+                         <div class="card  " style="height: 16rem;">
                               <div class="card-header bg-none">
                                    <h5 class="modal-title ng-binding">
                                         <div class="row">
                                              <div class="col-md-2">
                                                   <a  ><i class="fa fa-files-o fa-round-bg" aria-hidden="true"></i></a> 
                                              </div>
-                                             <div class="col-md-8">
-                                                  <a id={{usecase._id}} (click)="editUsecase($event)" >{{usecase.usecase_name}} </a> 
+                                             <div class="col-md-8 ">
+                                                  <a >{{usecase.usecase_name}} </a> 
                                              </div>
                                              <div class="col-md-2">
                                                   <a class="icon-arrow-right pull-right">
                                                        <div ngbDropdown class="d-inline-block">
                                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i></button>
                                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                                            <button ngbDropdownItem  id={{usecase._id}} (click)="editUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
+                                                            <button ngbDropdownItem  id={{usecase._id}} (click)="editMyUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
                                                             <button ngbDropdownItem><i class="fa fa-trash" aria-hidden="true"></i> Delete Use Case</button>
-                                                            <button ngbDropdownItem><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
+                                                            <button ngbDropdownItem id={{usecase._id}} (click)='pinTpHomeScreenMyUsecase($event)'><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
                                                             </div>
                                                        </div>
                                                   </a> 
                                              </div>
                                         </div>
-                                      
-                                        
-                                    </h5>
+                                       </h5>
                               </div>
                               <div class="card-body">                  
                               <p>{{usecase.usecase_description}}</p>                   
                               </div>
+                              <div class="card-footer">
+                                   <button class="btn btn-outline-primary btn-md toggle-checkbox " id={{usecase._id}} (click)="runMyUsecase($event)"  >
+                                        Run
+                                    </button>
+                                </div>
                          </div>
+                    </div>
                     </div> 
-               </div>
-          </div>
-        </div>
+               </div>   
+        
+        
 </div>

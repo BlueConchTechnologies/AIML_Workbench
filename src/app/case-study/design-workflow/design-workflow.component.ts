@@ -29,6 +29,8 @@ export class DesignWorkflowComponent implements OnInit {
   usecase_name:any;
   usecase_description:any;
   flow:any;
+  usecaseId = null
+  useCaseUserId:any
 
   constructor(private designWorkflowService: DesignWorkflowService, private toastService: ToastrService,
     private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer,private modelDataService: ModelDataService,
@@ -39,6 +41,9 @@ export class DesignWorkflowComponent implements OnInit {
     // this.createNode();
     const data = history.state;
     this.useCaseData = data[0];
+
+    // check if usecaseId present or not
+    this.usecaseId = localStorage.getItem('usecaseId')
    
     }
 
@@ -55,40 +60,32 @@ export class DesignWorkflowComponent implements OnInit {
         localStorage.setItem("workflow_to_nodered",JSON.stringify (successResponse) );
         
         //get workflow values
-        this.user_id = localStorage.getItem('logedInUsername');
         this.usecase_name = successResponse[0].label;
         this.usecase_description = successResponse[0].info;
         this.flow = successResponse
-        this.saveWorkflowToDB ()
-        
 
-        // download the workflow
-        var element = document.createElement('a');
-        element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
-        element.setAttribute('download', flowName+".json");
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click(); 
-        document.body.removeChild(element);
-        
+        //getting login user and usecase user
+        this.user_id = localStorage.getItem('logedInUsername');
+        this.useCaseUserId = localStorage.getItem('usecaseUserId');
+         console.log('usecaseUserId********************************************',this.useCaseUserId)
+
+       
+        if (this.usecaseId == 'null' || this.useCaseUserId == 'xpanxion' ) {
+          this.saveWorkflowToDB ();
+        } 
+        else {
+          this.updateWorkflowToDb() ;
+        }
       },
       (errorResponse) => {
       });
-      
-      
-     
-      
-     
-    
+        
   }
+
+  
 
   // ***********save work flow***********************//
   saveWorkflowToDB () {
-    console.log("*********************************************************************")
-    console.log('user_id',this.user_id)
-    console.log("usecase_name",this.usecase_name)
-    console.log("usecase_description",this.usecase_description)
-    console.log("flow",this.flow)
     this.spinnerActive = this.spinner.start();
     this.designWorkflowService.saveWorkflow(this.user_id, this.usecase_name,this.usecase_description,this.flow).subscribe(
       data => { 
@@ -102,6 +99,22 @@ export class DesignWorkflowComponent implements OnInit {
       }
     )
   
+  }
+
+  // ***********update work flow***********************//
+  updateWorkflowToDb() {
+    this.spinnerActive = this.spinner.start();
+    this.designWorkflowService.updateWorkflow(this.usecaseId,this.useCaseUserId, this.usecase_name,this.usecase_description,this.flow).subscribe(
+      data => { 
+        this.spinnerActive = this.spinner.stop();
+        console.log("update workflow response***************************************",data)
+        this.router.navigate(['/casestudy']);
+      },
+      (error) => {  
+        this.spinnerActive = this.spinner.stop();
+        console.log('save workflow error',error) 
+      }
+    )
   }
   getTrainModel() {
     this.designWorkflowService.getTrainModel().subscribe(

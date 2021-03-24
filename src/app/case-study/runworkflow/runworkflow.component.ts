@@ -544,11 +544,12 @@ runYourWorkflow_11() {
         }
       }
 
-      editCurrentWorkflow(){
-      // add previous flow
-      var allSubflow =  localStorage.getItem("workflow_to_nodered");
-        this.designWorkflowService.createFlow(allSubflow).subscribe(data => {
-        });
-        this.router.navigate(['/design-workflow']);
-      }
+      // editCurrentWorkflow(){
+      // // add previous flow
+      // var allSubflow =  localStorage.getItem("workflow_to_nodered");
+      //   this.designWorkflowService.createFlow(allSubflow).subscribe(data => {
+      //   });
+      //   this.router.navigate(['/design-workflow']);
+      // }
+    
 }
