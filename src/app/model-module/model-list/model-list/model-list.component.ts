@@ -71,6 +71,7 @@ export class ModelListComponent implements OnInit {
   getModelDetailsAndTrainModel(modelData: any) {
     console.log("modelData",modelData)
     console.log("modelData._id",modelData._id)
+    localStorage.setItem("modelToBeTrain",JSON.stringify(modelData))
     const originalModelName = modelData.original_model_name ? modelData.original_model_name : modelData.Ori_modelname;
     let getModelUploadHistory = this.modelDataService.getModelUploadHistory(modelData._id);
     let getModelDetails = this.modelDataService.getModelDetails(originalModelName);

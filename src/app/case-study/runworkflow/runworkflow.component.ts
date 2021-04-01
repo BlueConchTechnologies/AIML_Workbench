@@ -34,6 +34,7 @@ export class RunworkflowComponent implements OnInit {
   display_workflowForm_9 = false;
   display_workflowForm_10 = false;
   display_workflowForm_11 = false;
+  display_workflowForm_12 = false;
 
   runWorkflowForm:FormGroup
   workflowForm_1: FormGroup;
@@ -47,6 +48,7 @@ export class RunworkflowComponent implements OnInit {
   workflowForm_9: FormGroup;
   workflowForm_10: FormGroup;
   workflowForm_11: FormGroup;
+  workflowForm_12: FormGroup;
 
   fileToUpload: File = null;
   trainTrackerIdLength = 0
@@ -65,7 +67,7 @@ export class RunworkflowComponent implements OnInit {
       description:''
     })
 
-    //1] TermsExtraction,2] VoiceClassification, 3]SpeakerDiarization, 4]TextExtraction, 5]InvoiceExtraction,6] InstanceSegmentation,7] VideoAnalytics,8] ObjectDetection, 9]TableExtractor
+    //1] TermsExtraction,2] VoiceClassification, 3]SpeakerDiarization, 4]TextExtraction, 5]InvoiceExtraction,6] InstanceSegmentation, 9]TableExtractor
     this.workflowForm_1 = this.formBuilder.group({
       file: '',
     })
@@ -132,6 +134,11 @@ export class RunworkflowComponent implements OnInit {
       threshold : ''
     })
 
+  //  VideoAnalytics, ObjectDetection,FaceRecognition
+    this.workflowForm_12 = this.formBuilder.group({
+      file: '',
+    })
+
   }
 
 
@@ -184,7 +191,7 @@ export class RunworkflowComponent implements OnInit {
 
 //************************************** data assign to workflow***********************
 //*********************************************************************************** */ */
-// TermsExtraction, VoiceClassification, SpeakerDiarization, TextExtraction, InvoiceExtraction, InstanceSegmentation, VideoAnalytics, ObjectDetection, TableExtractor
+// TermsExtraction, VoiceClassification, SpeakerDiarization, TextExtraction, InvoiceExtraction, InstanceSegmentation,  TableExtractor
 runYourWorkflow_1() {
          const formData = new FormData();
           formData.append('trainingTracker_id', this.FirstModelTrainTrackerId);
@@ -339,6 +346,22 @@ runYourWorkflow_11() {
      });
 }
 
+// VideoAnalytics, ObjectDetection,faceRecognition  
+runYourWorkflow_12() {
+  const formData = new FormData();
+   formData.append('trainingTracker_id', this.FirstModelTrainTrackerId);
+   formData.append('file', this.fileToUpload);
+   this.runworkflowCallApi_imageFormatOutput(formData) 
+
+   console.log("flow 12 works")
+   formData.forEach((value,key) => {
+    console.log("formdata_new",key+" "+value)
+     });
+}
+
+
+
+
 
  
 
@@ -447,6 +470,53 @@ runYourWorkflow_11() {
     
   }
 
+
+   //*********************************** */ for one traintrackerId if output is inimage format*****************
+  // *************************************************************************************//*
+  runworkflowCallApi_imageFormatOutput(formData){ 
+   
+    this.spinnerActive = this.spinner.start();
+    this._caseStudyService.runWorkflow_imageFormatOutput(formData)
+      .subscribe(
+        (res:any) => {
+          this.spinnerActive = this.spinner.stop();
+          console.log("get response******************************")
+          if (res && ['image/jpg', 'image/png', 'image/jpeg', 'image/mp4'].includes(res.type)) {
+            console.log("if******************************")
+            const reader = new FileReader();
+            reader.readAsDataURL(res);
+            reader.onload = () => {
+              // base 64 string
+              this.imageUrl = reader.result;
+              console.log('this.imageUrl',this.imageUrl)
+              this.Output_result = this.imageUrl 
+  
+              if (res.type === 'image/mp4') {
+                const newUrl = 'data:video' + this.imageUrl.split('data:image')[1];
+                this.videoUrl = this.domSanitizer.bypassSecurityTrustUrl(newUrl);
+                console.log('this.videoUrl',this.videoUrl)
+                this.Output_result = this.videoUrl
+              }
+  
+            }
+          } else {
+            console.log("else******************************")
+          }
+        
+        },
+        (errorResponse) => {
+          this.toastService.showError('Something went wrong');
+          console.log('ERROR', errorResponse);
+          this.spinnerActive = this.spinner.stop()
+
+        });
+   
+ }
+
+
+
+
+
   //*********************************** */ for two traintrackerId*****************
   // *************************************************************************************//*
  //  second flow 
@@ -508,7 +578,7 @@ runYourWorkflow_11() {
         console.log('this.firstModel_type',this.firstModel_type)
         if (this.firstModel_type == 'TermsExtraction' || this.firstModel_type == 'VoiceClassification' || this.firstModel_type == 'SpeakerDiarization' 
         || this.firstModel_type == 'TextExtraction'  || this.firstModel_type == 'InstanceSegmentation' 
-        || this.firstModel_type == 'VideoAnalytics' || this.firstModel_type == 'ObjectDetection'   || this.firstModel_type == 'TableExtractor'
+        || this.firstModel_type == 'TableExtractor'
         ) {
           this.display_workflowForm_1 = true
         }
@@ -541,6 +611,9 @@ runYourWorkflow_11() {
         }
         else if (this.firstModel_type == 'DuplicatePrediction' ) {
           this.display_workflowForm_11 = true
+        }
+        else if (this.firstModel_type == 'VideoAnalytics' || this.firstModel_type == 'ObjectDetection'   || this.firstModel_type == 'FaceRecognition') {
+          this.display_workflowForm_12 = true
         }
       }
 

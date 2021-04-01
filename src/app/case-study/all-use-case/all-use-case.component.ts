@@ -148,7 +148,8 @@ export class AllUseCaseComponent implements OnInit {
       var flow = this.preBuiltUsecases[i].flow
       // set workflow to localstorage
       localStorage.setItem("workflow_to_nodered",JSON.stringify (flow) );
-      this.router.navigate(['/runworkflow']);
+      // this.router.navigate(['/runworkflow']);
+      this.router.navigate(['/displayWorkflow']);
     }
   }
  }
@@ -163,7 +164,8 @@ export class AllUseCaseComponent implements OnInit {
       var flow = this.mytUsecases[i].flow
       // set workflow to localstorage
       localStorage.setItem("workflow_to_nodered",JSON.stringify (flow) );
-      this.router.navigate(['/runworkflow']);
+      // this.router.navigate(['/runworkflow']);
+      this.router.navigate(['/displayWorkflow']);
     }
   }
  }

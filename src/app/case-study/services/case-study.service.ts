@@ -32,5 +32,11 @@ export class CaseStudyService {
     console.log("modeldta to api",request)
     return this._http.post(this.API_URL + '/api/predict', request);
   }
+
+  runWorkflow_imageFormatOutput(request: any): Observable<any> {
+    return this._http.post(this.API_URL + '/api/predict', request,{observe: 'body', responseType: 'blob'});
+  }
+
+ 
   
 }

@@ -91,7 +91,8 @@ export class DesignWorkflowComponent implements OnInit {
       data => { 
         this.spinnerActive = this.spinner.stop();
         console.log("save workflow response***************************************",data)
-        this.router.navigate(['/runworkflow']);
+        // this.router.navigate(['/runworkflow']);
+        this.router.navigate(['/displayWorkflow']);
       },
       (error) => {  
         this.spinnerActive = this.spinner.stop();

@@ -21,6 +21,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 export class TrainModelComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
   modalHeader: string;
   modelData: any;
   modalContent: string;
@@ -33,6 +34,8 @@ export class TrainModelComponent implements OnInit {
   isOptional = false;
   spinnerActive = false;
   public active = false;
+  modelToBeTrain:any;
+  display_thirdFormGroup = false;
   fileObj: any;
   inputFile: string | ArrayBuffer;
 
@@ -65,10 +68,25 @@ export class TrainModelComponent implements OnInit {
       //epochs: [''],
       //DropOut: ['']
     });
+    
+    this.getModelToBeTrainData ()
     this.addTrainingParamCheckboxes();
     if (this.modelData.modelHistory && this.modelData.modelHistory.length > 0) {
       this.firstFormGroup.controls.upload.setValue(this.modelData.modelHistory[0]._id);
     }
+  }
+
+  // display third form for product categorization model
+  getModelToBeTrainData () {
+    this.modelToBeTrain = JSON.parse(localStorage.getItem('modelToBeTrain'))
+    console.log("originalModelName",this.modelToBeTrain.original_model_name)
+
+    if (this.modelToBeTrain.original_model_name == 'ProductCategorization'){
+         this.display_thirdFormGroup = true;
+    }
+    this.thirdFormGroup = this.fb.group({
+     col_name: [''],
+    });
   }
   private addTrainingParamCheckboxes() {
     this.modelData.modelTrainingParamValues.forEach((tParam) => {
@@ -173,13 +191,6 @@ export class TrainModelComponent implements OnInit {
   addModelParam() {
     this.secondFormGroup.controls.TrainingParamValues.setValidators(minSelectedCheckboxes(1));;
     this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
-    if (!this.secondFormGroup.valid) {
-      this.secondFormGroup.controls.TrainingParamValues.setValidators(null);;
-      this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
-      this.toastrService.showError(ToastrCode.RequiredFeilds)
-      console.log("add model details if condition call")
-    }
-    else {
       this.spinnerActive = this.spinner.start();
 
       const selectedOrderIds = this.secondFormGroup.value.TrainingParamValues
@@ -203,8 +214,8 @@ export class TrainModelComponent implements OnInit {
       }
       modelData.experiment_name = this.firstFormGroup.controls.experiment_name.value;
       modelData.experiment_description = this.firstFormGroup.controls.experiment_description.value;
-      console.log("train model post data",modelData)
-
+      console.log("*******************************************************************add algorithm :**************************************")
+      console.log(modelData)
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {
@@ -213,15 +224,18 @@ export class TrainModelComponent implements OnInit {
           this.onClose();
           window.location.reload();
           this.spinnerActive = this.spinner.stop();
+          console.log("workflow running success")
 
         },
         (error) => {
+          this.spinnerActive = this.spinner.stop();
           console.log(error);
           this.toastrService.showError(ToastrCode.ApiError);
+          console.log("workflow faild")
         }
       );
       this.toastrService.showSuccess(ToastrCode.Training);
-    }
+    
   }
 
   onStepComplete() {

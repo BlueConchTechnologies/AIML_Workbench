@@ -1,0 +1,16 @@
+.padding-top {
+    padding-top: 20px;
+}
+.remove-padding-right {
+    padding-right: 0;
+}
+
+.pointer {
+    cursor: pointer;
+}
+.input-shadow{
+    height: 49px !important;
+    box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding-right: 60px;
+}

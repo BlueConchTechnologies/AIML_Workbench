@@ -1,0 +1,65 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()">
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Question</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12">
+          <textarea type="text" formControlName="question" class="form-control label-input"  rows="3" ></textarea>
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="form-group ">
+      <div class="row">
+        <div class="col-md-12">
+         <label>Organization</label>
+     </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">                        
+          <select class="form-control input-shadow light-font" formControlName = "org" placeholder="org">
+              <option [defaultSelected]=true value="AIRTEL" >AIRTEL</option>
+              <option value="A2">Org 2</option>
+              <option value="A3">Org 3</option>
+          </select>
+      </div>
+      </div>
+      
+  </div>
+  <div class="form-group row p-2">
+      <div class="w-10 mx-2 align-middle">   
+          <span class="light-font">Size:</span>
+      </div>     
+      <div class="w-20 mx-2">                 
+          <select class="form-control-sm light-font" formControlName = "top_n">
+              <option [defaultSelected]=true value="2">2</option>
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+          </select>
+      </div>
+      <div class="w-10 mx-2 align-middle"> 
+          <span class="light-font">entries</span>
+      </div>
+  </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+  <form class="mt-5">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+        <label for="exampleFormControlTextarea1">Output</label>
+        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+        </div>
+    </div>              
+</form>

@@ -53,6 +53,14 @@
                 </form>
             </mat-step>
             <mat-step>
+              <form [formGroup]="thirdFormGroup" *ngIf="display_thirdFormGroup">
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="Model Description" class="inputTitle">Column Name</label>&nbsp;<span class="mandatory">*</span>
+                      <input type="text" class="form-control" name="col_name" id="col_name" formControlName="col_name">
+                  </div>
+                  </div>
+              </form>
               <form [formGroup]="secondFormGroup">
                 <ng-template matStepLabel>Model Trainings</ng-template>
                 <div class="container">
@@ -66,8 +74,8 @@
                 </div>
                   <button mat-button matStepperPrevious class="ui-button-raised modal-action-button active-btn" (click)="reset()">Back</button>
                   <button type="submit" mat-button matStepperNext class="ui-button-raised modal-action-button active-btn" (click)="addModelParam()">Train Model</button>
-                <!--</div>-->
               </form>
+             
             </mat-step>
         </mat-horizontal-stepper>
     </div>

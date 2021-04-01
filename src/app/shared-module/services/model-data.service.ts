@@ -76,9 +76,6 @@ export class ModelDataService {
 
   //To train the model
   trainModel(modelData) {
-    modelData.forEach((value,key) => {
-      console.log("upload file details :",key+" "+value)
-       });
     const url: string = this.API_URL + '/api/trainmodel';
     return this.http.post(url, modelData);
   }

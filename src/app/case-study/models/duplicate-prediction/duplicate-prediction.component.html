@@ -1,0 +1,68 @@
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()">
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Query</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12">
+          <textarea type="text" formControlName="query" class="form-control label-input"  rows="3" ></textarea>
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Organisation</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+          <!-- <input type="text" formControlName="org" class="form-control label-input"   > -->
+          <select formControlName="org" class="form-select form-control label-input" aria-label="Default select example">
+            <option [defaultSelected]=true value="xpanxion">xpanxion</option>
+            <option value="Blueconchtech">Blueconchtech</option>
+          </select>
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Threshold</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+          <!-- <input type="text" formControlName="threshold" class="form-control label-input"   > -->
+          <select formControlName="threshold" class="form-select form-control label-input" aria-label="Default select example">
+            <option value="70">70</option>
+            <option value="80">80</option>
+            <option value="90">90</option>
+          </select>
+         </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+  <form class="mt-5">
+    <div class="form-row">
+        <div class="form-group col-md-12">
+        <label for="exampleFormControlTextarea1">Output</label>
+        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+        </div>
+    </div>              
+</form>
