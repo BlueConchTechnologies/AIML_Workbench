@@ -77,6 +77,7 @@ onClickProcessBtn() {
     error => {
       this.status = 'Fail';
       this.isSuccess = false;
+      console.log(error)
       this.isErrorAvailable = true;
       this.errMessage = error;
       this.spinnerActive = this.spinner.stop();

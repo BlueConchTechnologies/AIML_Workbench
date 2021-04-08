@@ -79,3 +79,8 @@ p, h1, h2, h3, h4, h5, h6, ul, li, ol{font-family: 'Poppins', sans-serif;}
     min-height: 550px;
     margin-top: 60px;
 }
+.results h2 {
+    color: #3A5198;
+    font-size: 30px;
+    line-height: 43px;
+}

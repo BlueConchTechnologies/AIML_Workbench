@@ -19,12 +19,14 @@ export class TicketClassificationComponent implements OnInit {
   workflowForm: FormGroup;
   Output_result: any
   spinnerActive = false;
+  isSuccess: any;
+  isErrorAvailable: any;
 
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       question: '',
-      org: '',
-      top_n: ''
+      org: 'AIRTEL',
+      top_n: '2'
     })
   }
 
@@ -47,13 +49,15 @@ export class TicketClassificationComponent implements OnInit {
         (successResponse) => {
           this.spinnerActive = this.spinner.stop()
           console.log('successResponse', successResponse)
-          this.Output_result = successResponse
+          this.Output_result = successResponse.response
+          this.isSuccess = true
 
 
         },
         (errorResponse) => {
           this.toastService.showError('Something went wrong');
           console.log('ERROR', errorResponse);
+          this.isErrorAvailable = true;
           this.spinnerActive = this.spinner.stop()
 
         });

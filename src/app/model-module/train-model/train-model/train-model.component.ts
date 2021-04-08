@@ -214,6 +214,8 @@ export class TrainModelComponent implements OnInit {
       }
       modelData.experiment_name = this.firstFormGroup.controls.experiment_name.value;
       modelData.experiment_description = this.firstFormGroup.controls.experiment_description.value;
+      modelData.original_model_name = this.modelToBeTrain.original_model_name
+
       console.log("*******************************************************************add algorithm :**************************************")
       console.log(modelData)
       this.modelDataService.trainModel(modelData).subscribe(

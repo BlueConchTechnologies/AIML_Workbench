@@ -1,3 +1,4 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()">
     <div class="form-row">
       <div class="form-group col-md-12" >
@@ -21,10 +22,10 @@
       </div>
        </div>
        <div class="row">
-         <div class="col-md-6">
+         <div class="col-md-2">
           <!-- <input type="text" formControlName="org" class="form-control label-input"   > -->
           <select formControlName="org" class="form-select form-control label-input" aria-label="Default select example">
-            <option [defaultSelected]=true value="xpanxion">xpanxion</option>
+            <option value="xpanxion">xpanxion</option>
             <option value="Blueconchtech">Blueconchtech</option>
           </select>
          </div>
@@ -39,7 +40,7 @@
       </div>
        </div>
        <div class="row">
-         <div class="col-md-6">
+         <div class="col-md-2">
           <!-- <input type="text" formControlName="threshold" class="form-control label-input"   > -->
           <select formControlName="threshold" class="form-select form-control label-input" aria-label="Default select example">
             <option value="70">70</option>
@@ -53,16 +54,41 @@
 
     <div class="form-row float-right">
       <div class="form-group col-md-12">
-        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+        <button type="submit"  class="btn btn-primary component-button">Run Your Workflow</button>
       </div>
     </div> 
   </form>
 
-  <form class="mt-5">
+  <!-- <form class="mt-5">
     <div class="form-row">
         <div class="form-group col-md-12">
         <label for="exampleFormControlTextarea1">Output</label>
         <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
         </div>
     </div>              
-</form>
+</form> -->
+<br><br><br>
+<section class="results container p-4 mb-4 mt-4">
+  <h2>Results</h2>
+  
+ 
+  <div>
+      <div *ngIf="isSuccess">
+        <hr>
+       <br>
+        <div *ngFor="let item of Output_result">
+          <p><b>Question : </b>{{item.matched_question}}</p>
+          <p><b>Answer : </b>{{item.answer}}</p>
+          <p><b>Score : </b>{{item.score}}</p>
+          <hr>
+        </div>
+         
+      </div>
+      <div *ngIf = 'isErrorAvailable'>
+          <p>
+              {{errMessage}}
+          </p>
+      </div>
+  </div>
+
+</section>

@@ -34,8 +34,8 @@ export class QNAKBComponent implements OnInit {
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       question: '',
-      kb_id: '',
-      top_n: ''
+      kb_id: 'A1',
+      top_n: '2'
     })
   }
 
@@ -63,9 +63,10 @@ export class QNAKBComponent implements OnInit {
 
         },
         (error) => {
+          console.log(error)
           this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = error;
+          this.errMessage = error.message;
           this.spinnerActive = this.spinner.stop();
 
         });

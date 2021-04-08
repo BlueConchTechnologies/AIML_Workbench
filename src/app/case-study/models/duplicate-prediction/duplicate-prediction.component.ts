@@ -18,12 +18,16 @@ export class DuplicatePredictionComponent implements OnInit {
   workflowForm: FormGroup;
   Output_result:any
   spinnerActive = false;
+  isSuccess= false;
+  isErrorAvailable = false;
+  errMessage = false
+
   ngOnInit(): void {
 
     this.workflowForm = this.formBuilder.group({
       query:'',
-      org: '',
-      threshold : ''
+      org: 'xpanxion',
+      threshold : '70'
     })
 
   }
@@ -42,12 +46,15 @@ export class DuplicatePredictionComponent implements OnInit {
          (successResponse) => {
            console.log('successResponse', successResponse)
            this.Output_result = successResponse.response
-  
+           this.isSuccess = true
+           this.spinnerActive = this.spinner.stop()
          
          },
          (errorResponse) => {
            this.toastService.showError('Something went wrong');
            console.log('ERROR', errorResponse);
+           this.isErrorAvailable = true
+           this.errMessage = errorResponse
            this.spinnerActive = this.spinner.stop()
   
          });

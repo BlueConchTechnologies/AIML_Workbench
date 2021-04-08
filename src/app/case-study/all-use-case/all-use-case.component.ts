@@ -27,6 +27,8 @@ export class AllUseCaseComponent implements OnInit {
   display_prebuiltUseCase = true
   display_myUseCase = true
  pinToHomeArray = []
+ title_prebuiltUseCase = '';
+ title_myUseCase = '';
   constructor(private _caseStudyService: CaseStudyService, private router: Router,private designWorkflowService: DesignWorkflowService, private toastService: ToastrService, private spinner: SpinnerService,private formBuilder: FormBuilder) { 
   }
 
@@ -60,6 +62,7 @@ export class AllUseCaseComponent implements OnInit {
       this.spinnerActive = this.spinner.stop()
       this.preBuiltUsecases = resp.records;
       console.log('preBuiltusecaseList',this.preBuiltUsecases)
+      this.title_prebuiltUseCase = 'Pre-Built Use Cases'
     },
     (errorResponse) => {
       this.spinnerActive = this.spinner.stop()
@@ -75,6 +78,7 @@ export class AllUseCaseComponent implements OnInit {
       this.spinnerActive = this.spinner.stop()
       this.mytUsecases = resp.records;
       console.log('MyusecaseList',this.mytUsecases)
+      this.title_myUseCase = 'My Use Cases';
     },
     (errorResponse) => {
       this.spinnerActive = this.spinner.stop()

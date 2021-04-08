@@ -1,46 +1,107 @@
-<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
-    <div class="form-row">
-      <div class="form-group col-md-12" >
-       <div class="row">
-         <div class="col-md-12">
-          <label>Algorithm Name</label>
+
+<spinner *ngIf="spinneractive" class="spinner-position"></spinner>
+<br><br>
+<main class="inner-component">
+  <section class="content-section">
+    <section >
+      <div class="row">
+        <div class="col-sm-12">
+          <span class="float-right clear-btn" (click)="resetForm()"></span>
+        </div>
       </div>
-       </div>
-       <div class="row">
-         <div class="col-md-6">
-          <input type="text" formControlName="algorithmname" class="form-control label-input"   >
-         </div>
-       </div>
+      <span *ngIf="errorMessage" class="error-message">{{ errorMessage }}</span>
+      <form [formGroup]="classificationForm">
+        <div class="row mb-3">
+          <div class="col-lg-12 left-side-box mb-3 test" >
+            <p class="left-side-box-header mb-3">Algorithm Name</p>
+            <div class="col">
+              <p class="my-2 mb-2"></p>
+            </div>
+            <div class="custom-control custom-checkbox mb-3 mr-3" *ngFor="let data of checkboxData; let i = index">
+              <input [checked]="checkboxData[i].checked" (change)="
+                  checkboxData[i].checked = !checkboxData[i].checked;
+                  handleErrorMessage()
+                " class="custom-control-input" type="checkbox" [value]="data.value" [name]="data.value"
+                [id]="data.value" [disabled]="checkboxData[i].isDisabled"/>
+              <label [for]="data.value" class="custom-control-label">
+                {{ data.name }}
+              </label>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="row mt-4">
+              <div class="col-6 custom_file_input">
+                <input type="text" class="form-control search-class drag-drop-field" id="colFormLabelSm"
+                  placeholder="File Name" readonly formControlName="colFormLabelSm" />
+                  <input #fileId type="file" hidden accept=".csv" formControlName="upload" (change)="
+                    handleUpload($event, fileId.files); handleErrorMessage()
+                  " />
+                <button class="btn btn-info component-button float-right" style="height: 38px;" id="buttonid" value="Upload"
+                  (click)="openDialog()">
+                  Upload
+                </button>
+              </div>
+
+              <!-- <div class="col-2">
+                <input #fileId type="file" hidden accept=".csv" formControlName="upload" (change)="
+                    handleUpload($event, fileId.files); handleErrorMessage()
+                  " />
+                <button class="btn btn-primary component-button float-right" id="buttonid" value="Upload"
+                  (click)="openDialog()">
+                  Upload
+                </button>
+              </div> -->
+              <div class="col-12">
+                <button class="btn btn-primary component-button float-right my-4" (click)="findAnmolies()">
+                  Run Your Workflow
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+  </section>
+  <section class="results container p-4 mb-4">
+    <h2>
+      Results
+    </h2>
+    <div *ngIf="isResultAvailable && !spinneractive">
+      <div class="row col-lg-12">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link title" [ngClass]="firstTab === i ? ' active ' : ''"
+              id="{{ 'nav-' + res.Algorithm_name + '-tab' }}" data-toggle="tab"
+              href="{{ '#nav-' + res.Algorithm_name }}" role="tab" *ngFor="let res of result; let i = index"
+              aria-selected="true">{{ getAlgoName(res?.Algorithm_name) }}</a>
+          </div>
+        </nav>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div *ngFor="let res of result; let i = index" class="tab-pane fade"
+          [ngClass]="firstTab === i ? ' active show' : ''" style="margin-top: 60px;"
+          id="{{ 'nav-' + res.Algorithm_name }}" role="tabpanel">
+          <table>
+            <thead>
+              <tr>
+                <th class="th-color" *ngFor="let header of headers"> {{ header }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td *ngFor="let header of headers">
+                  <table>
+                    <tr *ngFor="let resultData of result[i]?.Data[header]">
+                      <td>{{ resultData }}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-12">
-       <div class="row">
-         <div class="col-md-12">
-          <label>File Browse</label>
-      </div>
-       </div>
-       <div class="row">
-         <div class="col-md-6">
-          <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)">
-        </div>
-       </div>
-      </div>
-    </div>
-
-    <div class="form-row float-right">
-      <div class="form-group col-md-12">
-        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
-      </div>
-    </div> 
-  </form>
-
-  <form class="mt-5">
-    <div class="form-row">
-        <div class="form-group col-md-12">
-        <label for="exampleFormControlTextarea1">Output</label>
-        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
-        </div>
-    </div>              
-</form>
+    <p *ngIf="isErrorAvailable && !spinneractive">Error: {{ errMessage }}</p>
+  </section>
+</main>

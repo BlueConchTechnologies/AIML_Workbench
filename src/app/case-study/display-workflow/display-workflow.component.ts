@@ -26,6 +26,8 @@ export class DisplayWorkflowComponent implements OnInit {
   firstModel_type: any;
   SecondModelTrainTrackerId: any;
   secondModel_type: any;
+  firstModel_algorithm_names: any;
+  secondModel_algorithm_names: any;
 
 //non tranable model
   display_tableExtractor = false;
@@ -82,23 +84,26 @@ export class DisplayWorkflowComponent implements OnInit {
       // get traintrackerId for model and check the wire connected node
       if (this.trainTrackerIdLength <= 1) {
         this.FirstModelTrainTrackerId = this.workflow_data[1].trainingTracker_id
-        this.firstModel_type = this.workflow_data[1].type
+        this.firstModel_type = this.workflow_data[1].original_model_name
+        this.firstModel_algorithm_names = this.workflow_data[1].algorithm_names
       }
       else if (this.workflow_data[i].wires != null) {
         if (this.workflow_data[i].wires[0].length == 0) {
           this.SecondModelTrainTrackerId = this.workflow_data[i].trainingTracker_id
-          this.secondModel_type = this.workflow_data[i].type
+          this.secondModel_type = this.workflow_data[i].original_model_name
+          this.secondModel_algorithm_names = this.workflow_data[i].algorithm_names
 
         }
         else {
           this.FirstModelTrainTrackerId = this.workflow_data[i].trainingTracker_id
-          this.firstModel_type = this.workflow_data[i].type
-
+          this.firstModel_type = this.workflow_data[i].original_model_name
+          this.firstModel_algorithm_names = this.workflow_data[i].algorithm_names
         }
       }
     }
     localStorage.setItem("FirstModelTrainTrackerId", this.FirstModelTrainTrackerId);
     localStorage.setItem('SecondModelTrainTrackerId', this.SecondModelTrainTrackerId)
+    localStorage.setItem('firstModel_algorithm_names', this.firstModel_algorithm_names)
     this.displayFormByModelname()
 
   }
@@ -147,7 +152,7 @@ export class DisplayWorkflowComponent implements OnInit {
      else if (this.firstModel_type == 'DuplicatePrediction') {
       this.display_DuplicatePrediction = true
     }
-     else if (this.firstModel_type == 'FaceRecognotion') {
+     else if (this.firstModel_type == 'FaceRecognition') {
       this.display_FaceRecognotion = true
     }
      else if (this.firstModel_type == 'DocumentClassification') {

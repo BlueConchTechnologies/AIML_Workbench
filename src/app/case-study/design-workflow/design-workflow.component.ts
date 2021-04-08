@@ -7,8 +7,8 @@ import { environment } from '@env';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModelDataService } from '@shared/services/model-data.service';
-import {  SpinnerService } from '@core'
- 
+import { SpinnerService } from '@core'
+
 @Component({
   selector: 'app-design-workflow',
   templateUrl: './design-workflow.component.html',
@@ -23,29 +23,31 @@ export class DesignWorkflowComponent implements OnInit {
   urlSafe: SafeResourceUrl;
   spinnerActive = false;
   result: any;
-  trainedAndNonTrainableModel:any
-  workFlow:any;
-  user_id:any;
-  usecase_name:any;
-  usecase_description:any;
-  flow:any;
+  trainedAndNonTrainableModel: any
+  workFlow: any;
+  user_id: any;
+  usecase_name: any;
+  usecase_description: any;
+  flow: any;
   usecaseId = null
-  useCaseUserId:any
+  useCaseUserId: any
+  trainableModelData: any;
+  nonTrainableModelData: any;
 
   constructor(private designWorkflowService: DesignWorkflowService, private toastService: ToastrService,
-    private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer,private modelDataService: ModelDataService,
+    private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer, private modelDataService: ModelDataService,
     private spinner: SpinnerService) { }
 
   ngOnInit(): void {
-    this.getTableData()
+    this.getTranableAndNonTranableModelData()
     // this.createNode();
     const data = history.state;
     this.useCaseData = data[0];
 
     // check if usecaseId present or not
     this.usecaseId = localStorage.getItem('usecaseId')
-   
-    }
+
+  }
 
   // generate new flow
   finalizedDesign() {
@@ -57,8 +59,8 @@ export class DesignWorkflowComponent implements OnInit {
         var sJson = JSON.stringify(successResponse);
         var flowName = successResponse[0].label
         // set workflow to localstorage
-        localStorage.setItem("workflow_to_nodered",JSON.stringify (successResponse) );
-        
+        localStorage.setItem("workflow_to_nodered", JSON.stringify(successResponse));
+
         //get workflow values
         this.usecase_name = successResponse[0].label;
         this.usecase_description = successResponse[0].info;
@@ -67,53 +69,53 @@ export class DesignWorkflowComponent implements OnInit {
         //getting login user and usecase user
         this.user_id = localStorage.getItem('logedInUsername');
         this.useCaseUserId = localStorage.getItem('usecaseUserId');
-         console.log('usecaseUserId********************************************',this.useCaseUserId)
+        console.log('usecaseUserId********************************************', this.useCaseUserId)
 
-       
-        if (this.usecaseId == 'null' || this.useCaseUserId == 'xpanxion' ) {
-          this.saveWorkflowToDB ();
-        } 
+
+        if (this.usecaseId == 'null' || this.useCaseUserId == 'xpanxion') {
+          this.saveWorkflowToDB();
+        }
         else {
-          this.updateWorkflowToDb() ;
+          this.updateWorkflowToDb();
         }
       },
       (errorResponse) => {
       });
-        
+
   }
 
-  
+
 
   // ***********save work flow***********************//
-  saveWorkflowToDB () {
+  saveWorkflowToDB() {
     this.spinnerActive = this.spinner.start();
-    this.designWorkflowService.saveWorkflow(this.user_id, this.usecase_name,this.usecase_description,this.flow).subscribe(
-      data => { 
+    this.designWorkflowService.saveWorkflow(this.user_id, this.usecase_name, this.usecase_description, this.flow).subscribe(
+      data => {
         this.spinnerActive = this.spinner.stop();
-        console.log("save workflow response***************************************",data)
+        console.log("save workflow response***************************************", data)
         // this.router.navigate(['/runworkflow']);
         this.router.navigate(['/displayWorkflow']);
       },
-      (error) => {  
+      (error) => {
         this.spinnerActive = this.spinner.stop();
-        console.log('save workflow error',error) 
+        console.log('save workflow error', error)
       }
     )
-  
+
   }
 
   // ***********update work flow***********************//
   updateWorkflowToDb() {
     this.spinnerActive = this.spinner.start();
-    this.designWorkflowService.updateWorkflow(this.usecaseId,this.useCaseUserId, this.usecase_name,this.usecase_description,this.flow).subscribe(
-      data => { 
+    this.designWorkflowService.updateWorkflow(this.usecaseId, this.useCaseUserId, this.usecase_name, this.usecase_description, this.flow).subscribe(
+      data => {
         this.spinnerActive = this.spinner.stop();
-        console.log("update workflow response***************************************",data)
+        console.log("update workflow response***************************************", data)
         this.router.navigate(['/casestudy']);
       },
-      (error) => {  
+      (error) => {
         this.spinnerActive = this.spinner.stop();
-        console.log('save workflow error',error) 
+        console.log('save workflow error', error)
       }
     )
   }
@@ -125,42 +127,93 @@ export class DesignWorkflowComponent implements OnInit {
         this.toastService.showError(ToastrCode.Fatal);
       });
   }
-   
 
-  // get trained and non trainable model
-  getTableData() {
-    this.spinnerActive = this.spinner.start() 
+
+  // get trainable and non trainable model data
+  getTranableAndNonTranableModelData() {
+
+    // get  non trainable model data
+    this.spinnerActive = this.spinner.start()
     this.modelDataService.getModelList(environment.testUserId).subscribe(
       (response: any) => {
         this.result = response.records;
-        console.log("all data trainModel",this.result)
         // get trained and non-trainable model
         var trainedModel = []
         var trainModelData = []
-        for (var i = 0; i < this.result.length; i++){
-            if(this.result[i].status == 'Trained' || this.result[i].trainable == false){
-              trainedModel[i] = this.result[i].original_model_name
-              trainModelData[i] = this.result[i]
-            } 
+        for (var i = 0; i < this.result.length; i++) {
+          if (this.result[i].trainable == false) {
+            trainedModel[i] = this.result[i].original_model_name
+            trainModelData[i] = this.result[i]
+            trainModelData[i].algorithm_names = ''
+          }
         }
         trainedModel = trainedModel.filter(item => item);
-        trainModelData = trainModelData.filter(item => item);
+        this.nonTrainableModelData = trainModelData.filter(item => item);
+        console.log('this.nonTrainableModelData',this.nonTrainableModelData)
+        this.spinnerActive = this.spinner.stop()
+        
+      },
+      (error) => {
+        this.spinnerActive = this.spinner.stop();
+        console.log(error)
+      }
+
+    )
+
+    // get trainable model data
+    this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
+      (response: any) => {
+        this.trainableModelData = response
+        // add property modelname
+        for (var i = 0; i < this.trainableModelData.length; i++) {
+          this.trainableModelData[i].model_name = this.trainableModelData[i].experiment_name
+          this.trainableModelData[i].prediction_params = '';
+          this.trainableModelData[i].training_params = '';
+
+          
+              // get algorithum name from minio_train_model array
+              var model_array = [];
+              for (var j = 0; j < this.trainableModelData[i].minio_trained_model.length; j++) {
+                var split_model_array = this.trainableModelData[i].minio_trained_model[j].split(".");
+                var n = split_model_array[0].split("/");
+                model_array.push(n[n.length - 1]);
+              }          
+          this.trainableModelData[i].algorithm_names =  model_array;
+
+        }
+        console.log("this.trainableModelData", this.trainableModelData)
+
+        // concat nontranable and trained history
+        var trainedAndNonTrainableModel =[]
+        trainedAndNonTrainableModel = this.nonTrainableModelData.concat(this.trainableModelData)
+        console.log("all model",trainedAndNonTrainableModel)
 
         // extract id , original_modelName , model_name
-        let trainModel = trainModelData.map(({_id,original_model_name,model_name,prediction_params,training_params,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params}))
-        console.log("trainModel",trainModel)
+        let allModelData = trainedAndNonTrainableModel.map(({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names}))
+        console.log("allModelData",allModelData)
 
 
         // set trained and non trainable model to node-red-Component
-        var strJSON = encodeURIComponent(JSON.stringify(trainModel));
+        var strJSON = encodeURIComponent(JSON.stringify(allModelData));
         this.url = environment.nodeRedUrl+'?'+  strJSON
         this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+        
+      },
+      (error) => {
+        this.spinnerActive = this.spinner.stop();
+        console.log(error)
+      })
+
+      
        
 
-      }
-    )
-    this.spinnerActive = this.spinner.stop()
+      
+
+
   }
+
+
+
 
 
 

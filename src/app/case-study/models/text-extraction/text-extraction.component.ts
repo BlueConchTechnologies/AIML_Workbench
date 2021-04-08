@@ -18,7 +18,10 @@ export class TextExtractionComponent implements OnInit {
   Output_result:any
   spinnerActive = false;
   fileToUpload: File = null;
-
+  termFileLabel= 'choose file....'
+  isSuccess: any;
+  isErrorAvailable: any;
+  errMessage: any;
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
@@ -29,6 +32,7 @@ export class TextExtractionComponent implements OnInit {
    uploadFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
     console.log(this.fileToUpload )
+    this.termFileLabel = this.fileToUpload.name
 }
 
 runYourWorkflow() {
@@ -43,12 +47,14 @@ runYourWorkflow() {
        (successResponse) => {
          console.log('successResponse', successResponse)
          this.Output_result = successResponse.response.text.trim()
-
-       
+         this.isSuccess = true;
+         this.spinnerActive = this.spinner.stop()
        },
        (errorResponse) => {
          this.toastService.showError('Something went wrong');
          console.log('ERROR', errorResponse);
+         this.isErrorAvailable = true;
+          this.errMessage = errorResponse;
          this.spinnerActive = this.spinner.stop()
 
        });

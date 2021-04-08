@@ -14,44 +14,142 @@ import { DesignWorkflowService } from '../../services/design-workflow.service';
 export class TimeSeriesComponent implements OnInit {
 
   constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder,private designWorkflowService: DesignWorkflowService) { }
-  workflowForm: FormGroup;
-  Output_result:any
+  // workflowForm: FormGroup;
+  // Output_result:any
+  // spinnerActive = false;
+
+  timeSeriesForm: FormGroup;
+  algorithmList: any = [];
   spinnerActive = false;
+  isErrorAvailable = false;
+  isResultAvailable = false;
+  timeSeriesData = [];
+  errMessage = '';
+  algoNameResult = [];
+  firstTab = 0;
+  selectedItem = 0;
+  formErrorMessage;
+
 
   ngOnInit(): void {
-    this.workflowForm = this.formBuilder.group({
-      algorithmname: '',
-      number_of_indexes: ''
-    })
-  }
-
-  runYourWorkflow() {
-    const formData = new FormData();
-    var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-    formData.append('trainingTracker_id', firstTrainTrackerId);
-    formData.append('algorithmname',this.workflowForm.value.algorithmname);
-   formData.append('number_of_indexes',this.workflowForm.value.number_of_indexes);
-    console.log("flow 8 works")
-    formData.forEach((value, key) => {
-      console.log("formdata_new", key + " " + value)
+    this.timeSeriesForm = this.formBuilder.group({
+      noOfPredictions: ['2' , Validators.required]
     });
 
-    this.spinnerActive = this.spinner.start();
-    this._caseStudyService.runWorkflow(formData)
-      .subscribe(
-        (successResponse) => {
-          console.log('successResponse', successResponse)
-          this.Output_result = successResponse
+   this.filterAlgorithumName ();
+  }
+
+  filterAlgorithumName () {
+    
+    this.algorithmList = [
+      { name: 'Auto Arima Model', value: 'auto_arima_model', checked: false, isDisabled: true  },
+      { name: 'Arima Model', value: 'arima_model', checked: false, isDisabled: true  },
+      { name: 'Ar Model', value: 'ar_model', checked: false, isDisabled: true  },
+      { name: 'Sarimax Model', value: 'sarimax_model', checked: false, isDisabled: true  },
+      { name: 'Var Model', value: 'var_model', checked: false, isDisabled: true  },
+      { name: 'Lstm', value: 'lstm', checked: false, isDisabled: true  },
+    ];
+
+    var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
+   console.log(algorithum_name)
+   var algorithum_array = algorithum_name.split(",");
+   console.log(algorithum_array)
+
+   for (let i = 0; i < algorithum_array.length; i++) {
+    if (algorithum_array[i] === 'auto_arima_model') {
+      this.algorithmList[0] = { name: 'Auto Arima Model', value: 'auto_arima_model', checked: true, isDisabled: false };
+    }
+    if (algorithum_array[i] === 'arima_model' ) {
+      this.algorithmList[1] = { name: 'Arima Model', value: 'arima_model', checked: true, isDisabled: false };
+    }
+    if (algorithum_array[i] === 'ar_model' ) {
+      this.algorithmList[2] = { name: 'Ar Model', value: 'ar_model', checked: true, isDisabled: false };
+    }
+    if (algorithum_array[i] === 'sarimax_model') {
+      this.algorithmList[3] = { name: 'Sarimax Model', value: 'sarimax_model', checked: true, isDisabled: false };
+    }
+    if (algorithum_array[i] === 'var_model') {
+      this.algorithmList[4] = { name: 'Var Model', value: 'var_model', checked: true, isDisabled: false };
+    }
+    if (algorithum_array[i] === 'lstm') {
+      this.algorithmList[5] = { name: 'Lstm', value: 'lstm', checked: true, isDisabled: false };
+    }
+  }
 
 
-        },
-        (errorResponse) => {
-          this.toastService.showError('Something went wrong');
-          console.log('ERROR', errorResponse);
-          this.spinnerActive = this.spinner.stop()
+  }
 
-        });
 
+  submit() {
+    if ((this.timeSeriesForm.controls.noOfPredictions.value >= 1) && (this.timeSeriesForm.controls.noOfPredictions.value <= 25)) {
+      const formData = new FormData();
+      const selectedAlgoList = [];
+      this.algorithmList.forEach(algo => {
+        if (algo.checked) {
+          selectedAlgoList.push(algo.value);
+        }
+      });
+      if (selectedAlgoList.length && this.timeSeriesForm.invalid) {
+        this.formErrorMessage = 'Please Enter No Of Predictions And Select Filters';
+      } else {
+        this.formErrorMessage = undefined;
+        var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+        formData.append('trainingTracker_id', firstTrainTrackerId);
+        formData.append('algorithmname', selectedAlgoList.toString());
+        formData.append('number_of_indexes', Math.ceil(this.timeSeriesForm.controls.noOfPredictions.value).toString());
+        this.isErrorAvailable = false;
+        this.spinnerActive = this.spinner.start();
+        this.timeSeriesData = [];
+        this._caseStudyService.runWorkflow(formData).subscribe(
+          (response: any) => {
+            if (response.response.result === 'success') {
+              this.isResultAvailable = true;
+              this.isErrorAvailable = false;
+              const tempData = this.timeSeriesData;
+              // tslint:disable-next-line
+              Object.keys(response.response).map(function (key) {
+                if (key !== 'result') {
+                  tempData.push({ algoName: key, prediction: response.response[key] });
+                }
+                return tempData;
+              });
+              this.timeSeriesData = tempData;
+              this.timeSeriesData.forEach(element => {
+                if ((typeof element.prediction) !== 'object') {
+                  element.prediction = {};
+                  element.prediction.keys = [];
+                  element.prediction.values = [];
+                }
+                // tslint:disable-next-line
+                element.prediction.keys = eval(element.prediction.keys);
+                // tslint:disable-next-line
+                element.prediction.values = eval(element.prediction.values);
+              });
+            } else {
+              this.isResultAvailable = false;
+              this.isErrorAvailable = true;
+              this.errMessage = response.response.message;
+            }
+            this.spinnerActive = this.spinner.stop();
+          },
+          (error) => {
+            this.isResultAvailable = false;
+            this.isErrorAvailable = true;
+            this.errMessage = error;
+            this.spinnerActive = this.spinner.stop();
+          });
+      }
+    } else {
+      alert('Please select No. of Predictions in between 1 to 25.');
+    }
+  }
+  getAlgoName(algoValue: string) {
+    // tslint:disable-next-line
+    const algoRes = this.algorithmList.filter(function (item) { return item.value === algoValue; });
+    return algoRes[0].name;
+  }
+  setIndex(index) {
+    this.selectedItem = index;
   }
 
 }

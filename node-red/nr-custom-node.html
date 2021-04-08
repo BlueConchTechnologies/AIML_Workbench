@@ -7,28 +7,535 @@ var modelData = JSON.parse(url_data_arr_decode)
 console.log("modelData in nodered",modelData)
 console.log("url_data_parsed_json",modelData[0]['_id'])
 
-for (var i = 0; i < this.modelData.length; i++) {
-RED.nodes.registerType(modelData[i]['original_model_name'],{
-        category: 'Header',
+    // console.log(modelData[14]['original_model_name'])
+    // console.log(modelData[15]['original_model_name'])
+    // console.log(modelData[16]['original_model_name'])
+    // console.log(modelData[17]['original_model_name'])
+    // console.log(modelData[18]['original_model_name'])
+
+// for (var i = 0; i < this.modelData.length; i++) {
+//    RED.nodes.registerType('model'+i,{
+//         category: 'Model List',
+//         inputs:1,
+//         outputs:1,
+//         icon: "file.png",
+//         defaults: {
+//             trainingTracker_id: {value:modelData[i]['_id']},
+//             prediction_params: {value:modelData[i]['prediction_params']},
+//             original_model_name : {value:modelData[i]['original_model_name']},
+//           },
+//           label: function() {
+//             return modelData[i]['model_name'];
+//         },
+//         paletteLabel: function() {
+//             return modelData[i]['model_name'];
+//         },
+//     });
+
+// }
+
+// model 0 
+RED.nodes.registerType('model0',{
+        category: 'Model List',
         inputs:1,
         outputs:1,
         icon: "file.png",
         defaults: {
-            trainingTracker_id: {value:modelData[i]['_id']},
-            prediction_params: {value:modelData[i]['prediction_params']}
+            trainingTracker_id: {value:modelData[0]['_id']},
+            prediction_params: {value:modelData[0]['prediction_params']},
+            original_model_name : {value:modelData[0]['original_model_name']},
+            algorithm_names : {value:modelData[0]['algorithm_names']},
           },
+          label: function() {
+            return modelData[0]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[0]['model_name'];
+        },
     });
-}
 
-</script>
+    // model 1
+    RED.nodes.registerType('model1',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[1]['_id']},
+            prediction_params: {value:modelData[1]['prediction_params']},
+            original_model_name : {value:modelData[1]['original_model_name']},
+            algorithm_names : {value:modelData[1]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[1]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[1]['model_name'];
+        },
+    });
 
-<script type="text/html" data-template-name="lower-case">
-    <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
-        <input type="text" id="node-input-name" placeholder="Name">
-    </div>
-</script>
+     // model 2
+     RED.nodes.registerType('model2',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[2]['_id']},
+            prediction_params: {value:modelData[2]['prediction_params']},
+            original_model_name : {value:modelData[2]['original_model_name']},
+            algorithm_names : {value:modelData[2]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[2]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[2]['model_name'];
+        },
+    });
 
-<script type="text/html" data-help-name="lower-case">
-    <p>A simple node that converts the message payloads into all lower-case characters</p>
+     // model 3
+     RED.nodes.registerType('model3',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[3]['_id']},
+            prediction_params: {value:modelData[3]['prediction_params']},
+            original_model_name : {value:modelData[3]['original_model_name']},
+            algorithm_names : {value:modelData[3]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[3]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[3]['model_name'];
+        },
+    });
+
+     // model 4
+     RED.nodes.registerType('model4',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[4]['_id']},
+            prediction_params: {value:modelData[4]['prediction_params']},
+            original_model_name : {value:modelData[4]['original_model_name']},
+            algorithm_names : {value:modelData[4]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[4]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[4]['model_name'];
+        },
+    });
+
+     // model 5
+     RED.nodes.registerType('model5',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[5]['_id']},
+            prediction_params: {value:modelData[5]['prediction_params']},
+            original_model_name : {value:modelData[5]['original_model_name']},
+            algorithm_names : {value:modelData[5]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[5]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[5]['model_name'];
+        },
+    });
+
+     // model 6
+     RED.nodes.registerType('model6',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[6]['_id']},
+            prediction_params: {value:modelData[6]['prediction_params']},
+            original_model_name : {value:modelData[6]['original_model_name']},
+            algorithm_names : {value:modelData[6]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[6]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[6]['model_name'];
+        },
+    });
+
+     // model 7
+     RED.nodes.registerType('model7',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[7]['_id']},
+            prediction_params: {value:modelData[7]['prediction_params']},
+            original_model_name : {value:modelData[7]['original_model_name']},
+            algorithm_names : {value:modelData[7]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[7]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[7]['model_name'];
+        },
+    });
+
+     // model 8
+     RED.nodes.registerType('model8',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[8]['_id']},
+            prediction_params: {value:modelData[8]['prediction_params']},
+            original_model_name : {value:modelData[8]['original_model_name']},
+            algorithm_names : {value:modelData[8]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[8]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[8]['model_name'];
+        },
+    });
+
+     // model 9
+     RED.nodes.registerType('model9',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[9]['_id']},
+            prediction_params: {value:modelData[9]['prediction_params']},
+            original_model_name : {value:modelData[9]['original_model_name']},
+            algorithm_names : {value:modelData[9]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[9]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[9]['model_name'];
+        },
+    });
+
+     // model 10
+     RED.nodes.registerType('model10',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[10]['_id']},
+            prediction_params: {value:modelData[10]['prediction_params']},
+            original_model_name : {value:modelData[10]['original_model_name']},
+            algorithm_names : {value:modelData[10]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[10]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[10]['model_name'];
+        },
+    });
+
+     // model 11
+     RED.nodes.registerType('model11',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[11]['_id']},
+            prediction_params: {value:modelData[11]['prediction_params']},
+            original_model_name : {value:modelData[11]['original_model_name']},
+            algorithm_names : {value:modelData[11]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[11]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[11]['model_name'];
+        },
+    });
+
+     // model 12
+     RED.nodes.registerType('model12',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[12]['_id']},
+            prediction_params: {value:modelData[12]['prediction_params']},
+            original_model_name : {value:modelData[12]['original_model_name']},
+            algorithm_names : {value:modelData[12]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[12]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[12]['model_name'];
+        },
+    });
+
+     // model 13
+     RED.nodes.registerType('model13',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[13]['_id']},
+            prediction_params: {value:modelData[13]['prediction_params']},
+            original_model_name : {value:modelData[13]['original_model_name']},
+            algorithm_names : {value:modelData[13]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[13]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[13]['model_name'];
+        },
+    });
+
+     // model 14
+     RED.nodes.registerType('model14',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[14]['_id']},
+            prediction_params: {value:modelData[14]['prediction_params']},
+            original_model_name : {value:modelData[14]['original_model_name']},
+            algorithm_names : {value:modelData[14]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[14]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[14]['model_name'];
+        },
+    });
+
+     // model 15
+     RED.nodes.registerType('model15',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[15]['_id']},
+            prediction_params: {value:modelData[15]['prediction_params']},
+            original_model_name : {value:modelData[15]['original_model_name']},
+            algorithm_names : {value:modelData[15]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[15]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[15]['model_name'];
+        },
+    });
+
+     // model 16
+     RED.nodes.registerType('model16',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[16]['_id']},
+            prediction_params: {value:modelData[16]['prediction_params']},
+            original_model_name : {value:modelData[16]['original_model_name']},
+            algorithm_names : {value:modelData[16]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[16]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[16]['model_name'];
+        },
+    });
+
+     // model 17
+     RED.nodes.registerType('model17',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[17]['_id']},
+            prediction_params: {value:modelData[17]['prediction_params']},
+            original_model_name : {value:modelData[17]['original_model_name']},
+            algorithm_names : {value:modelData[17]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[17]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[17]['model_name'];
+        },
+    });
+
+     // model 18
+     RED.nodes.registerType('model18',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[18]['_id']},
+            prediction_params: {value:modelData[18]['prediction_params']},
+            original_model_name : {value:modelData[18]['original_model_name']},
+            algorithm_names : {value:modelData[18]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[18]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[18]['model_name'];
+        },
+    });
+
+     // model 19
+     RED.nodes.registerType('model19',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[19]['_id']},
+            prediction_params: {value:modelData[19]['prediction_params']},
+            original_model_name : {value:modelData[19]['original_model_name']},
+            algorithm_names : {value:modelData[19]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[19]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[19]['model_name'];
+        },
+    });
+
+     // model 20
+     RED.nodes.registerType('model20',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[20]['_id']},
+            prediction_params: {value:modelData[20]['prediction_params']},
+            original_model_name : {value:modelData[20]['original_model_name']},
+            algorithm_names : {value:modelData[20]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[20]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[20]['model_name'];
+        },
+    });
+
+     // model 21
+     RED.nodes.registerType('model21',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[21]['_id']},
+            prediction_params: {value:modelData[21]['prediction_params']},
+            original_model_name : {value:modelData[21]['original_model_name']},
+            algorithm_names : {value:modelData[21]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[21]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[21]['model_name'];
+        },
+    });
+
+     // model 22
+     RED.nodes.registerType('model22',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[22]['_id']},
+            prediction_params: {value:modelData[22]['prediction_params']},
+            original_model_name : {value:modelData[22]['original_model_name']},
+            algorithm_names : {value:modelData[22]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[22]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[22]['model_name'];
+        },
+    });
+
+     // model 23
+     RED.nodes.registerType('model23',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[23]['_id']},
+            prediction_params: {value:modelData[23]['prediction_params']},
+            original_model_name : {value:modelData[23]['original_model_name']},
+            algorithm_names : {value:modelData[23]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[23]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[23]['model_name'];
+        },
+    });
+
+    // model 24
+    RED.nodes.registerType('model24',{
+        category: 'Model List',
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        defaults: {
+            trainingTracker_id: {value:modelData[24]['_id']},
+            prediction_params: {value:modelData[24]['prediction_params']},
+            original_model_name : {value:modelData[24]['original_model_name']},
+            algorithm_names : {value:modelData[24]['algorithm_names']},
+          },
+          label: function() {
+            return modelData[24]['model_name'];
+        },
+        paletteLabel: function() {
+            return modelData[23]['model_name'];
+        },
+    });
+
+
+
+
+
 </script>

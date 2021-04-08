@@ -23,9 +23,9 @@
       <div class="row">
         <div class="col-sm-2">                        
           <select class="form-control input-shadow light-font" formControlName = "org" placeholder="org">
-              <option [defaultSelected]=true value="AIRTEL" >AIRTEL</option>
-              <option value="A2">Org 2</option>
-              <option value="A3">Org 3</option>
+              <option  value="AIRTEL" >AIRTEL</option>
+              <option value="Qrg 2">Org 2</option>
+              <option value="Org 3">Org 3</option>
           </select>
       </div>
       </div>
@@ -37,7 +37,7 @@
       </div>     
       <div class="w-20 mx-2">                 
           <select class="form-control-sm light-font" formControlName = "top_n">
-              <option [defaultSelected]=true value="2">2</option>
+              <option  value="2">2</option>
               <option value="3">3</option>
               <option value="5">5</option>
               <option value="10">10</option>
@@ -48,18 +48,31 @@
       </div>
   </div>
 
-    <div class="form-row float-right">
+    <div class="form-row float-right mt-4">
       <div class="form-group col-md-12">
-        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+        <button type="submit" class="btn btn-primary component-button mt-4">Run Your Workflow</button>
       </div>
     </div> 
   </form>
 
-  <form class="mt-5">
-    <div class="form-row">
-        <div class="form-group col-md-12">
-        <label for="exampleFormControlTextarea1">Output</label>
-        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+ <br><br><br><br><br><br>
+<section class="results container p-4 mb-4 mt-4">
+  <h2>Results</h2>
+ 
+  <div>
+      <div *ngIf="isSuccess">
+        <div *ngFor="let item of Output_result">
+          <p><b>Question : </b>{{item.matched_question}}</p>
+          <p><b>Answer : </b>{{item.answer}}</p>
+          <hr>
         </div>
-    </div>              
-</form>
+         
+      </div>
+      <div *ngIf = 'isErrorAvailable'>
+          <p>
+              {{errMessage}}
+          </p>
+      </div>
+  </div>
+
+</section>

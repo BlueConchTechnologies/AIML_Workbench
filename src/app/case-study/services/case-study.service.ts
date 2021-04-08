@@ -29,7 +29,9 @@ export class CaseStudyService {
     return this._http.post(this.NODE_URL + 'documentClassification', request);
   }
   runWorkflow(request: any): Observable<any> {
-    console.log("modeldta to api",request)
+    request.forEach((value,key) => {
+      console.log("formdata_new",key+" "+value)
+       }); 
     return this._http.post(this.API_URL + '/api/predict', request);
   }
 

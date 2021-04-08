@@ -164,17 +164,17 @@ export class RunworkflowComponent implements OnInit {
         // get traintrackerId for model and check the wire connected node
           if (this.trainTrackerIdLength <= 1) {
             this.FirstModelTrainTrackerId = this.workflow_data[1].trainingTracker_id  
-            this.firstModel_type =  this.workflow_data[1].type 
+            this.firstModel_type =  this.workflow_data[1].original_model_name
           } 
           else if (this.workflow_data[i].wires != null) {
               if (this.workflow_data[i].wires[0].length == 0) {
                 this.SecondModelTrainTrackerId = this.workflow_data[i].trainingTracker_id  
-                this.secondModel_type =  this.workflow_data[i].type
+                this.secondModel_type =  this.workflow_data[i].original_model_name
 
               }
               else{
                 this.FirstModelTrainTrackerId = this.workflow_data[i].trainingTracker_id
-                this.firstModel_type =  this.workflow_data[i].type   
+                this.firstModel_type =  this.workflow_data[i].original_model_name
 
               }
           } 

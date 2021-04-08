@@ -26,7 +26,7 @@
         </form><br>
          
                <div  *ngIf="display_prebuiltUseCase">
-                    <p class="font-weight-bold "><u>Pre-Built Use Cases</u></p>
+                    <p class="font-weight-bold "><u>{{title_prebuiltUseCase}}</u></p>
                     <!-- <span class="badge_custom badge-pill badge-primary">Pre-Built Use Cases</span><br> -->
                     <div class="row">
                     <div class="col-sm-4 mb-4" *ngFor="let usecase of preBuiltUsecases">
@@ -71,7 +71,7 @@
                </div>
          
                <div  *ngIf="display_myUseCase">
-                    <p class="font-weight-bold"><u>My Use Cases</u></p>
+                    <p class="font-weight-bold"><u>{{title_myUseCase}}</u></p>
                     <!-- <span class="badge_custom badge-pill badge-primary">My Use Cases</span><br> -->
                     <div class="row">
                     <div class="col-sm-4 mb-4" *ngFor="let usecase of mytUsecases">

@@ -1,45 +1,126 @@
-<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
-    <div class="form-row">
-      <div class="form-group col-md-12" >
-       <div class="row">
-         <div class="col-md-12">
-          <label>Algorithm Name</label>
-      </div>
-       </div>
-       <div class="row">
-         <div class="col-md-6">
-          <input type="text" formControlName="algorithmname" class="form-control label-input"   >
-         </div>
-       </div>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group col-md-12" >
-       <div class="row">
-         <div class="col-md-12">
-          <label>Number of indexes</label>
-      </div>
-       </div>
-       <div class="row">
-         <div class="col-md-6">
-          <input type="number" formControlName="number_of_indexes" class="form-control label-input"   >
-         </div>
-       </div>
-      </div>
-    </div>
+<br>
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<main class="inner-component">
+  <section class="content-section">
+    <section>
+      <span *ngIf="formErrorMessage" class="error-message">{{formErrorMessage }}</span>
+      <div>
+        <div class="row mb-3">
+          <div class="col-lg-12 left-side-box mb-3 test">
+            <p class="left-side-box-header mb-3">Algorithm Name</p>
+            <div class="col">
+              <p class="my-2 mb-2"></p>
+            </div>
+            <form class="form-inline">
+              <div class="custom-control custom-checkbox mb-3 form-group mr-4"
+                *ngFor="let data of algorithmList; let i = index">
+                <input type="checkbox" [checked]="algorithmList[i].checked" (change)="
+              algorithmList[i].checked = !algorithmList[i].checked;
+                " class="custom-control-input" [value]="data.value" [name]="data.value" [id]="data.value"
+                  [disabled]="algorithmList[i].isDisabled" />
+                <label [for]="data.value" class="custom-control-label">
+                  {{ data.name }}
+                </label>
+              </div>
+            </form>
+          </div>
+          <div class="col-lg-12">
+            <p class="left-side-box-header mb-3">Number of indexes</p>
+            <div class="col">
+              <p class="my-2 mb-2"></p>
+            </div>
+            <form [formGroup]="timeSeriesForm" (ngSubmit)="submit()">
+              <div class="row">
+                <div class="col-2">
+                  <!-- <input type="number" min="1" max="25" class="form-control " id="colFormLabelSm"
+                    formControlName="noOfPredictions"/> -->
+                  <select class="form-control light-font" class="form-control " id="colFormLabelSm"
+                    formControlName="noOfPredictions">
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                  </select>
+                </div>
 
-    <div class="form-row float-right">
-      <div class="form-group col-md-12">
-        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
-      </div>
-    </div> 
-  </form>
-
-  <form class="mt-5">
-    <div class="form-row">
-        <div class="form-group col-md-12">
-        <label for="exampleFormControlTextarea1">Output</label>
-        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+                <div class="col-12">
+                  <!-- <button type="submit" class="btn component-button my-4 float-right" id="buttonid" value="Submit">
+                    Submit
+                  </button> --><br> <br><br><br>
+                  <button type="submit" class="btn btn-primary component-button mt-4 float-right">Run Your
+                    Workflow</button>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
-    </div>              
-</form>
+      </div>
+    </section>
+  </section>
+
+  <section class="results container p-4 mb-4">
+    <h2>
+      Results
+    </h2>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 top">
+        <app-spinner *ngIf="spinnerActive"></app-spinner>
+      </div>
+    </div>
+    <div *ngIf="isResultAvailable && !spinnerActive">
+      <div class="row col-lg-12">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link title" [ngClass]="firstTab === i ? ' active ' : ''"
+              id="{{ 'nav-' + item.algoName + '-tab' }}" data-toggle="tab" href="{{ '#nav-' + item.algoName }}"
+              role="tab" *ngFor="let item of timeSeriesData; let i = index" aria-selected="true"
+              (click)="setIndex(i)">{{ getAlgoName(item.algoName) }}</a>
+
+          </div>
+        </nav>
+      </div>
+      <div class="tab-content" id="nav-tabContent">
+        <div *ngFor="let element of timeSeriesData; let i = index" class="tab-pane fade"
+          [ngClass]="firstTab === i ? ' active show' : ''" style="margin-top: 60px;"
+          id="{{ 'nav-' + element.Algorithm_name }}" role="tabpanel">
+          <table class="time-series-table">
+            <thead>
+              <tr>
+                <th class="th-color time-series-heading" *ngIf="timeSeriesData[selectedItem]?.prediction?.keys">Date
+                </th>
+                <th class="th-color time-series-heading" *ngIf="timeSeriesData[selectedItem]?.prediction?.values">
+                  Prediction</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="no-record-text"
+                  *ngIf="timeSeriesData[selectedItem]?.prediction?.values.length === 0 && timeSeriesData[selectedItem]?.prediction?.keys.length === 0">
+                  No Records Found
+                </td>
+                <td *ngIf="timeSeriesData[selectedItem]?.prediction?.keys?.length" class="table-content">
+                  <table>
+                    <tr *ngFor="let date of timeSeriesData[selectedItem]?.prediction?.keys">
+                      <td>{{ date }}</td>
+                    </tr>
+                  </table>
+                </td>
+                <td *ngIf="timeSeriesData[selectedItem]?.prediction?.values?.length" class="table-content">
+                  <table>
+                    <tr *ngFor="let prediction of timeSeriesData[selectedItem]?.prediction?.values">
+                      <td>{{ prediction }}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <p *ngIf="isErrorAvailable && !spinnerActive">Error: {{ errMessage }}</p>
+  </section>
+</main>

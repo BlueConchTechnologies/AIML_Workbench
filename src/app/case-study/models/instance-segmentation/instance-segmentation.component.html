@@ -1,3 +1,4 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
     <div class="form-row">
       <div class="form-group col-md-12">
@@ -8,7 +9,12 @@
        </div>
        <div class="row">
          <div class="col-md-6">
-          <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)">
+          <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
+          <div class="custom-file">
+            <input #fileId type="file" class="custom-file-input" formControlName="selectedFile" (change)="
+        uploadFileInput($event.target.files)" accept="image/*,.pdf">
+            <label class="custom-file-label">{{termFileLabel}}</label>
+        </div>
         </div>
        </div>
       </div>
@@ -16,16 +22,27 @@
 
     <div class="form-row float-right">
       <div class="form-group col-md-12">
-        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+        <button type="submit" class="btn btn-primary component-button mt-4">Run Your Workflow</button>
       </div>
     </div> 
   </form>
-
-  <form class="mt-5">
-    <div class="form-row">
-        <div class="form-group col-md-12">
-        <label for="exampleFormControlTextarea1">Output</label>
-        <textarea class="form-control"  name="outpurResult" id="exampleFormControlTextarea1" rows="10">{{Output_result | json}}</textarea>
+  <br><br><br><br>
+  <section class="results container p-4 mb-4 mt-4">
+    <h2>Results</h2>
+<br><br>
+        
+        <div *ngIf="isSuccess">
+            <span *ngFor="let im of getReceiptUrls(result)">
+              
+                <img [src]="getUrlForPreviewImage(im)" height="250px" width="250px" class="ml-3 mb-3"/>
+            </span>
         </div>
-    </div>              
-</form>
+        <div *ngIf='isErrorAvailable'>
+            <p>
+                {{errMessage}}
+            </p>
+        </div>
+   
+
+   
+</section>
