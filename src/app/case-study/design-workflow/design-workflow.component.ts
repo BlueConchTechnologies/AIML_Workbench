@@ -149,7 +149,61 @@ export class DesignWorkflowComponent implements OnInit {
         }
         trainedModel = trainedModel.filter(item => item);
         this.nonTrainableModelData = trainModelData.filter(item => item);
-        console.log('this.nonTrainableModelData',this.nonTrainableModelData)
+
+        //********************************Get Trainable model data start ************************
+        //******************************************************************************************/
+        // get trainable model data
+                  this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
+                    (response: any) => {
+                      this.trainableModelData = response
+                      // add property modelname
+                      for (var i = 0; i < this.trainableModelData.length; i++) {
+                        this.trainableModelData[i].model_name = this.trainableModelData[i].experiment_name
+                        this.trainableModelData[i].prediction_params = '';
+                        this.trainableModelData[i].training_params = '';
+                        this.trainableModelData[i]._id = this.trainableModelData[i].trainTracker_id;
+
+                        
+                            // get algorithum name from minio_train_model array
+                            var model_array = [];
+                            for (var j = 0; j < this.trainableModelData[i].minio_trained_model.length; j++) {
+                              var split_model_array = this.trainableModelData[i].minio_trained_model[j].split(".");
+                              var n = split_model_array[0].split("/");
+                              model_array.push(n[n.length - 1]);
+                            }          
+                        this.trainableModelData[i].algorithm_names =  model_array;
+
+                      }
+                      console.log("this.trainableModelData", this.trainableModelData)
+                      console.log("this.nonTrainableModelData", this.nonTrainableModelData)
+
+                      // concat nontranable and trained history
+                      var trainedAndNonTrainableModel =[]
+                      trainedAndNonTrainableModel = this.nonTrainableModelData.concat(this.trainableModelData)
+
+                      // extract id , original_modelName , model_name
+                      let allModelData = trainedAndNonTrainableModel.map(({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names}))
+                     
+                      //sort json alphabetically
+                      allModelData.sort( function( a, b ) {
+                        return a.model_name < b.model_name ? -1 : a.model_name > b.model_name ? 1 : 0;
+                      });
+                    console.log("this.trainableModelData + this.nonTrainableModelData",allModelData)
+
+
+                      // set trained and non trainable model to node-red-Component
+                      var strJSON = encodeURIComponent(JSON.stringify(allModelData));
+                      this.url = environment.nodeRedUrl+'?'+  strJSON
+                      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+                      
+                    },
+                    (error) => {
+                      this.spinnerActive = this.spinner.stop();
+                      console.log(error)
+                    })
+
+ //********************************Get Trainable model data end ************************
+        //******************************************************************************************/       
         this.spinnerActive = this.spinner.stop()
         
       },
@@ -160,49 +214,7 @@ export class DesignWorkflowComponent implements OnInit {
 
     )
 
-    // get trainable model data
-    this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
-      (response: any) => {
-        this.trainableModelData = response
-        // add property modelname
-        for (var i = 0; i < this.trainableModelData.length; i++) {
-          this.trainableModelData[i].model_name = this.trainableModelData[i].experiment_name
-          this.trainableModelData[i].prediction_params = '';
-          this.trainableModelData[i].training_params = '';
-
-          
-              // get algorithum name from minio_train_model array
-              var model_array = [];
-              for (var j = 0; j < this.trainableModelData[i].minio_trained_model.length; j++) {
-                var split_model_array = this.trainableModelData[i].minio_trained_model[j].split(".");
-                var n = split_model_array[0].split("/");
-                model_array.push(n[n.length - 1]);
-              }          
-          this.trainableModelData[i].algorithm_names =  model_array;
-
-        }
-        console.log("this.trainableModelData", this.trainableModelData)
-
-        // concat nontranable and trained history
-        var trainedAndNonTrainableModel =[]
-        trainedAndNonTrainableModel = this.nonTrainableModelData.concat(this.trainableModelData)
-        console.log("all model",trainedAndNonTrainableModel)
-
-        // extract id , original_modelName , model_name
-        let allModelData = trainedAndNonTrainableModel.map(({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names}))
-        console.log("allModelData",allModelData)
-
-
-        // set trained and non trainable model to node-red-Component
-        var strJSON = encodeURIComponent(JSON.stringify(allModelData));
-        this.url = environment.nodeRedUrl+'?'+  strJSON
-        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-        
-      },
-      (error) => {
-        this.spinnerActive = this.spinner.stop();
-        console.log(error)
-      })
+    
 
       
        
