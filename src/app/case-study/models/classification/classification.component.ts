@@ -131,29 +131,33 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
  console.log(algorithum_array)
 
  for (let i = 0; i < algorithum_array.length; i++) {
+  console.log(algorithum_array[i])
   if (algorithum_array[i] === 'DecisionTree' ) {
     this.checkboxData[0] = { name: 'Decision Tree', value: 'DecisionTree', checked:true, isDisabled: false };
   }
   if (algorithum_array[i] === 'LogisticRegression' ) {
     this.checkboxData[1] = { name: 'Logistic Regression', value: 'LogisticRegression', checked:true, isDisabled: false};
   }
+  if (algorithum_array[i] === 'Neural_Network' ) {
+    this.checkboxData[2] =  { name: 'Neural Network', value: 'Neural_Network', checked:true, isDisabled: false};
+  }
   if (algorithum_array[i] === 'Naive_Bayes') {
-    this.checkboxData[2] = { name: 'Naive Bayes', value: 'Naive_Bayes',checked:true, isDisabled: false };
+    this.checkboxData[3] = { name: 'Naive Bayes', value: 'Naive_Bayes',checked:true, isDisabled: false };
   }
   if (algorithum_array[i] === 'bagging' ) {
-    this.checkboxData[3] = { name: 'Bagging', value: 'bagging', checked:true, isDisabled: false };
+    this.checkboxData[4] = { name: 'Bagging', value: 'bagging', checked:true, isDisabled: false };
   }
   if (algorithum_array[i] === 'AdaBoostClassifier' ) {
-    this.checkboxData[4] = { name: 'Ada Boost', value: 'AdaBoostClassifier', checked:true, isDisabled: false};
+    this.checkboxData[5] = { name: 'Ada Boost', value: 'AdaBoostClassifier', checked:true, isDisabled: false};
   }
   if (algorithum_array[i] === 'Random_Forest' ) {
-    this.checkboxData[5] = { name: 'Random Forest', value: 'Random_Forest', checked:true, isDisabled: false };
+    this.checkboxData[6] = { name: 'Random Forest', value: 'Random_Forest', checked:true, isDisabled: false };
   }
   if (algorithum_array[i] === 'Stochastic_Gradient_Descent' ) {
-    this.checkboxData[5] = { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked:true, isDisabled: false };
+    this.checkboxData[7] = { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked:true, isDisabled: false };
   }
   if (algorithum_array[i] === 'Support_Vector_Machine' ) {
-    this.checkboxData[5] = { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked:true, isDisabled: false };
+    this.checkboxData[8] = { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked:true, isDisabled: false };
   }
 }
 
@@ -268,6 +272,7 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
             this.isResultAvailable = false;
             this.isErrorAvailable = true;
             this.errMessage = response.response.message;
+            console.log(response)
           }
           this.spinneractive = this.spinner.stop();
         },

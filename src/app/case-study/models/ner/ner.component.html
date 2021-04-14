@@ -1,1 +1,45 @@
-<p>ner works!</p>
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Query</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12">
+          <textarea type="text" formControlName="query" class="form-control label-input"  rows="4" ></textarea>
+         </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-primary component-button">Run Your Workflow</button>      </div>
+    </div> 
+  </form>
+
+  <section class="results container p-4 mb-4">
+    <h2>
+            Results
+        </h2>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 top">
+            </div>
+        </div>
+        
+  <!-- <P *ngIf="status"> -->
+      <!-- Result: {{result}} -->
+      <div *ngFor="let item of result | keyvalue">
+       <p class="custom_row_output"> <b>{{item.key}} : </b> {{item.value}}</p>
+      </div>
+      <!-- <table *ngFor="let item of result | keyvalue">
+          <tr><th>{{item.key}}</th></tr>
+          <tr><td>{{item.value}}</td></tr>
+      </table> -->
+  <!-- </P> -->
+</section>

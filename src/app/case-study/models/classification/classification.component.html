@@ -76,7 +76,7 @@
         <div *ngFor="let res of result; let i = index" class="tab-pane fade"
           [ngClass]="firstTab === i ? ' active show' : ''" style="margin-top: 60px;"
           id="{{ 'nav-' + res.Algorithm_name }}" role="tabpanel">
-          <table>
+          <table class="text-center">
             <thead>
               <tr>
                 <th class="th-color" *ngFor="let header of headers"> {{ header }}</th>

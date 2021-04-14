@@ -216,6 +216,11 @@ export class TrainModelComponent implements OnInit {
       modelData.experiment_description = this.firstFormGroup.controls.experiment_description.value;
       modelData.original_model_name = this.modelToBeTrain.original_model_name
 
+      // add col_name when model will be product categorization
+      if (modelData.original_model_name == 'ProductCategorization') {
+        modelData.col_name = this.thirdFormGroup.controls.col_name.value
+      }
+
       console.log("*******************************************************************add algorithm :**************************************")
       console.log(modelData)
       this.modelDataService.trainModel(modelData).subscribe(

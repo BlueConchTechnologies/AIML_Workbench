@@ -75,7 +75,7 @@ export class AnamolyDetectionComponent implements OnInit {
     if (algorithum_array[i] === 'EllipticEnvelope') {
       this.checkboxData[2] = { name: 'Elliptic Envelope', value: 'EllipticEnvelope', checked: true, isDisabled: false };
     }
-    if (algorithum_array[i] === 'OneclassSVM=' ) {
+    if (algorithum_array[i] === 'OneclassSVM' ) {
       this.checkboxData[3] = { name: 'One Class SVM', value: 'OneclassSVM', checked: true, isDisabled: false };
     }
     if (algorithum_array[i] === 'DBSCAN' ) {
