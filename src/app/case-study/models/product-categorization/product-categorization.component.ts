@@ -53,13 +53,15 @@ runYourWorkflow() {
          console.log('successResponse', successResponse)
          this.Output_result = successResponse.response.result
          this.isSuccess = true;
+         this.isErrorAvailable = false;
          this.spinnerActive = this.spinner.stop()
        },
        (errorResponse) => {
          this.toastService.showError('Something went wrong');
          console.log('ERROR', errorResponse);
+         this.errMessage = 'Server Error, Please contact system administrator';
          this.isErrorAvailable = true;
-          this.errMessage = errorResponse;
+         this.isSuccess = false;
          this.spinnerActive = this.spinner.stop()
 
        });

@@ -205,7 +205,7 @@ findAnmolies() {
         } else {
           this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = response.message;
+          this.errMessage = 'Server Error, Please contact system administrator';
           console.log(this.errMessage)
         }
         this.fileObj = {};
@@ -215,7 +215,7 @@ findAnmolies() {
         this.isResultAvailable = false;
         this.isErrorAvailable = true;
         this.fileObj = {};
-        this.errMessage = error;
+        this.errMessage = 'Server Error, Please contact system administrator';;
         console.log(error)
         this.spinneractive = this.spinner.stop();
       }
@@ -245,14 +245,14 @@ findAnmolies() {
         } else {
           this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = response.response.message;
+          this.errMessage = 'Server Error, Please contact system administrator';;
         }
         this.spinneractive = this.spinner.stop();
       },
       (error) => {
         this.isResultAvailable = false;
         this.isErrorAvailable = true;
-        this.errMessage = error;
+        this.errMessage = 'Server Error, Please contact system administrator';;
         this.spinneractive = this.spinner.stop();
       }
     );

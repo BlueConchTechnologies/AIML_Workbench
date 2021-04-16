@@ -69,17 +69,17 @@ onClickProcessBtn() {
       this.isSuccess = true;
       this.status = 'Success';
     } else {
-      this.isErrorAvailable = true;
       this.status = 'Fail';
-      this.errMessage = res.message;
+      this.errMessage = 'Server Error, Please contact system administrator';
+      this.isErrorAvailable = true;     
     }
   },
     error => {
       this.status = 'Fail';
       this.isSuccess = false;
       console.log(error)
-      this.isErrorAvailable = true;
-      this.errMessage = error;
+      this.errMessage = 'Server Error, Please contact system administrator';
+      this.isErrorAvailable = true;     
       this.spinnerActive = this.spinner.stop();
     });
 }

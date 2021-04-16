@@ -35,4 +35,9 @@
   <P *ngIf="status">
       Result: {{result}}
   </P>
+  <div *ngIf = 'isErrorAvailable'>
+    <p>
+        {{errMessage}}
+    </p>
+</div>
 </section>

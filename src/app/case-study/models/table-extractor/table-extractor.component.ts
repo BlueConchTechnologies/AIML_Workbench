@@ -66,14 +66,16 @@ runYourWorkflow() {
 
         } else {
           this.isResultAvailable = false;
+          this.errMessage = 'Server Error, Please contact system administrator';
           this.isErrorAvailable = true;
-          this.errMessage = response.response.message;
         }
         this.spinnerActive = this.spinner.stop();
        
        },
        (errorResponse) => {
-         this.toastService.showError('Something went wrong');
+        this.errMessage = 'Server Error, Please contact system administrator';
+        this.isResultAvailable = false;
+        this.isErrorAvailable = true;
          console.log('ERROR', errorResponse);
          this.spinnerActive = this.spinner.stop()
 

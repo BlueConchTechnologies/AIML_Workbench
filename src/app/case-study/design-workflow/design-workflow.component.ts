@@ -209,8 +209,8 @@ export class DesignWorkflowComponent implements OnInit {
                       console.log(response)
 
                        // remove duplicate items
-                this.trainableModelData = response.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj.original_model_name).indexOf(obj.original_model_name) == pos;});
-                console.log(this.trainableModelData)
+                   this.trainableModelData = response.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj.original_model_name).indexOf(obj.original_model_name) == pos;});
+                    console.log(this.trainableModelData)
                      
                       // add property modelname
                       for (var i = 0; i < this.trainableModelData.length; i++) {

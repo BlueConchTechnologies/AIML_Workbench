@@ -22,6 +22,9 @@ export class InstanceSegmentationComponent implements OnInit {
   spinnerActive = false;
   fileToUpload: File = null;
   termFileLabel= 'choose file....'
+  singleModel_isSuccess= false;
+  doubleModel_isSuccess = false
+  trainTrackerIdLength:any
 
    // ----------------------------------------------------------------------------------------------
   // Private Variables
@@ -32,17 +35,21 @@ export class InstanceSegmentationComponent implements OnInit {
   // Public Variables
   // ----------------------------------------------------------------------------------------------
   public errMessage: any;
-  public isSuccess = false;
   public isErrorAvailable = false;
   public spinneractive = false;
   public result = {};
   public status = null;
+ 
 
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
       
     })
+
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
+
   }
 
    // upload file 
@@ -63,25 +70,34 @@ runYourWorkflow() {
    this._caseStudyService.runWorkflow(formData)
      .subscribe(
       (res: any) => {
-        this.spinneractive = this.spinner.stop();
-        if (res.status === 'Success' && res.response.status !== 'fail') {
-          this.result = res.response;
-          this.status = res.status;
-          this.isSuccess = true;
-        } else {
-          this.result = {};
-          this.status = res.response.status;
-          this.isErrorAvailable = true;
-          this.errMessage = res.response.Message;
-          this.isSuccess = false;
-        }
+        if (this.trainTrackerIdLength <= 1) {
+            if (res.status === 'Success' && res.response.status !== 'fail') {
+              this.result = res.response;
+              this.status = res.status;
+              this.singleModel_isSuccess = true;
+              console.log(this.result)
+              this.spinneractive = this.spinner.stop();
+            } else {
+              this.result = {};
+              this.status = res.response.status;
+              this.isErrorAvailable = true;
+              this.errMessage = 'Server Error, Please contact system administrator';
+              this.singleModel_isSuccess = false;
+              this.spinneractive = this.spinner.stop();
+            }
+          } else {
+            this.secondFlow(res.response)
+          }
+       
+        
+
       },
         error => {
-          this.isSuccess = false;
+          this.singleModel_isSuccess = false;
           console.log(error)
           this.status = 'Fail';
           this.isErrorAvailable = true;
-          this.errMessage = error;
+          this.errMessage = 'Server Error, Please contact system administrator';
           this.spinneractive = this.spinner.stop();
         });
    
@@ -104,8 +120,46 @@ private initializeState() {
  this.status = null;
  this.isErrorAvailable = false;
  this.errMessage =  null;
- this.isSuccess = false;
+ this.singleModel_isSuccess = false;
 }
+
+
+//*********************************** */ for two traintrackerId*****************
+  // *************************************************************************************//*
+ //  second flow 
+ secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+  formData_new.append('trainingTracker_id', secondTrainTrackerId);
+  formData_new.append('file', '');
+  formData_new.append('input', firstflowResponse);
+
+    formData_new.forEach((value,key) => {
+   console.log("formdata_second model",key+" "+value)
+   });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+ .subscribe(
+   (successResponse) => {
+     console.log('successResponse',successResponse)
+     this.doubleModel_isSuccess = true
+     this.result = successResponse.response.result
+     console.log('this.result',this.result)
+     this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+     this.spinnerActive = this.spinner.stop()
+   },
+   (errorResponse) => {
+    //  this.toastService.showError('Something went wrong');
+     console.log('ERROR', errorResponse);
+     this.isErrorAvailable = true;
+      this.errMessage = 'Server Error, Please contact system administrator';
+     this.spinnerActive = this.spinner.stop()
+
+   });
+}
+
+
 
 
 }

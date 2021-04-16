@@ -20,6 +20,8 @@ export class DocumentClassificationComponent implements OnInit {
   result;
   status;
   isSuccess: boolean;
+  isErrorAvailable =false
+  errMessage :any
 
   ngOnInit(): void {
 
@@ -48,13 +50,17 @@ export class DocumentClassificationComponent implements OnInit {
             this.result = data.message;
             this.status = true;
             this.isSuccess = false;
+            this.isErrorAvailable = true
+            this.errMessage = 'Server Error, Please contact system administrator';
           }
          
          },
          (errorResponse) => {
-           this.toastService.showError('Something went wrong');
+          this.isSuccess = false;
+          this.isErrorAvailable = true
            console.log('ERROR', errorResponse);
            this.spinnerActive = this.spinner.stop()
+           this.errMessage = 'Server Error, Please contact system administrator';
   
          });
      

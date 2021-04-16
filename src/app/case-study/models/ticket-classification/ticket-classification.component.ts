@@ -21,6 +21,7 @@ export class TicketClassificationComponent implements OnInit {
   spinnerActive = false;
   isSuccess: any;
   isErrorAvailable: any;
+  errMessage:any
 
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
@@ -51,13 +52,15 @@ export class TicketClassificationComponent implements OnInit {
           console.log('successResponse', successResponse)
           this.Output_result = successResponse.response
           this.isSuccess = true
+          this.isErrorAvailable = false;  
 
 
         },
         (errorResponse) => {
-          this.toastService.showError('Something went wrong');
           console.log('ERROR', errorResponse);
-          this.isErrorAvailable = true;
+          this.errMessage = 'Server Error, Please contact system administrator';
+          this.isErrorAvailable = true;     
+          this.isSuccess = false    
           this.spinnerActive = this.spinner.stop()
 
         });

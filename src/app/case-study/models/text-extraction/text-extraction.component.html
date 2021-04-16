@@ -11,7 +11,7 @@
          <div class="col-md-6">
           <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
           <div class="custom-file">
-            <input #fileId type="file" class="custom-file-input" formControlName="selectedFile" (change)="
+            <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
         uploadFileInput($event.target.files)" accept="image/*,.pdf">
             <label class="custom-file-label">{{termFileLabel}}</label>
         </div>
@@ -32,13 +32,20 @@
   <h2>Results</h2>
  
   <div>
-      <div *ngIf="isSuccess">
+      <div *ngIf="singleModel_isSuccess">
           <p>
              <b> FileName : </b>{{ termFileLabel}}
               <br><br>
               <b>Text : </b> {{ Output_result }}
           </p>
       </div>
+      <div *ngIf="doubleModel_isSuccess">
+        <p>
+           <b> FileName : </b>{{ termFileLabel}}
+            <br><br>
+            <b>Documents Type : </b> {{ Output_result }}
+        </p>
+    </div>
       <div *ngIf = 'isErrorAvailable'>
           <p>
               {{errMessage}}

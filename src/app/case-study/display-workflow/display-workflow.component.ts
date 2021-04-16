@@ -104,6 +104,7 @@ export class DisplayWorkflowComponent implements OnInit {
     localStorage.setItem("FirstModelTrainTrackerId", this.FirstModelTrainTrackerId);
     localStorage.setItem('SecondModelTrainTrackerId', this.SecondModelTrainTrackerId)
     localStorage.setItem('firstModel_algorithm_names', this.firstModel_algorithm_names)
+    localStorage.setItem('trainTrackerIdLength', this.trainTrackerIdLength)
     this.displayFormByModelname()
 
   }

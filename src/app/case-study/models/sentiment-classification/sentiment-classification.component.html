@@ -39,5 +39,8 @@
         <br />
        <b>Prediction:</b>  {{ prediction }}
       </p>
+      <p *ngIf="isErrorAvailable">
+        Error: {{ errMessage }}
+    </p>
     </div>
   </section>

@@ -31,7 +31,7 @@ export class TermsExtractionComponent implements OnInit {
   ngOnInit(): void {
     this.termFileLabel = 'Path To Directory';
     this.termExtractorForm = this.formBuilder.group({
-      selectedFile: [''],
+      file: [''],
       termText: ['']
     });
     this.headerValue = [
@@ -130,16 +130,16 @@ submit() {
           });
         } else {
           this.isResultAvailable = false;
+          this.errMessage = 'Server Error, Please contact system administrator';
           this.isErrorAvailable = true;
-          this.errMessage = response.response.message;
         }
         this.spinnerActive = this.spinner.stop();
       },
       (error) => {
         this.isResultAvailable = false;
         console.log(error)
-        this.isErrorAvailable = true;
-        this.errMessage = error;
+        this.errMessage = 'Server Error, Please contact system administrator';
+          this.isErrorAvailable = true;
         this.spinnerActive = this.spinner.stop();
       });
   }

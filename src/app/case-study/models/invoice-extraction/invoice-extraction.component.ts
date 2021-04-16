@@ -22,6 +22,7 @@ export class InvoiceExtractionComponent implements OnInit {
   termFileLabel= 'choose file....'
   isSuccess:any;
   isErrorAvailable:any;
+  errMessage:any
 
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
@@ -51,12 +52,14 @@ runYourWorkflow() {
          console.log('successResponse', successResponse)
          this.Output_result = successResponse.response.result;
          this.isSuccess = true;
+         this.isErrorAvailable = true;
          this.spinnerActive = this.spinner.stop()
        
        },
        (errorResponse) => {
-         this.toastService.showError('Something went wrong');
+        this.errMessage = 'Server Error, Please contact system administrator';
          console.log('ERROR', errorResponse);
+         this.isSuccess = false;
          this.isErrorAvailable = true;
          this.spinnerActive = this.spinner.stop()
 

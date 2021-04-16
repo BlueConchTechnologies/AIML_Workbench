@@ -68,20 +68,24 @@ runYourWorkflow() {
                this.videoUrl = this.domSanitizer.bypassSecurityTrustUrl(newUrl);
                console.log('this.videoUrl',this.videoUrl)
                this.Output_result = this.videoUrl
+               this.isErrorAvailable = false;
              }
  
            }
            this.isSuccess = true;
          }
           else {
+            this.isSuccess = false;
             this.isErrorAvailable = true;
-          this.errMessage = 'Error occurred while processing File...!';
+          this.errMessage = 'Server Error, Please contact system administrator';
          }
        
        },
        (errorResponse) => {
-         this.toastService.showError('Something went wrong');
-         console.log('ERROR', errorResponse);
+        this.isSuccess = false;
+        this.isErrorAvailable = true;
+        this.errMessage = 'Server Error, Please contact system administrator';
+        console.log('ERROR', errorResponse);
          this.spinnerActive = this.spinner.stop()
 
        });

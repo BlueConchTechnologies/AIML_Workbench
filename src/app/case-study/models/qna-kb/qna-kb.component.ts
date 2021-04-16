@@ -59,14 +59,16 @@ export class QNAKBComponent implements OnInit {
         (response) => {
           this.result = response.response;
           this.isResultAvailable = true;
+          this.isErrorAvailable = false;
           this.spinnerActive = this.spinner.stop();
 
         },
         (error) => {
           console.log(error)
           this.isResultAvailable = false;
+          this.errMessage = 'Server Error, Please contact system administrator';
+          this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = error.message;
           this.spinnerActive = this.spinner.stop();
 
         });

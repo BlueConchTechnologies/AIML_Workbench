@@ -11,7 +11,7 @@
          <div class="col-md-6">
           <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
           <div class="custom-file">
-            <input #fileId type="file" class="custom-file-input" formControlName="selectedFile" (change)="
+            <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
         uploadFileInput($event.target.files)" accept="image/*,.pdf">
             <label class="custom-file-label">{{termFileLabel}}</label>
         </div>
@@ -29,20 +29,34 @@
   <br><br><br><br>
   <section class="results container p-4 mb-4 mt-4">
     <h2>Results</h2>
-<br><br>
+
         
-        <div *ngIf="isSuccess">
+        <div *ngIf="singleModel_isSuccess">
             <span *ngFor="let im of getReceiptUrls(result)">
               
                 <img [src]="getUrlForPreviewImage(im)" height="250px" width="250px" class="ml-3 mb-3"/>
             </span>
+        </div>
+        <div *ngIf="doubleModel_isSuccess">
+          <div *ngFor="let item of result | keyvalue">
+            <div class="card">
+              <div class="card-body">
+               <p><b>Invoice Date</b> : {{ item.value.invoice_date }}</p>
+               <p><b>Invoice Number</b> : {{ item.value.invoice_number }}</p>
+               <p><b>Shipping Address</b> : {{ item.value.shipping_address }}</p>
+               <p><b>Total</b> : {{ item.value.total }}</p>
+               <p><b>Vendor Address</b> : {{ item.value.vendor_address }}</p>
+               <p><b>Vendor Name</b> : {{ item.value.vendor_name }}</p>
+ 
+              </div>
+            
+            </div><br>
+          </div>
+           
         </div>
         <div *ngIf='isErrorAvailable'>
             <p>
                 {{errMessage}}
             </p>
         </div>
-   
-
-   
 </section>

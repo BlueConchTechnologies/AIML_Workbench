@@ -75,14 +75,17 @@ runYourWorkflow() {
            this.isSuccess = true;
          }
           else {
+            this.errMessage = 'Server Error, Please contact system administrator';
             this.isErrorAvailable = true;
-          this.errMessage = 'Error occurred while processing File...!';
+            this.isSuccess = false;
          }
        
        },
        (errorResponse) => {
-         this.toastService.showError('Something went wrong');
-         console.log('ERROR', errorResponse);
+        this.errMessage = 'Server Error, Please contact system administrator';
+        this.isSuccess = false;
+        this.isErrorAvailable = true;
+        console.log('ERROR', errorResponse);
          this.spinnerActive = this.spinner.stop()
 
        });

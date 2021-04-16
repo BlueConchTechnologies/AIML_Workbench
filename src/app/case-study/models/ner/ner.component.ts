@@ -19,7 +19,9 @@ export class NERComponent implements OnInit {
   spinnerActive = false;
   result;
   status;
-  isSuccess: boolean;
+  isSuccess= false;
+  isErrorAvailable= false;
+  errMessage:any
 
   ngOnInit(): void {
 
@@ -48,11 +50,14 @@ export class NERComponent implements OnInit {
             this.result = data.message;
             this.status = true;
             this.isSuccess = false;
+            this.errMessage = 'Server Error, Please contact system administrator';
+            this.isErrorAvailable = true;
           }
          
          },
          (errorResponse) => {
-           this.toastService.showError('Something went wrong');
+          this.errMessage = 'Server Error, Please contact system administrator';
+          this.isErrorAvailable = true;
            console.log('ERROR', errorResponse);
            this.spinnerActive = this.spinner.stop()
   

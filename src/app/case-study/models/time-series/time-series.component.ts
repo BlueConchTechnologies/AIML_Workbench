@@ -127,15 +127,15 @@ export class TimeSeriesComponent implements OnInit {
               });
             } else {
               this.isResultAvailable = false;
-              this.isErrorAvailable = true;
-              this.errMessage = response.response.message;
+              this.errMessage = 'Server Error, Please contact system administrator';
+              this.isErrorAvailable = true;     
             }
             this.spinnerActive = this.spinner.stop();
           },
           (error) => {
             this.isResultAvailable = false;
-            this.isErrorAvailable = true;
-            this.errMessage = error;
+            this.errMessage = 'Server Error, Please contact system administrator';
+            this.isErrorAvailable = true;     
             this.spinnerActive = this.spinner.stop();
           });
       }

@@ -9,7 +9,7 @@
           <div class="col-lg-6">
             <div class="row">
               <div class="custom-file">
-                <input #fileId type="file" class="custom-file-input" formControlName="selectedFile" (change)="
+                <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
                 handleUpload($event);" accept=".html">
                 <label class="custom-file-label">{{termFileLabel}}</label>
               </div>
@@ -48,5 +48,5 @@
           </table>
         </div>
     </div>
-    <p *ngIf="isErrorAvailable && !spinnerActive">Error: {{ errMessage }}</p>
+    <p *ngIf="isErrorAvailable">Error: {{ errMessage }}</p>
   </section>

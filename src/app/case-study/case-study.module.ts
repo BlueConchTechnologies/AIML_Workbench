@@ -34,6 +34,7 @@ import { VoiceClassificationComponent } from './models/voice-classification/voic
 import { SpeakerDiarizationComponent } from './models/speaker-diarization/speaker-diarization.component';
 import { ProductCategorizationComponent } from './models/product-categorization/product-categorization.component';
 import { DocumentClassificationComponent } from './models/document-classification/document-classification.component';
+import { ObjectValuesPipe } from './object-values.pipe';
 
 
 
@@ -68,6 +69,7 @@ import { DocumentClassificationComponent } from './models/document-classificatio
     SpeakerDiarizationComponent,
     ProductCategorizationComponent,
     DocumentClassificationComponent,
+    ObjectValuesPipe,
 
   ],
   imports: [

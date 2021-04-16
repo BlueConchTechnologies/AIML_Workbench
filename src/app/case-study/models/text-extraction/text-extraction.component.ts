@@ -19,13 +19,18 @@ export class TextExtractionComponent implements OnInit {
   spinnerActive = false;
   fileToUpload: File = null;
   termFileLabel= 'choose file....'
-  isSuccess: any;
+  singleModel_isSuccess: any;
+  doubleModel_isSuccess: any;
   isErrorAvailable: any;
   errMessage: any;
+  trainTrackerIdLength:any
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
     })
+
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
    // upload file 
@@ -45,21 +50,65 @@ runYourWorkflow() {
    this._caseStudyService.runWorkflow(formData)
      .subscribe(
        (successResponse) => {
-         console.log('successResponse', successResponse)
-         this.Output_result = successResponse.response.text.trim()
-         this.isSuccess = true;
-         this.spinnerActive = this.spinner.stop()
+          if (this.trainTrackerIdLength <= 1) {
+          console.log('successResponse', successResponse)
+          this.Output_result = successResponse.response.text.trim()
+          console.log(this.Output_result)
+          this.singleModel_isSuccess = true;
+          this.spinnerActive = this.spinner.stop()
+          } else {
+            console.log(this.Output_result)
+            this.secondFlow(successResponse.response.text.trim())
+          }
+
        },
        (errorResponse) => {
-         this.toastService.showError('Something went wrong');
          console.log('ERROR', errorResponse);
+         this.errMessage = 'Server Error, Please contact system administrator';
          this.isErrorAvailable = true;
-          this.errMessage = errorResponse;
          this.spinnerActive = this.spinner.stop()
 
        });
    
 }
+
+
+ //*********************************** */ for two traintrackerId*****************
+  // *************************************************************************************//*
+ //  second flow 
+ secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+   formData_new.append('trainingTracker_id', secondTrainTrackerId);
+   formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value,key) => {
+   console.log("formdata_second model",key+" "+value)
+   });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+ .subscribe(
+   (successResponse) => {
+     console.log('successResponse',successResponse)
+     this.doubleModel_isSuccess = true
+     this.isErrorAvailable = false;
+     this.Output_result = successResponse.response.Result
+     this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+     this.spinnerActive = this.spinner.stop()
+   },
+   (errorResponse) => {
+    //  this.toastService.showError('Something went wrong');
+     console.log('ERROR', errorResponse);
+     this.doubleModel_isSuccess = false
+     this.isErrorAvailable = true;
+     this.errMessage = 'Server Error, Please contact system administrator';
+     this.spinnerActive = this.spinner.stop()
+
+   });
+}
+
+
 
 
 }

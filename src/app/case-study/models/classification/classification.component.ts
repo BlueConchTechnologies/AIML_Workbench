@@ -271,7 +271,7 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
           } else {
             this.isResultAvailable = false;
             this.isErrorAvailable = true;
-            this.errMessage = response.response.message;
+            this.errMessage ='Server Error, Please contact system administrator';
             console.log(response)
           }
           this.spinneractive = this.spinner.stop();
@@ -279,8 +279,9 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
         (error) => {
           console.log(error)
           this.isResultAvailable = false;
+          this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = error;
+          this.errMessage = 'Server Error, Please contact system administrator';
           this.spinneractive = this.spinner.stop();
         }
       );

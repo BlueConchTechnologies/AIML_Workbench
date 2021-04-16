@@ -20,7 +20,7 @@ export class DuplicatePredictionComponent implements OnInit {
   spinnerActive = false;
   isSuccess= false;
   isErrorAvailable = false;
-  errMessage = false
+  errMessage :any
 
   ngOnInit(): void {
 
@@ -47,14 +47,15 @@ export class DuplicatePredictionComponent implements OnInit {
            console.log('successResponse', successResponse)
            this.Output_result = successResponse.response
            this.isSuccess = true
+           this.isErrorAvailable = false
            this.spinnerActive = this.spinner.stop()
          
          },
          (errorResponse) => {
-           this.toastService.showError('Something went wrong');
+          this.isSuccess = false
            console.log('ERROR', errorResponse);
            this.isErrorAvailable = true
-           this.errMessage = errorResponse
+           this.errMessage = 'Server Error, Please contact system administrator';
            this.spinnerActive = this.spinner.stop()
   
          });

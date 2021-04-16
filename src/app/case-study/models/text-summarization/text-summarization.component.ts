@@ -62,7 +62,9 @@ export class TextSummarizationComponent implements OnInit {
          
          },
          (errorResponse) => {
-           this.toastService.showError('Something went wrong');
+          this.errMessage = 'Server Error, Please contact system administrator';
+          this.isErrorAvailable = true;   
+          this.isResultAvailable = false;       
            console.log('ERROR', errorResponse);
            this.spinnerActive = this.spinner.stop()
   
