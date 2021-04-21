@@ -45,7 +45,8 @@ export class MarketPlaceComponent implements OnInit {
   checkedoutModelList :any
   spinnerActive = false;
   // modelCheckList:any
- 
+  isErrorAvailable = false
+  errMessage = ''
 
   constructor(
     private modelDataService: ModelDataService,
@@ -104,6 +105,7 @@ export class MarketPlaceComponent implements OnInit {
     this.config.currentPage = event;
   }
   getModelsData() {
+    this.spinnerActive = this.spinner.start() 
     this.modelService.showData().subscribe(( marketmodeldata : any) => {
       this.marketshowdata = marketmodeldata;
     this.checklist=marketmodeldata.records;
@@ -125,14 +127,21 @@ export class MarketPlaceComponent implements OnInit {
     }
     this.trainable_model = trainable
     this.non_trainable_model = non_trainable
-
+    this.isErrorAvailable = false;
 
 
      console.log ("trainable-model",this.trainable_model)
     console.log ("non-trainable-model",this.non_trainable_model)
     this.disableCheckBtnNonTrainableModel ();
+    this.spinnerActive = this.spinner.stop() 
 
 
+    },
+    (errorResponse) => {
+      this.isErrorAvailable = true;
+      this.errMessage = 'Server Error, Please contact system administrator';
+      this.spinnerActive = this.spinner.stop()
+      console.log(errorResponse)
     });
 
   }

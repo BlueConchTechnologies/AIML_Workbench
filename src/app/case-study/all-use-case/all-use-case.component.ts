@@ -29,6 +29,8 @@ export class AllUseCaseComponent implements OnInit {
  pinToHomeArray = []
  title_prebuiltUseCase = '';
  title_myUseCase = '';
+ isErrorAvailable = false
+ errMessage = ''
   constructor(private _caseStudyService: CaseStudyService, private router: Router,private designWorkflowService: DesignWorkflowService, private toastService: ToastrService, private spinner: SpinnerService,private formBuilder: FormBuilder) { 
   }
 
@@ -51,6 +53,8 @@ export class AllUseCaseComponent implements OnInit {
       var emptyArray = []
       localStorage.setItem("pinToHomeArray",JSON.stringify(emptyArray))
     }
+
+   
     
   }
 
@@ -59,12 +63,18 @@ export class AllUseCaseComponent implements OnInit {
     var preBuilt_usecaseId = "xpanxion"
     this.spinnerActive = this.spinner.start() 
     this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
-      this.spinnerActive = this.spinner.stop()
       this.preBuiltUsecases = resp.records;
       console.log('preBuiltusecaseList',this.preBuiltUsecases)
       this.title_prebuiltUseCase = 'Pre-Built Use Cases'
+      this.isErrorAvailable = false;
+      this.spinnerActive = this.spinner.stop()
+
+       // set prebuilt usecases to home screen
+    this.pinTpHomeScreenPreBuiltUsecase ()
     },
     (errorResponse) => {
+      this.isErrorAvailable = true;
+      this.errMessage = 'Server Error, Please contact system administrator';
       this.spinnerActive = this.spinner.stop()
       console.log(errorResponse)
     });
@@ -75,12 +85,16 @@ export class AllUseCaseComponent implements OnInit {
     var my_usecaseId = localStorage.getItem('logedInUsername')
     this.spinnerActive = this.spinner.start() 
     this._caseStudyService.getPrebuiltUseCases(my_usecaseId).subscribe(resp => {
-      this.spinnerActive = this.spinner.stop()
+      
       this.mytUsecases = resp.records;
       console.log('MyusecaseList',this.mytUsecases)
       this.title_myUseCase = 'My Use Cases';
+      this.isErrorAvailable = false;
+      this.spinnerActive = this.spinner.stop()
     },
     (errorResponse) => {
+      this.isErrorAvailable = true;
+      this.errMessage = 'Server Error, Please contact system administrator';
       this.spinnerActive = this.spinner.stop()
       console.log(errorResponse)
     });
@@ -186,20 +200,31 @@ displayMyusecaseChange(values:any):void {
   this.display_myUseCase = values.currentTarget.checked
 }
 
-//pre-built use cases pin to home screen
-pinTpHomeScreenPreBuiltUsecase (event) {
-  var idAttr = event.srcElement.attributes.id;
-  var usecaseid = idAttr.nodeValue;
+//pre-built use cases pin to home screen by click action
+// pinTpHomeScreenPreBuiltUsecase (event) {
+//   var idAttr = event.srcElement.attributes.id;
+//   var usecaseid = idAttr.nodeValue;
+//   this.pinToHomeArray = JSON.parse(localStorage.getItem("pinToHomeArray"))
+//   for (var i = 0; i < this.preBuiltUsecases.length; i++) {
+//     if (this.preBuiltUsecases[i]._id == usecaseid) {
+//       this.pinToHomeArray.push(this.preBuiltUsecases[i]) 
+//     }
+//   }
+//   console.log ("pre built use case flow",this.pinToHomeArray)
+//   localStorage.setItem("pinToHomeArray",JSON.stringify(this.pinToHomeArray))
+//   this.router.navigate(['home']);
+// }
+
+//pre-built use cases pin to home screen by onload
+pinTpHomeScreenPreBuiltUsecase () {
   this.pinToHomeArray = JSON.parse(localStorage.getItem("pinToHomeArray"))
   for (var i = 0; i < this.preBuiltUsecases.length; i++) {
-    if (this.preBuiltUsecases[i]._id == usecaseid) {
-      this.pinToHomeArray.push(this.preBuiltUsecases[i]) 
-    }
+    this.pinToHomeArray.push(this.preBuiltUsecases[i]) 
   }
   console.log ("pre built use case flow",this.pinToHomeArray)
   localStorage.setItem("pinToHomeArray",JSON.stringify(this.pinToHomeArray))
-  this.router.navigate(['home']);
 }
+
 
 //my use cases pin to home screen
 pinTpHomeScreenMyUsecase (event) {

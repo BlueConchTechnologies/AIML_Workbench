@@ -19,9 +19,20 @@ export class SpeakerDiarizationComponent implements OnInit {
   spinnerActive = false;
   fileToUpload: File = null;
   termFileLabel= 'choose file....'
-  isSuccess: any;
-  isErrorAvailable: any;
-  errMessage: any;
+  public isSuccess = false;
+  public isErrorAvailable = false;
+  public spinneractive = false;
+  public result = [];
+  public times = [];
+  public speakers = [];
+  public levels = [];
+  public speaker = [];
+  public status = null;
+  public fileLabel: string;
+  public errMessage: any;
+  termFileString: any;
+  errorMessage: string;
+
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
@@ -44,21 +55,52 @@ runYourWorkflow() {
    this.spinnerActive = this.spinner.start();
    this._caseStudyService.runWorkflow(formData)
      .subscribe(
-       (successResponse) => {
-         console.log('successResponse', successResponse)
-         this.Output_result = successResponse.response.Result
-         this.isSuccess = true;
-         this.isErrorAvailable = false;
-         this.spinnerActive = this.spinner.stop()
-       },
-       (errorResponse) => {
-        this.errMessage = 'Server Error, Please contact system administrator';
-        this.isErrorAvailable = true;
-        this.isSuccess = false;
-        console.log('ERROR', errorResponse);
-         this.spinnerActive = this.spinner.stop()
+      (res: any) => {
+        if (res.status === 'Success' && res.response.status !== 'fail') {
+          this.result = res.response.result;
+          for (let res of this.result) {
+            Object.keys(res).forEach(key => {
+              this.times.push(key);
+            });
+            Object.values(res).forEach(value => {
+              this.speakers.push(value);
+            });
+          }
+          for (let sp of this.speakers) {
+            if (sp) {
+              this.speaker.push(sp.split(' ', 1));
+              this.levels.push(sp.replace(/[\(\)']+/g, '').split(' ').slice(-1).join(' '));
+            } 
+          }
+          for (var i = 0; i < this.speaker.length && this.levels.length ; i++) {
+            if (this.speaker[i] == "Unknown/No"){
+              this.speaker[i] =  "No speaker"
+            
+            }
+            if (this.levels[i] == "speaker"){
+              this.levels[i] =  "Unknown"
+            
+            }
+          }
+          this.status = res.status;
+          this.isSuccess = true;
+          this.spinnerActive = this.spinner.stop();
+        } else {
+          this.result = [];
+          this.status = res.response.status;
+          this.isErrorAvailable = true;
+          this.errMessage = res.response.Message;
+          this.isSuccess = false;
+          this.spinnerActive = this.spinner.stop();
+        }
+      },
+        error => {
+          this.isSuccess = false;
+          this.isErrorAvailable = true;
+          this.errMessage = error;
+          this.spinnerActive = this.spinner.stop();
 
-       });
+        });
    
 }
 }

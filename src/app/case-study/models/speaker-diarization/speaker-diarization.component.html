@@ -9,7 +9,6 @@
        </div>
        <div class="row">
          <div class="col-md-6">
-          <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
           <div class="custom-file">
             <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
         uploadFileInput($event.target.files)">
@@ -28,20 +27,38 @@
   </form>
 
  <br><br>
-<section class="results container p-4 mb-4">
+ <section class="results container p-4 mb-4">
   <h2>Results</h2>
- 
-  <div>
-      <div *ngIf="isSuccess">
-          <p>
-             <b> FileName : </b>{{ termFileLabel}}
-              <br><br>
-              <b>Embedding Match Id : </b> {{ Output_result.Embedding_match }}
-              <br><br>
-              <b>Speaker : </b> {{ Output_result.Speaker }}
-          </p>
-      </div>
-      <div *ngIf = 'isErrorAvailable'>
+  <div *ngIf="result">
+      <table *ngIf="isSuccess" class="table text-center">
+          <thead>
+              <tr>
+                  <th class="th-color"> Sr.No.</th>
+                  <th class="th-color"> Time (Sec) </th>
+                  <th class="th-color"> Speaker</th>
+                  <th class="th-color"> Confidence Level</th>
+              </tr>
+          </thead>
+          <tbody>
+              <ng-container *ngFor="let time of times;let i=index">
+                  <tr>
+                      <td >
+                          {{ i + 1}}
+                      </td>
+                      <td >
+                          {{time}} 
+                      </td>
+                      <td >
+                          {{speaker[i]}}
+                      </td>
+                      <td>
+                          {{levels[i]}}
+                      </td>
+                  </tr>
+              </ng-container>
+          </tbody>
+      </table>
+      <div *ngIf='isErrorAvailable'>
           <p>
               {{errMessage}}
           </p>
