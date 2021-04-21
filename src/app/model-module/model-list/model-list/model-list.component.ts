@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { TrainModelComponent } from '../../train-model/train-model/train-model.component';
 import { TestModelComponent } from '../../test-model/test-model/test-model.component';
@@ -107,7 +108,26 @@ export class ModelListComponent implements OnInit {
         var trainedModel = []
         for (var i = 0; i < this.result.length; i++) {
           if (this.result[i].original_model_name == 'TimeSeries') { this.result[i].model_route = "time-series"; }
-          else if (this.result[i].original_model_name == 'AnamolyDetection') { this.result[i].model_route = "anamoly-detection"; }
+          else if (this.result[i].original_model_name == 'AnamolyDetection'){this.result[i].model_route = "anomaly-detection"; }
+          else if (this.result[i].original_model_name == 'NER'){this.result[i].model_route = "named-entity-recognition"; } 
+          else if (this.result[i].original_model_name == 'VideoAnalytics'){this.result[i].model_route = "video-analytics"; } 
+          else if (this.result[i].original_model_name == 'TableExtractor'){this.result[i].model_route = "table-extractor"; } 
+          else if (this.result[i].original_model_name == 'DocumentClassification'){this.result[i].model_route = "document-classification"; } 
+          else if (this.result[i].original_model_name == 'TextSummarization'){this.result[i].model_route = "text-summarization"; }
+          else if (this.result[i].original_model_name == 'TicketClassification'){this.result[i].model_route = "ticket-classification"; }
+          else if (this.result[i].original_model_name == 'SentimentClassification'){this.result[i].model_route = "sentiment-analysis"; }
+          else if (this.result[i].original_model_name == 'QNA-KB'){this.result[i].model_route = "question-answer"; }
+          else if (this.result[i].original_model_name == 'Classification'){this.result[i].model_route = "ml-classification"; }
+          else if (this.result[i].original_model_name == 'InstanceSegmentation'){this.result[i].model_route = "instance-segmentation"; } 
+          else if (this.result[i].original_model_name == 'InvoiceExtraction'){this.result[i].model_route = "invoice-extraction"; } 
+          else if (this.result[i].original_model_name == 'VideoAnalytics'){this.result[i].model_route = "video-analytics"; } 
+          else if (this.result[i].original_model_name == 'ObjectDetection'){this.result[i].model_route = "object-detection"; }
+          else if (this.result[i].original_model_name == 'TermsExtraction'){this.result[i].model_route = "term-extractor"; } 
+          else if (this.result[i].original_model_name == 'TextExtraction'){this.result[i].model_route = "image-to-text"; } 
+          else if (this.result[i].original_model_name == 'DuplicatePrediction'){this.result[i].model_route = "duplicates-prediction"; } 
+          else if (this.result[i].original_model_name == 'FaceRecognition'){this.result[i].model_route = "face-recognition"; } 
+          else if (this.result[i].original_model_name == 'ProductCategorization'){this.result[i].model_route = "products-categorization"; }
+
         }
         this.result.map(obj => ({
           ...obj,
