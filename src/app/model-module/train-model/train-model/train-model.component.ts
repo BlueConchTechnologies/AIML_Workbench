@@ -21,6 +21,7 @@ import { MatHorizontalStepper } from '@angular/material/stepper';
 export class TrainModelComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
+  thirdFormGroup: FormGroup;
   modalHeader: string;
   modelData: any;
   modalContent: string;
@@ -33,6 +34,8 @@ export class TrainModelComponent implements OnInit {
   isOptional = false;
   spinnerActive = false;
   public active = false;
+  modelToBeTrain:any;
+  display_thirdFormGroup = false;
   fileObj: any;
   inputFile: string | ArrayBuffer;
 
@@ -65,10 +68,25 @@ export class TrainModelComponent implements OnInit {
       //epochs: [''],
       //DropOut: ['']
     });
+    
+    this.getModelToBeTrainData ()
     this.addTrainingParamCheckboxes();
     if (this.modelData.modelHistory && this.modelData.modelHistory.length > 0) {
       this.firstFormGroup.controls.upload.setValue(this.modelData.modelHistory[0]._id);
     }
+  }
+
+  // display third form for product categorization model
+  getModelToBeTrainData () {
+    this.modelToBeTrain = JSON.parse(localStorage.getItem('modelToBeTrain'))
+    console.log("originalModelName",this.modelToBeTrain.original_model_name)
+
+    if (this.modelToBeTrain.original_model_name == 'ProductCategorization'){
+         this.display_thirdFormGroup = true;
+    }
+    this.thirdFormGroup = this.fb.group({
+     col_name: [''],
+    });
   }
   private addTrainingParamCheckboxes() {
     this.modelData.modelTrainingParamValues.forEach((tParam) => {
@@ -97,6 +115,7 @@ export class TrainModelComponent implements OnInit {
     let modal = {
       "_id": "Test123",
       "user_id": "banu",
+      // "user_id": "xpanxion",
       "model_name": this.modelData.modelName,
       "file_name": this.fileObj.name,
       "created_date_time": this.fileObj.lastModifiedDate
@@ -145,10 +164,6 @@ export class TrainModelComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', this.fileObj);
       formData.append('trainTracker_id', this.modelData.trainTrackerId);
-      // formData.append('user_id', environment.testUserId);
-      // formData.append('model_name', this.firstFormGroup.get('modelName').value);
-      // formData.append('model_description', this.firstFormGroup.get('modelDescription').value);
-      // formData.append('algorithmname', "*");
       this.modelDataService.uploadData(formData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {
@@ -176,12 +191,6 @@ export class TrainModelComponent implements OnInit {
   addModelParam() {
     this.secondFormGroup.controls.TrainingParamValues.setValidators(minSelectedCheckboxes(1));;
     this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
-    if (!this.secondFormGroup.valid) {
-      this.secondFormGroup.controls.TrainingParamValues.setValidators(null);;
-      this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
-      this.toastrService.showError(ToastrCode.RequiredFeilds)
-    }
-    else {
       this.spinnerActive = this.spinner.start();
 
       const selectedOrderIds = this.secondFormGroup.value.TrainingParamValues
@@ -205,8 +214,15 @@ export class TrainModelComponent implements OnInit {
       }
       modelData.experiment_name = this.firstFormGroup.controls.experiment_name.value;
       modelData.experiment_description = this.firstFormGroup.controls.experiment_description.value;
-      console.log("train model post data",modelData)
+      modelData.original_model_name = this.modelToBeTrain.original_model_name
 
+      // add col_name when model will be product categorization
+      if (modelData.original_model_name == 'ProductCategorization') {
+        modelData.col_name = this.thirdFormGroup.controls.col_name.value
+      }
+
+      console.log("*******************************************************************add algorithm :**************************************")
+      console.log(modelData)
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
           if (response.status === 'Success') {
@@ -215,15 +231,18 @@ export class TrainModelComponent implements OnInit {
           this.onClose();
           window.location.reload();
           this.spinnerActive = this.spinner.stop();
+          console.log("workflow running success")
 
         },
         (error) => {
+          this.spinnerActive = this.spinner.stop();
           console.log(error);
           this.toastrService.showError(ToastrCode.ApiError);
+          console.log("workflow faild")
         }
       );
       this.toastrService.showSuccess(ToastrCode.Training);
-    }
+    
   }
 
   onStepComplete() {

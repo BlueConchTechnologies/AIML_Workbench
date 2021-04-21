@@ -1,0 +1,46 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Input  Text</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12">
+          <textarea type="text" rows="6"  formControlName="input_text" class="form-control label-input"   ></textarea>
+         </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+  <section class="results py-3">
+    <div class="container">
+      <h2>
+        Results
+      </h2>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 top">
+
+        </div>
+      </div>
+      <p *ngIf="displayStatus">
+       <b>Input Text:</b>  {{ inputText }}
+        <br />
+       <b>Prediction:</b>  {{ prediction }}
+      </p>
+      <p *ngIf="isErrorAvailable">
+        Error: {{ errMessage }}
+    </p>
+    </div>
+  </section>

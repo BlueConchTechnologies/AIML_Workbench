@@ -1,15 +1,65 @@
 <div class="row">
-    <div class="col-2"></div>
-    <div class="col top">
-        <h5>Welcome ! To AI-Workbench Portal, start exploring the story.</h5>
-        <br/>
-        <p><em>How do i proceed</em> - Nothing special, just start adding components and services as you normally would</p>
-        <p><em>Whats that to left side</em> - Demos of some of components that might come handy to you</p>
-        <p><em>Show me what the kit has</em> - Sure, head over
-            <a target="_blank" href="https://dah.xpanxion.co.in:9010/accelerators/angular">here</a></p>
-        <p><em>Whats the version of angular</em>- V9</p>
-
-        <em><a routerLink="/marketplace">Start Building Your Own Use Case</a></em>
+    <div class="col-12 background">
+        <div class="scroll">
+            <br>
+            <div class="custom_container">
+        <div class="row">
+            <!-- <div class="col-1"></div> -->
+            <div class="col-12 top text-white ">
+                <div class="custom_card_new p-4">
+                    <p class="titile_details">Platform for orchestrating AI/ML services to solve domain-agnostic real-life challenges</p>
+                    <p class="titile_details">* Provides pre-built AI/ML usecases & AI/ML services</p>
+                    <p class="titile_details">* Provides Test functionality for the services</p>
+                    <p class="titile_details">* Supports customized pipelines</p>
+                </div>
+            </div>
+        </div>
     </div>
-
+        <div class="row" >
+            <div class="col-12 ">
+                <div class="custom_card">
+                    <div *ngIf="display_UseCases">
+                    <h4 class="text-white custom_card_title">Use Cases</h4>
+                    <br />
+                    
+                    <div class="row">
+                        <div class="col-sm-4 mb-4" *ngFor="let usecase of pinToHomeScreen">
+                             <div class="custom_card_new" style="height: 16rem;">
+                                  <div class="card-header bg-none">
+                                       <h5 class="modal-title ng-binding">
+                                            <div class="row">
+                                                 <div class="col-md-2">
+                                                      <a  ><i class="fa fa-files-o fa-round-bg" aria-hidden="true"></i></a> 
+                                                 </div>
+                                                 <div class="col-md-10 ">
+                                                      <p >{{usecase.usecase_name}}</p> 
+                                                 </div>
+                                                 
+                                                 
+                                            </div>
+                                          
+                                            
+                                        </h5>
+                                  </div>
+                                  <div class="card-body">                  
+                                  <p>{{usecase.usecase_description}}</p>                   
+                                  </div>
+                                  <div class="card-footer text-center">
+                                      <button class="btn btn-outline-primary btn-md toggle-checkbox text-center mr-2" id={{usecase._id}} (click)="runUsecase($event)" >
+                                               Run
+                                       </button>
+                                       <button class="btn btn-outline-primary btn-md toggle-checkbox text-center" id={{usecase._id}} (click)="unPinModel($event)" >
+                                        <i class="fa fa-thumb-tack" aria-hidden="true"></i> Unpin
+                                </button>
+                                   </div>
+                             </div>
+                        </div> 
+                   </div>
+                </div>
+               
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>

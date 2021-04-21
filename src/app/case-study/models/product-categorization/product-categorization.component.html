@@ -1,0 +1,78 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
+    <div class="form-row">
+      <div class="form-group col-md-12">
+       <div class="row">
+         <div class="col-md-12">
+          <label>File Browse</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+          <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
+          <div class="custom-file">
+            <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
+        uploadFileInput($event.target.files)" >
+            <label class="custom-file-label">{{termFileLabel}}</label>
+        </div>
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-12" >
+         <div class="row">
+           <div class="col-md-12">
+            <label>Column Name</label>
+        </div>
+         </div>
+         <div class="row">
+           <div class="col-md-6">
+            <input type="text"  formControlName="col_name" class="form-control label-input">
+           </div>
+         </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-12" >
+         <div class="row">
+           <div class="col-md-12">
+            <label>Description</label>
+        </div>
+         </div>
+         <div class="row">
+           <div class="col-md-6">
+            <input type="text" formControlName="desc" class="form-control label-input">
+           </div>
+         </div>
+        </div>
+      </div>
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit" class="btn btn-primary component-button mt-4">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+ <br><br>
+<section class="results container p-4 mb-4">
+  <h2>Results</h2>
+ 
+  <div>
+      <div *ngIf="isSuccess">
+          <p>
+             <b> FileName : </b>{{ termFileLabel}}
+              <br><br>
+              <b>Result : </b> {{ Output_result }}
+          </p>
+      </div>
+      <div *ngIf = 'isErrorAvailable'>
+          <p>
+              {{errMessage}}
+          </p>
+      </div>
+  </div>
+
+</section>

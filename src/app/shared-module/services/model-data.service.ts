@@ -49,6 +49,12 @@ export class ModelDataService {
     return this.http.get(url);
   }
 
+  //get All model train history
+  getAllmodeltrainhistory(user_id:any): Observable<any>  {
+    const url: string = this.API_URL + '/api/training/history?user_id='+ user_id;
+    return this.http.get(url);
+  }
+
   getModelHistory(trainTracker_id:any): Observable<any>  {
     const url: string = this.API_URL + '/api/training/history?trainTracker_id='+ trainTracker_id;
     return this.http.get(url);
@@ -65,7 +71,11 @@ export class ModelDataService {
   }
 
   //Update the Selected Model List
+  
     uploadData(fileData) {
+      fileData.forEach((value,key) => {
+        console.log("upload file details :",key+" "+value)
+         });
       const url: string = this.API_URL + '/api/uploadfile';
       return this.http.post(url, fileData);
     }

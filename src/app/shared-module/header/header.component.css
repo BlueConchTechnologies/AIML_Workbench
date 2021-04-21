@@ -1,8 +1,16 @@
 ﻿.bd-navbar {
-    min-height: 4rem;
+    /* min-height: 4rem;
     background-color: #1e1e1e;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .05), inset 0 -1px 0 rgba(0, 0, 0, .1);
-    border-bottom: 0.2rem solid #15BAF3;
+    border-bottom: 0.2rem solid #15BAF3; */
+    height: 70px;
+    background-image: none;
+    margin-bottom: 0;
+    max-width: 100%;
+    
+    background: linear-gradient(180deg, #000c67 0%, #0073db 100%);
+    /* background-color: white;
+    box-shadow: 5px 5px grey; */
 }
 
 .bd-navbar .navbar-nav-scroll {
@@ -35,4 +43,9 @@
 
 .logo img {
     height: 5rem;
+}
+
+.dropdown-menu_custom {
+    min-width: 5rem; 
+    padding: 2px;
 }

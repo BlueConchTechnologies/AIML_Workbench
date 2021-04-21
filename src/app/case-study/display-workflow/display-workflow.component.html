@@ -1,0 +1,118 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h6 class="create-design-header mt-4"><a class="nav-link" routerLink="/casestudy"><i class="fa fa-chevron-left"
+                        aria-hidden="true"></i> All Use Case </a></h6>
+        </div>
+
+    </div>
+    
+    <div class="container">
+        <!-- display name and description  -->
+        <form class="mt-5" [formGroup]="runWorkflowForm">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Use Case Name</label>
+                    <input type="input" formControlName="name" [(ngModel)]="workFlowName" class="form-control" readonly>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Use Case Description</label>
+                    <input type="input" formControlName="description" [(ngModel)]="workflowDescription"
+                        class="form-control" readonly>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container">
+
+        <!-- //non tranable model
+  display_tableExtractor = false;
+  display_textSummarization = false;
+  display_sentimentClassification = false;
+  display_VideoAnalytics = false;
+  display_ObjectDetection = false;
+  display_QNA_KB = false;
+  display_TicketClassification = false;
+  display_TermsExtraction = false;
+  display_TextExtraction = false;
+  display_InvoiceExtraction = false;
+  display_InstanceSegmentation = false;
+  display_DuplicatePrediction = false;
+  display_FaceRecognotion = false;
+  display_DocumentClassification = false;
+
+  // tranable model
+  
+  display_TimeSeries = false;
+  display_Classification = false;
+  display_AnamolyDetection = false;
+  display_NER = false;
+  display_VoiceClassification = false;
+  display_SpeakerDiarization = false;
+  display_ProductCategorization = false; -->
+        <div *ngIf='display_tableExtractor'>
+            <app-table-extractor></app-table-extractor>
+        </div>
+        <div *ngIf='display_textSummarization'>
+            <app-text-summarization></app-text-summarization>
+        </div>
+        <div *ngIf='display_sentimentClassification'>
+            <app-sentiment-classification></app-sentiment-classification>
+        </div>
+        <div *ngIf='display_VideoAnalytics'>
+            <app-video-analytics></app-video-analytics>
+        </div>
+        <div *ngIf='display_ObjectDetection'>
+            <app-object-detection></app-object-detection>
+        </div>
+        <div *ngIf='display_QNA_KB'>
+            <app-qna-kb></app-qna-kb>
+        </div>
+        <div *ngIf='display_TicketClassification'>
+            <app-ticket-classification></app-ticket-classification>
+        </div>
+        <div *ngIf='display_TermsExtraction'>
+            <app-terms-extraction></app-terms-extraction>
+        </div>
+        <div *ngIf='display_TextExtraction'>
+            <app-text-extraction></app-text-extraction>
+        </div>
+        <div *ngIf='display_InvoiceExtraction'>
+            <app-invoice-extraction></app-invoice-extraction>
+        </div>
+        <div *ngIf='display_InstanceSegmentation'>
+            <app-instance-segmentation></app-instance-segmentation>
+        </div>
+        <div *ngIf='display_DuplicatePrediction'>
+            <app-duplicate-prediction></app-duplicate-prediction>
+        </div>
+        <div *ngIf='display_FaceRecognotion'>
+            <app-face-recognotion></app-face-recognotion>
+        </div>
+        <div *ngIf='display_DocumentClassification'>
+            <app-document-classification></app-document-classification>
+        </div>
+        <div *ngIf='display_TimeSeries'>
+            <app-time-series></app-time-series>
+        </div>
+        <div *ngIf='display_Classification'>
+           <app-classification></app-classification>
+        </div>
+        <div *ngIf='display_AnamolyDetection'>
+           <app-anamoly-detection></app-anamoly-detection>
+         </div>
+         <div *ngIf='display_NER'>
+            <app-ner></app-ner>
+          </div>
+          <div *ngIf='display_VoiceClassification'>
+           <app-voice-classification></app-voice-classification>
+          </div>
+          <div *ngIf='display_SpeakerDiarization'>
+            <app-speaker-diarization></app-speaker-diarization>
+           </div>
+           <div *ngIf='display_ProductCategorization'>
+           <app-product-categorization></app-product-categorization>
+           </div>
+    </div>
+</div>

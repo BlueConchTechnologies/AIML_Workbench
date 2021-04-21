@@ -39,6 +39,7 @@ export class AuthService {
     }
 
     isUserLoggedIn(): boolean {
+        console.log('this.isLoggedIn',this.isLoggedIn)
         return this.isLoggedIn;
     }
 

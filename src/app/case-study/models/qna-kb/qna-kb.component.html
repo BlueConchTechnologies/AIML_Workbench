@@ -1,0 +1,93 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Question</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-12">
+          <textarea type="text" rows="3" formControlName="question" class="form-control label-input"   ></textarea>
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Knowledge base id</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-2">
+            <select formControlName="kb_id" class="form-control label-input" >
+              <option value="A1">A1</option>
+              <option value="A2">A2</option>
+              <option value="A3">A3</option>
+          </select>
+         
+         </div>
+       </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-12" >
+       <div class="row">
+         <div class="col-md-12">
+          <label>Top Results</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-2">
+          <select formControlName="top_n" class="form-control label-input"  >
+            <option value="2">2</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+        </select>
+         </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-primary component-button">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+  <section class="results py-3">
+    <div class="container">
+        <h2>
+            Results
+        </h2>
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 top">
+               
+            </div>
+        </div>
+        <!-- <p *ngIf="isResultAvailable">
+            Status: {{ resultStatus }}
+            <br>
+            Question: {{ inputQuestion }}
+            <br>
+            Answer: {{ resultSummary }}
+        </p> -->
+        <div *ngIf="isResultAvailable">
+            <p *ngFor = 'let r of result'>
+                Score: {{ r.score }}
+                <br>
+                Question: {{ r.matched_question }}
+                <br>
+                Answer: {{ r.answer }}
+            </p>
+        </div>
+        <p *ngIf="isErrorAvailable">
+            Error: {{ errMessage }}
+        </p>
+    </div>
+</section>

@@ -1,0 +1,48 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()">
+    <div class="form-row">
+      <div class="form-group col-md-12">
+       <div class="row">
+         <div class="col-md-12">
+          <label>File Browse</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+          <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
+          <div class="custom-file">
+            <input #file formControlName="file" type="file" id="file" accept="image/jpg,image/jpeg,image/png,Video/mp4"
+            (change)="uploadFileInput($event.target.files)" class="custom-file-input" >
+            <label class="custom-file-label">{{termFileLabel}}</label>
+        </div>
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"  class="btn btn-primary component-button">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+<br><br>
+
+<section class="results container p-4 mb-4 mt-4">
+  <h2>Results</h2>
+  <div>
+
+      <div *ngIf="isSuccess" class="text-center">
+          <img *ngIf="imageUrl && !videoUrl" [src]="imageUrl" style="max-height: 450px; max-width: 500px"/>
+          <video *ngIf="videoUrl" width="520" height="400" controls>
+              <source [src]="videoUrl">
+          </video>
+      </div>
+
+      <div *ngIf='isErrorAvailable'>
+          <p>
+             {{errMessage}}
+          </p>
+      </div>
+  </div>
+</section>

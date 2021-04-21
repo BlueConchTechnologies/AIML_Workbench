@@ -16,6 +16,9 @@ export class CaseStudyService {
 
   getAllUseCases(): Observable<any> {
     return this._http.get(this.API_URL + '/api/dynamicfields');
+  }
+  getPrebuiltUseCases(userId): Observable<any> {
+    return this._http.get(this.API_URL + `/api/usecases?user_id=${userId}`);
   } 
 
   createUsecase(request: any): Observable<any> {
@@ -26,8 +29,16 @@ export class CaseStudyService {
     return this._http.post(this.NODE_URL + 'documentClassification', request);
   }
   runWorkflow(request: any): Observable<any> {
-    console.log("modeldta to api",request)
+    request.forEach((value,key) => {
+      console.log("formdata_new",key+" "+value)
+       }); 
     return this._http.post(this.API_URL + '/api/predict', request);
   }
+
+  runWorkflow_imageFormatOutput(request: any): Observable<any> {
+    return this._http.post(this.API_URL + '/api/predict', request,{observe: 'body', responseType: 'blob'});
+  }
+
+ 
   
 }

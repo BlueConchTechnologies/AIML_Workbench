@@ -7,8 +7,8 @@ import { environment } from '@env';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ModelDataService } from '@shared/services/model-data.service';
-import {  SpinnerService } from '@core'
- 
+import { SpinnerService } from '@core'
+
 @Component({
   selector: 'app-design-workflow',
   templateUrl: './design-workflow.component.html',
@@ -23,73 +23,102 @@ export class DesignWorkflowComponent implements OnInit {
   urlSafe: SafeResourceUrl;
   spinnerActive = false;
   result: any;
-  trainedAndNonTrainableModel:any
-  workFlow:any;
+  trainedAndNonTrainableModel: any
+  workFlow: any;
+  user_id: any;
+  usecase_name: any;
+  usecase_description: any;
+  flow: any;
+  usecaseId = null
+  useCaseUserId: any
+  trainableModelData: any;
+  nonTrainableModelData: any;
 
   constructor(private designWorkflowService: DesignWorkflowService, private toastService: ToastrService,
-    private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer,private modelDataService: ModelDataService,
+    private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer, private modelDataService: ModelDataService,
     private spinner: SpinnerService) { }
 
   ngOnInit(): void {
-    this.getTableData()
+    this.getTranableAndNonTranableModelData()
     // this.createNode();
     const data = history.state;
     this.useCaseData = data[0];
-   
-    }
 
-  // add previously created flow
-  // createNode() {
-  //     var allSubflow = [{"id":"5750b22f.6cdecc","type":"tab","label":"Flow 1","disabled":false,"info":""},{"id":"6d00b61d.6cd948","type":"subflow","name":"Document Classification","info":"","category":"","in":[],"out":[],"env":[],"color":"#DDAA99"},{"id":"bbcc4858.3393b8","type":"subflow","name":"File Upload","info":"","category":"","in":[],"out":[{"x":740,"y":120,"wires":[{"id":"eb60e72.20a4f18","port":0}]}],"env":[],"color":"#DDAA99"},{"id":"d62a90e7.d95cc","type":"http request","z":"6d00b61d.6cd948","name":"","method":"POST","ret":"obj","paytoqs":false,"url":"http://121.244.33.115:8080/api/DocumentClassification/predict_class","tls":"","persist":false,"proxy":"","authType":"","x":370,"y":60,"wires":[["a589ccbe.b103f"]]},{"id":"441ae066.0c097","type":"function","z":"6d00b61d.6cd948","name":"Set Text","func":"msg.headers = {\n    \"Content-Type\": \"multipart/form-data; boundary=------------------------d74496d66958873e\"\n}\n\nmsg.payload = '--------------------------d74496d66958873e\\r\\n'+\n'Content-Disposition: form-data; name=\"select\"\\r\\n'+\n'\\r\\n'+\n'true\\r\\n'+\n'--------------------------d74496d66958873e\\r\\n'+\n'Content-Disposition: form-data; name=\"print\"\\r\\n'+\n'\\r\\n'+\n'true\\r\\n'+\n'--------------------------d74496d66958873e\\r\\n'+\n'Content-Disposition: form-data; name=\"text\"\\r\\n'+\n'Content-Type: text/html\\r\\n'+\n'\\r\\n'+\nmsg.payload+'\\r\\n'+\n'--------------------------d74496d66958873e--\\r\\n';\nreturn msg;","outputs":1,"noerr":0,"x":180,"y":60,"wires":[["d62a90e7.d95cc"]]},{"id":"bd3429fd.abca38","type":"http in","z":"6d00b61d.6cd948","name":"","url":"/documentClassification","method":"post","upload":false,"swaggerDoc":"","x":210,"y":240,"wires":[["b3ade76.6a2aa18"]]},{"id":"b3ade76.6a2aa18","type":"function","z":"6d00b61d.6cd948","name":"","func":"var text = msg.payload.text\nmsg.payload  = text;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","x":450,"y":200,"wires":[["441ae066.0c097"]]},{"id":"a589ccbe.b103f","type":"http response","z":"6d00b61d.6cd948","name":"","statusCode":"","headers":{},"x":570,"y":60,"wires":[]},{"id":"aa8b20cd.41667","type":"http in","z":"bbcc4858.3393b8","name":"UPLOAD","url":"/upload","method":"post","upload":true,"swaggerDoc":"","x":200,"y":120,"wires":[["9caa980b.5449c8","fa38873b.8a7b48"]]},{"id":"9caa980b.5449c8","type":"function","z":"bbcc4858.3393b8","name":"Set file name","func":"var extn = msg.req.files[0].originalname.split('.').pop()\nmsg.filename = \"test.\"+extn;\nmsg.extn= extn;\nmsg.payload = msg.req.files[0].buffer;\nreturn msg;","outputs":1,"noerr":0,"initialize":"","finalize":"","x":390,"y":120,"wires":[["eb60e72.20a4f18","d8ea6a70.2b1c08"]]},{"id":"eb60e72.20a4f18","type":"file","z":"bbcc4858.3393b8","name":"Save file","filename":"","appendNewline":true,"createDir":true,"overwriteFile":"true","encoding":"none","x":600,"y":120,"wires":[[]]},{"id":"fa38873b.8a7b48","type":"debug","z":"bbcc4858.3393b8","name":"","active":true,"tosidebar":true,"console":false,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":390,"y":280,"wires":[]},{"id":"d8ea6a70.2b1c08","type":"debug","z":"bbcc4858.3393b8","name":"","active":true,"tosidebar":true,"console":true,"tostatus":false,"complete":"true","targetType":"full","statusVal":"","statusType":"auto","x":650,"y":260,"wires":[]}]
-  //   // var allSubflow =  localStorage.getItem("workflow_to_nodered");
-  //   this.designWorkflowService.createFlow(allSubflow).subscribe(data => {
-  //   });
-  // }
+    // check if usecaseId present or not
+    this.usecaseId = localStorage.getItem('usecaseId')
 
-  // startFlow() {
-  //   this.designWorkflowService.startFlow().subscribe(data => {
-  //   });
-  // }
+  }
 
   // generate new flow
   finalizedDesign() {
+    this.spinnerActive = this.spinner.start();
     this.designWorkflowService.checkDesign().subscribe(
       (successResponse) => {
+        this.spinnerActive = this.spinner.stop();
         this.workFlow = successResponse[0]
         var sJson = JSON.stringify(successResponse);
-
+        var flowName = successResponse[0].label
         // set workflow to localstorage
-        localStorage.setItem("workflow_to_nodered",JSON.stringify (successResponse) );
+        localStorage.setItem("workflow_to_nodered", JSON.stringify(successResponse));
 
-        // download the workflow
-        var element = document.createElement('a');
-        element.setAttribute('href', "data:text/json;charset=UTF-8," + encodeURIComponent(sJson));
-        element.setAttribute('download', "download_subflow.json");
-        element.style.display = 'none';
-        document.body.appendChild(element);
-        element.click(); // simulate click
-        document.body.removeChild(element);
-        this.router.navigate(['/runworkflow']);
+        //get workflow values
+        this.usecase_name = successResponse[0].label;
+        this.usecase_description = successResponse[0].info;
+        this.flow = successResponse
+
+        //getting login user and usecase user
+        this.user_id = localStorage.getItem('logedInUsername');
+        this.useCaseUserId = localStorage.getItem('usecaseUserId');
+        console.log('usecaseUserId********************************************', this.useCaseUserId)
+
+
+        if (this.usecaseId == 'null' || this.useCaseUserId == 'xpanxion') {
+          this.saveWorkflowToDB();
+        }
+        else {
+          this.updateWorkflowToDb();
+        }
       },
       (errorResponse) => {
       });
-      
-      
 
-    // this.useCaseData.url = this.nodeRedConstant.flowURL.DocumentClassification;
-    // const useCaseDataList = [];
-    // useCaseDataList.push(this.useCaseData);
-    // console.log("useCaseDataList",useCaseDataList)
-    // this.designWorkflowService.finalizedFlow(useCaseDataList).subscribe(
-    //   (successResponse) => {
-    //     this.toastService.showSuccess(ToastrCode.DesignedFinalized);
-        
-    //   },
-    //   (errorResponse) => {
-    //     this.toastService.showError(ToastrCode.Fatal);
-    //   });
   }
 
+
+
+  // ***********save work flow***********************//
+  saveWorkflowToDB() {
+    this.spinnerActive = this.spinner.start();
+    this.designWorkflowService.saveWorkflow(this.user_id, this.usecase_name, this.usecase_description, this.flow).subscribe(
+      data => {
+        this.spinnerActive = this.spinner.stop();
+        console.log("save workflow response***************************************", data)
+        // this.router.navigate(['/runworkflow']);
+        this.router.navigate(['/displayWorkflow']);
+      },
+      (error) => {
+        this.spinnerActive = this.spinner.stop();
+        console.log('save workflow error', error)
+      }
+    )
+
+  }
+
+  // ***********update work flow***********************//
+  updateWorkflowToDb() {
+    this.spinnerActive = this.spinner.start();
+    this.designWorkflowService.updateWorkflow(this.usecaseId, this.useCaseUserId, this.usecase_name, this.usecase_description, this.flow).subscribe(
+      data => {
+        this.spinnerActive = this.spinner.stop();
+        console.log("update workflow response***************************************", data)
+        this.router.navigate(['/casestudy']);
+      },
+      (error) => {
+        this.spinnerActive = this.spinner.stop();
+        console.log('save workflow error', error)
+      }
+    )
+  }
   getTrainModel() {
     this.designWorkflowService.getTrainModel().subscribe(
       (successResponse) => {
@@ -98,42 +127,161 @@ export class DesignWorkflowComponent implements OnInit {
         this.toastService.showError(ToastrCode.Fatal);
       });
   }
-   
 
-  // get trained and non trainable model
-  getTableData() {
-    this.spinnerActive = this.spinner.start() 
+
+  // get trainable and non trainable model data
+  getTranableAndNonTranableModelData() {
+
+    // get  non trainable model data
+    this.spinnerActive = this.spinner.start()
     this.modelDataService.getModelList(environment.testUserId).subscribe(
       (response: any) => {
         this.result = response.records;
-        console.log("all data trainModel",this.result)
         // get trained and non-trainable model
         var trainedModel = []
         var trainModelData = []
-        for (var i = 0; i < this.result.length; i++){
-            if(this.result[i].status == 'Trained' || this.result[i].trainable == false){
-              trainedModel[i] = this.result[i].original_model_name
-              trainModelData[i] = this.result[i]
-            } 
+        for (var i = 0; i < this.result.length; i++) {
+          if (this.result[i].trainable == false) {
+            trainedModel[i] = this.result[i].original_model_name
+            trainModelData[i] = this.result[i]
+            trainModelData[i].algorithm_names = ''
+          }
         }
         trainedModel = trainedModel.filter(item => item);
-        trainModelData = trainModelData.filter(item => item);
+        this.nonTrainableModelData = trainModelData.filter(item => item);
 
-        // extract id , original_modelName , model_name
-        let trainModel = trainModelData.map(({_id,original_model_name,model_name,prediction_params,training_params,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params}))
-        console.log("trainModel",trainModel)
+        //********************************Get Trainable model data start ************************
+        //******************************************************************************************/
+        // get trainable model data
+                  // this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
+                  //   (response: any) => {
+                  //     this.trainableModelData = response
+                  //     // add property modelname
+                  //     for (var i = 0; i < this.trainableModelData.length; i++) {
+                  //       this.trainableModelData[i].model_name = this.trainableModelData[i].experiment_name
+                  //       this.trainableModelData[i].prediction_params = '';
+                  //       this.trainableModelData[i].training_params = '';
+                  //       this.trainableModelData[i]._id = this.trainableModelData[i].trainTracker_id;
+
+                        
+                  //           // get algorithum name from minio_train_model array
+                  //           var model_array = [];
+                  //           for (var j = 0; j < this.trainableModelData[i].minio_trained_model.length; j++) {
+                  //             var split_model_array = this.trainableModelData[i].minio_trained_model[j].split(".");
+                  //             var n = split_model_array[0].split("/");
+                  //             model_array.push(n[n.length - 1]);
+                  //           }          
+                  //       this.trainableModelData[i].algorithm_names =  model_array;
+
+                  //     }
+                  //     console.log("this.trainableModelData", this.trainableModelData)
+                  //     console.log("this.nonTrainableModelData", this.nonTrainableModelData)
+
+                  //     // concat nontranable and trained history
+                  //     var trainedAndNonTrainableModel =[]
+                  //     trainedAndNonTrainableModel = this.nonTrainableModelData.concat(this.trainableModelData)
+
+                  //     // extract id , original_modelName , model_name
+                  //     let allModelData = trainedAndNonTrainableModel.map(({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names}))
+                     
+                  //     //sort json alphabetically
+                  //     allModelData.sort( function( a, b ) {
+                  //       return a.model_name < b.model_name ? -1 : a.model_name > b.model_name ? 1 : 0;
+                  //     });
+                  //   console.log("this.trainableModelData + this.nonTrainableModelData",allModelData)
 
 
-        // set trained and non trainable model to node-red-Component
-        var strJSON = encodeURIComponent(JSON.stringify(trainModel));
-        this.url = environment.nodeRedUrl+'?'+  strJSON
-        this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+                  //     // set trained and non trainable model to node-red-Component
+                  //     var strJSON = encodeURIComponent(JSON.stringify(allModelData));
+                  //     this.url = environment.nodeRedUrl+'?'+  strJSON
+                  //     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+                      
+                  //   },
+                  //   (error) => {
+                  //     this.spinnerActive = this.spinner.stop();
+                  //     console.log(error)
+                  //   })
+
+
+                  this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
+                    (response: any) => {
+                      this.trainableModelData = response
+                      console.log(response)
+
+                       // remove duplicate items
+                   this.trainableModelData = response.filter((obj, pos, arr) => { return arr.map(mapObj =>mapObj.original_model_name).indexOf(obj.original_model_name) == pos;});
+                    console.log(this.trainableModelData)
+                     
+                      // add property modelname
+                      for (var i = 0; i < this.trainableModelData.length; i++) {
+                        this.trainableModelData[i].model_name = this.trainableModelData[i].experiment_name
+                        this.trainableModelData[i].prediction_params = '';
+                        this.trainableModelData[i].training_params = '';
+                        this.trainableModelData[i]._id = this.trainableModelData[i].trainTracker_id;
+
+                        
+                            // get algorithum name from minio_train_model array
+                            var model_array = [];
+                            for (var j = 0; j < this.trainableModelData[i].minio_trained_model.length; j++) {
+                              var split_model_array = this.trainableModelData[i].minio_trained_model[j].split(".");
+                              var n = split_model_array[0].split("/");
+                              model_array.push(n[n.length - 1]);
+                            }          
+                        this.trainableModelData[i].algorithm_names =  model_array;
+
+                      }
+                      console.log("this.trainableModelData", this.trainableModelData)
+                      console.log("this.nonTrainableModelData", this.nonTrainableModelData)
+
+                      // concat nontranable and trained history
+                      var trainedAndNonTrainableModel =[]
+                      trainedAndNonTrainableModel = this.nonTrainableModelData.concat(this.trainableModelData)
+
+                      // extract id , original_modelName , model_name
+                      let allModelData = trainedAndNonTrainableModel.map(({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names,...rest}) =>({_id,original_model_name,model_name,prediction_params,training_params,algorithm_names}))
+                     
+                      //sort json alphabetically
+                      allModelData.sort( function( a, b ) {
+                        return a.model_name < b.model_name ? -1 : a.model_name > b.model_name ? 1 : 0;
+                      });
+                    console.log("this.trainableModelData + this.nonTrainableModelData",allModelData)
+
+
+                      // set trained and non trainable model to node-red-Component
+                      var strJSON = encodeURIComponent(JSON.stringify(allModelData));
+                      this.url = environment.nodeRedUrl+'?'+  strJSON
+                      this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+                      
+                    },
+                    (error) => {
+                      this.spinnerActive = this.spinner.stop();
+                      console.log(error)
+                    })
+
+ //********************************Get Trainable model data end ************************
+        //******************************************************************************************/       
+        this.spinnerActive = this.spinner.stop()
+        
+      },
+      (error) => {
+        this.spinnerActive = this.spinner.stop();
+        console.log(error)
+      }
+
+    )
+
+    
+
+      
        
 
-      }
-    )
-    this.spinnerActive = this.spinner.stop()
+      
+
+
   }
+
+
+
 
 
 

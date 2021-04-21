@@ -1,0 +1,52 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+
+  <br>
+  <section class="content-section">
+    <section class="container">
+      <span *ngIf="errorMessage" class="error-message">{{ errorMessage }}</span>
+      <form  [formGroup]="termExtractorForm" (ngSubmit)="submit()">
+        <div class="row mb-3">
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="custom-file">
+                <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
+                handleUpload($event);" accept=".html">
+                <label class="custom-file-label">{{termFileLabel}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <br><br>
+            <button type="submit" class="btn btn-primary component-button float-right mt-4">Run Your Workflow</button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </section>
+
+  <section class="results container p-4 mb-4">
+    <h2>
+      Results
+    </h2>
+    <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-4 top">
+        <!-- <app-spinner *ngIf="spinnerActive"></app-spinner> -->
+      </div>
+    </div>
+    <div *ngIf="isResultAvailable && !spinnerActive">
+        <div class="row col-lg-12" >
+          <table style="width:100%">
+            <tr>              
+              <th class="th-color" *ngFor="let header of headerData">{{getHeaderName(header)}}</th>
+            </tr>
+            <tr *ngFor = "let term of termExtractorData">
+              <td *ngFor = "let column of headerData">
+                {{getTermValue(term[column])}}
+              </td>
+            </tr>
+          </table>
+        </div>
+    </div>
+    <p *ngIf="isErrorAvailable">Error: {{ errMessage }}</p>
+  </section>

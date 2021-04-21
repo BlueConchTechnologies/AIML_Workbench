@@ -1,0 +1,36 @@
+
+  .error-message {
+    color: #f00;
+    margin-left: 5px;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 5px;
+    text-align: left;
+    width:30px
+  }
+  
+  
+  
+  .th-color {
+    background-color: #3a5198;
+    color: #fff;
+    text-align: center;
+  }
+  
+   
+  .custom-file-label {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    padding: .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    color: lightgray
+}

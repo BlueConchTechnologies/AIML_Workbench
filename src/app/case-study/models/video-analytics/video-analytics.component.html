@@ -1,0 +1,48 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<main class="inner-component mt-4">
+ 
+      
+           
+           
+
+            <form class="box" method="post" action="" enctype="multipart/form-data">
+                <!-- <div class="box__input" style="width: 46%;">
+                    <input  #file type="file" name="file" id="file" accept="image/jpg,image/jpeg,image/png,Video/mp4"
+                        (change)="onFileUpload(file.files)" />
+                   
+                </div> -->
+                <div class="row">
+                  <div class="col-md-6">
+                      <div class="custom-file">
+                          <input #file type="file" name="file" id="file" accept="image/jpg,image/jpeg,image/png,Video/mp4"
+                        (change)="onFileUpload(file.files)" class="custom-file-input" >
+                          <label class="custom-file-label">{{termFileLabel}}</label>
+                      </div>
+                  </div>
+              </div>
+            </form>
+            <div class="form-row float-right">
+              <div class="form-group col-md-12">
+                <button (click)="onClickProcessBtn()"  class="btn btn-primary component-button">Run Your Workflow</button>
+              </div>
+            </div> 
+    <section class="results container p-4 mb-4">
+        <h2>Results</h2>
+        <div *ngIf="result">
+            <div class="text-center">
+                <img [src]="result" *ngIf="ext ==='png' || ext ==='jpg' || ext ==='jpeg'" width="450" height="300">
+                <video *ngIf="url && ext === 'mp4'" width="520" height="350" controls>
+                    <source [src]="url">
+                </video>    
+            </div>
+            <div *ngIf='isErrorAvailable'>
+                <p>
+                    {{errMessage}}
+                </p>
+            </div>
+        </div>
+
+        <div>
+        </div>
+    </section>
+</main>

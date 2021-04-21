@@ -1,3 +1,4 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -5,17 +6,21 @@
             aria-hidden="true"></i>  All Use Case </a></h6>
         </div>
     </div>
-    <div class="container">
+    <!-- <div class="container">
         <ul class="nav nav-pills">
             <li class="nav-item">
                 <a class="btn btn-outline-primary nav-link">Create Design</a>
             </li>&nbsp;
         </ul>
-    </div>
+    </div> -->
     <div class="container">
         <iframe [src]="urlSafe" width="100%" height="550px" allowfullscreen="true"></iframe>
         <div class="button-wrapper"><br>
-            <button type="submit" (click)="finalizedDesign()" class="btn btn-outline-primary flow-button">Finalize
-        Design</button>
+            <button *ngIf="usecaseId != 'null'; else finalDesign" type="submit" (click)="finalizedDesign()" class="btn btn-outline-primary flow-button">Update
+                Workflow</button>
+                <ng-template #finalDesign>
+                    <button  type="submit" (click)="finalizedDesign()" class="btn btn-outline-primary flow-button">Create Workflow</button>
+                </ng-template>
+            
         </div><br><br><br>
     </div>

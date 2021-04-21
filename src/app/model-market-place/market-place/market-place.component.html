@@ -1,3 +1,4 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <div class="container">
     <div class="row">
         <div class="col-md-4">
@@ -31,6 +32,7 @@
       </ul>
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-trainable" role="tabpanel" aria-labelledby="pills-trainable-tab">
+            <p *ngIf="isErrorAvailable"><b>Error :</b> {{ errMessage }}</p>
             <div class="row" id="model-market-place">
                 <div class="col-md-4 mb-4" *ngFor="let model of trainable_model | filter:searchText | paginate: config">
                     <div class="card inner shadow p-0 mb-2 bg-white rounded"  [ngClass]="{'highlight': model.trainable === true}">
@@ -60,6 +62,7 @@
         </div>
 
         <div class="tab-pane fade" id="pills-non-trainable" role="tabpanel" aria-labelledby="pills-non-trainable-tab">
+            <p *ngIf="isErrorAvailable"><b>Error :</b> {{ errMessage }}</p>
             <div class="row" id="model-market-place">
                 <div class="col-md-4 mb-4" *ngFor="let model of non_trainable_model | filter:searchText | paginate: config">
                     <div class="card inner shadow p-0 mb-2 bg-white rounded" [ngClass]="{'highlight': model.trainable === true}">
@@ -127,6 +130,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 

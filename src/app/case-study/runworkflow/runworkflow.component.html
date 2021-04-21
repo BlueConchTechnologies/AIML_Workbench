@@ -4,13 +4,6 @@
       <div class="col-md-4">
         <h6 class="create-design-header"><a class="nav-link" routerLink="/casestudy" ><i class="fa fa-chevron-left" aria-hidden="true"></i> All Use Case </a></h6>
       </div>
-      <div class="col-md-8 text-right mb-2">
-        <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary ml-2" (click)="editCurrentWorkflow()"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Your Workflow</button>
-
-        </div>
-  
-      </div>
       
   </div>
   <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
@@ -24,7 +17,7 @@
             </div>
             <div class="form-group col-md-6">
               <label for="inputPassword4">Description</label>
-              <input type="input" formControlName="description"  class="form-control" readonly>
+              <input type="input" formControlName="description" [(ngModel)]="workflowDescription" class="form-control" readonly>
             </div>
           </div>           
         </form>
@@ -377,6 +370,91 @@
 
         <!-- invoice extraction  -->
         <form  [formGroup]="workflowForm_10" (ngSubmit)="runYourWorkflow_10()" *ngIf = 'display_workflowForm_10'>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+             <div class="row">
+               <div class="col-md-12">
+                <label>File Browse</label>
+            </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6">
+                <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)">
+              </div>
+             </div>
+            </div>
+          </div>
+   
+          <div class="form-row float-right">
+            <div class="form-group col-md-12">
+              <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+            </div>
+          </div> 
+        </form>
+
+         <!-- DuplicatePrediction  -->
+         <form  [formGroup]="workflowForm_11" (ngSubmit)="runYourWorkflow_11()" *ngIf = 'display_workflowForm_11'>
+          <div class="form-row">
+            <div class="form-group col-md-12" >
+             <div class="row">
+               <div class="col-md-12">
+                <label>Query</label>
+            </div>
+             </div>
+             <div class="row">
+               <div class="col-md-12">
+                <textarea type="text" formControlName="query" class="form-control label-input"  rows="3" ></textarea>
+               </div>
+             </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" >
+             <div class="row">
+               <div class="col-md-12">
+                <label>Organisation</label>
+            </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6">
+                <!-- <input type="text" formControlName="org" class="form-control label-input"   > -->
+                <select formControlName="org" class="form-select form-control label-input" aria-label="Default select example">
+                  <option value="xpanxion">xpanxion</option>
+                  <option value="Blueconchtech">Blueconchtech</option>
+                </select>
+               </div>
+             </div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12" >
+             <div class="row">
+               <div class="col-md-12">
+                <label>Threshold</label>
+            </div>
+             </div>
+             <div class="row">
+               <div class="col-md-6">
+                <!-- <input type="text" formControlName="threshold" class="form-control label-input"   > -->
+                <select formControlName="threshold" class="form-select form-control label-input" aria-label="Default select example">
+                  <option value="70">70</option>
+                  <option value="80">80</option>
+                  <option value="90">90</option>
+                </select>
+               </div>
+             </div>
+            </div>
+          </div>
+
+          <div class="form-row float-right">
+            <div class="form-group col-md-12">
+              <button type="submit"  class="btn btn-outline-primary btn-lg">Run Your Workflow</button>
+            </div>
+          </div> 
+        </form>
+
+        <!-- objectDetection,faceRecognotion,videoAnalaytics -->
+        <form  [formGroup]="workflowForm_12" (ngSubmit)="runYourWorkflow_12()" *ngIf = 'display_workflowForm_12'>
           <div class="form-row">
             <div class="form-group col-md-12">
              <div class="row">
