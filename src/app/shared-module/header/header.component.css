@@ -49,3 +49,6 @@
     min-width: 5rem; 
     padding: 2px;
 }
+.logout_user{
+cursor: pointer;
+}

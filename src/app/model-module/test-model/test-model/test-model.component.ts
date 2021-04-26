@@ -33,7 +33,7 @@ export class TestModelComponent implements OnInit {
   public active = false;
   fileObj: any;
   inputFile: string | ArrayBuffer;
-
+  loggedUser:any
   constructor(
     private dialogRef: MatDialogRef<TestModelComponent>,
     public modalService: MatDialog,
@@ -48,6 +48,7 @@ export class TestModelComponent implements OnInit {
   @ViewChild('fileId', { static: false }) fileId: ElementRef;
 
   ngOnInit(): void {
+    this.loggedUser = localStorage.getItem('logedInUsername')
     this.firstFormGroup = this.fb.group({
       upload: ['', Validators.required],
       description: ['', Validators.required],
@@ -96,7 +97,7 @@ export class TestModelComponent implements OnInit {
       this.spinnerActive = this.spinner.start();
       const formData = new FormData();
       formData.append('file', this.fileObj);
-      formData.append('user_id', environment.testUserId);
+      formData.append('user_id', this.loggedUser);
       formData.append('model_name', this.firstFormGroup.get('modelName').value);
       formData.append('model_description', this.firstFormGroup.get('modelDescription').value);
       this.modelDataService.uploadData(formData).subscribe(

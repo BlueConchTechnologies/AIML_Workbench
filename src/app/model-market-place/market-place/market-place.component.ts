@@ -46,7 +46,8 @@ export class MarketPlaceComponent implements OnInit {
   spinnerActive = false;
   // modelCheckList:any
   isErrorAvailable = false
-  errMessage = ''
+  errMessage = '';
+  loggedUser:any
 
   constructor(
     private modelDataService: ModelDataService,
@@ -65,6 +66,7 @@ export class MarketPlaceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loggedUser = localStorage.getItem('logedInUsername')
     this.getModelsData();
     
     //runWorkflowForm form validation
@@ -151,7 +153,7 @@ export class MarketPlaceComponent implements OnInit {
             // display trainable model Details on popup
             pickTrainableModel(getData: object): void {
                   this.modelFormData = getData
-                  this.modelDetailsForm.get('user_id').setValue(environment.testUserId);
+                  this.modelDetailsForm.get('user_id').setValue(this.loggedUser);
                   this.modelDetailsForm.get('_id').setValue(this.modelFormData._id);
                   this.modelDetailsForm.get('model_name').setValue(this.modelFormData.original_model_name);
                   this.modelDetailsForm.get('model_description').setValue(this.modelFormData.model_description);
@@ -190,7 +192,7 @@ export class MarketPlaceComponent implements OnInit {
 
           pickNontrainblekModel(getData: object): void {
                 this.modelFormData = getData
-                this.modelDetailsForm.get('user_id').setValue(environment.testUserId);
+                this.modelDetailsForm.get('user_id').setValue(this.loggedUser);
                 this.modelDetailsForm.get('_id').setValue(this.modelFormData._id);
                 this.modelDetailsForm.get('model_name').setValue(this.modelFormData.original_model_name);
                 this.modelDetailsForm.get('model_description').setValue(this.modelFormData.model_description);
@@ -262,7 +264,7 @@ export class MarketPlaceComponent implements OnInit {
           this.non_trainable_model[i].activeInChecklist = false
         }
 
-         this.modelDataService.getModelList(environment.testUserId).subscribe((response: any) => {
+         this.modelDataService.getModelList(this.loggedUser).subscribe((response: any) => {
               this.checkedoutModelList = response.records;
               for (var i = 0; i < this.non_trainable_model.length; i++) {
                  for (var j = 0; j < this.checkedoutModelList.length; j++) {

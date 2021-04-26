@@ -13,9 +13,6 @@ export const environment = {
   apiUrl: 'http://localhost:9043/api/',
   workbenchUrl:'https://aiworkbench.xpanxion.co.in:5672',
   workbenchPublicUrl:'https://aiworkbench.xpanxion.co.in:5672',
-  
-  testUserId: 'banu', //'akamble',
-  // testUserId: 'xpanxion',
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',

@@ -18,6 +18,7 @@ export class Constants {
 
     static webApis = {
         getSharedData: environment.apiUrl + 'user/getUserData'
+      
     };
 
     static queryString = {

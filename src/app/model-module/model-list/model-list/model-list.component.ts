@@ -29,10 +29,12 @@ export class ModelListComponent implements OnInit {
   urlParameter: any[];
   historyArray: any;
   modelHistory: any;
+  loggedUser:any
   constructor(private modalService: MatDialog, private modelDataService: ModelDataService,
     private toastrService: ToastrService, private spinner: SpinnerService) { }
 
   ngOnInit(): void {
+    this.loggedUser = localStorage.getItem('logedInUsername')
     this.cols = [
       { field: 'model_name', header: 'Model Name', isShowInHistory: true },
       { field: 'model_description', header: 'Model Details', isShowInHistory: false },
@@ -101,7 +103,7 @@ export class ModelListComponent implements OnInit {
   }
   getTableData() {
     this.spinnerActive = this.spinner.start()
-    this.modelDataService.getModelList(environment.testUserId).subscribe(
+    this.modelDataService.getModelList(this.loggedUser).subscribe(
       (response: any) => {
         this.result = response.records;
         console.log("All model", this.result)

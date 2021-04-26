@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "build:staging": "ng build --prod --configuration=staging", 
+    "build:staging": "ng build --prod --configuration=staging",
     "build:prod": "ng build --prod --configuration=production"
   },
   "private": true,

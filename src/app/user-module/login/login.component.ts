@@ -69,10 +69,11 @@ export class LoginComponent implements OnInit {
                 .subscribe(
                     (successResponse) => {
                         const response = successResponse;
-                        this._utilityService.redirectToURL('/home');
+                        console.log("login response",response)
                         this.model.isAuthInitiated = false;
                         localStorage.setItem(Constants.localStorageKeys.isLoggedIn, 'true');    
                         localStorage.setItem("logedInUsername", this.model.emailAddress);
+                        location.reload()
                     },
                     (errorResponse) => {
                         this.resetModel();

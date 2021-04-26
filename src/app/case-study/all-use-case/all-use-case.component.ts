@@ -77,6 +77,9 @@ export class AllUseCaseComponent implements OnInit {
       this.errMessage = 'Server Error, Please contact system administrator';
       this.spinnerActive = this.spinner.stop()
       console.log(errorResponse)
+      if (errorResponse.error.message == 'No record found') {
+        this.errMessage = '';
+      }
     });
     
   }
@@ -97,6 +100,11 @@ export class AllUseCaseComponent implements OnInit {
       this.errMessage = 'Server Error, Please contact system administrator';
       this.spinnerActive = this.spinner.stop()
       console.log(errorResponse)
+      if (errorResponse.error.message == 'No record found') {
+        this.errMessage = '';
+      }
+      
+
     });
   }
 

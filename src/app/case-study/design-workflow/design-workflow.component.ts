@@ -33,12 +33,13 @@ export class DesignWorkflowComponent implements OnInit {
   useCaseUserId: any
   trainableModelData: any;
   nonTrainableModelData: any;
-
+  loggedUser:any;
   constructor(private designWorkflowService: DesignWorkflowService, private toastService: ToastrService,
     private router: Router, private dataRoute: ActivatedRoute, public sanitizer: DomSanitizer, private modelDataService: ModelDataService,
     private spinner: SpinnerService) { }
 
   ngOnInit(): void {
+    this.loggedUser = localStorage.getItem('logedInUsername')
     this.getTranableAndNonTranableModelData()
     // this.createNode();
     const data = history.state;
@@ -46,7 +47,7 @@ export class DesignWorkflowComponent implements OnInit {
 
     // check if usecaseId present or not
     this.usecaseId = localStorage.getItem('usecaseId')
-
+   
   }
 
   // generate new flow
@@ -134,7 +135,7 @@ export class DesignWorkflowComponent implements OnInit {
 
     // get  non trainable model data
     this.spinnerActive = this.spinner.start()
-    this.modelDataService.getModelList(environment.testUserId).subscribe(
+    this.modelDataService.getModelList(this.loggedUser).subscribe(
       (response: any) => {
         this.result = response.records;
         // get trained and non-trainable model
@@ -203,7 +204,7 @@ export class DesignWorkflowComponent implements OnInit {
                   //   })
 
 
-                  this.modelDataService.getAllmodeltrainhistory(environment.testUserId).subscribe(
+                  this.modelDataService.getAllmodeltrainhistory(this.loggedUser).subscribe(
                     (response: any) => {
                       this.trainableModelData = response
                       console.log(response)
