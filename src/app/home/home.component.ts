@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
-import { SpinnerService } from '@core'
+import { SpinnerService } from '@core';
 
 @Component({
   selector: 'app-home',
@@ -12,10 +12,13 @@ pinToHomeScreen:any
 display_UseCases = false
 spinnerActive = false;
 
+
+
   constructor(private router: Router, private spinner: SpinnerService) { }
 
   ngOnInit() {
    this.getPinedItem ()
+  
   }
 
   getPinedItem () {
@@ -32,7 +35,7 @@ spinnerActive = false;
     
   }
 
-  unPinModel(event) {
+  /*unPinModel(event) {
     var idAttr = event.srcElement.attributes.id;
     var usecaseId = idAttr.nodeValue;
     console.log(usecaseId)
@@ -47,7 +50,7 @@ spinnerActive = false;
     this.spinnerActive = this.spinner.start() 
     location.reload();
     this.spinnerActive = this.spinner.stop() 
-  }
+  }*/
 
   runUsecase(event) {
     var idAttr = event.srcElement.attributes.id;
@@ -63,5 +66,7 @@ spinnerActive = false;
       }
     }
    }
+  
+   
 
 }

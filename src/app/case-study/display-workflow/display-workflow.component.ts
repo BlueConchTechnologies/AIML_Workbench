@@ -58,6 +58,7 @@ export class DisplayWorkflowComponent implements OnInit {
 
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.getWorkflowData();
     this.runWorkflowForm = this.formBuilder.group({
       name: '',

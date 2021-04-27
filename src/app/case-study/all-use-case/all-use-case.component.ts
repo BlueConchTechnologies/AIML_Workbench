@@ -44,33 +44,35 @@ export class AllUseCaseComponent implements OnInit {
       display_myUsecase: true
     })
     
-    this.getPrebuiltUsecases()
+   this.getPrebuiltUsecases()
     this.getMyUsecases()
 
     // set empty pinToHomeArray to localstorage
     // var pinToHomeArray = 
-    if (JSON.parse(localStorage.getItem("pinToHomeArray")) == null) {
+   /*if (JSON.parse(localStorage.getItem("pinToHomeArray")) == null) {
       var emptyArray = []
       localStorage.setItem("pinToHomeArray",JSON.stringify(emptyArray))
-    }
+    } */
 
    
     
   }
-
+ 
 
   getPrebuiltUsecases(){
+    console.log('all case component')
     var preBuilt_usecaseId = "xpanxion"
     this.spinnerActive = this.spinner.start() 
     this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
       this.preBuiltUsecases = resp.records;
       console.log('preBuiltusecaseList',this.preBuiltUsecases)
+      console.log('all case component')
       this.title_prebuiltUseCase = 'Pre-Built Use Cases'
       this.isErrorAvailable = false;
       this.spinnerActive = this.spinner.stop()
 
        // set prebuilt usecases to home screen
-    this.pinTpHomeScreenPreBuiltUsecase ()
+   //this.pinTpHomeScreenPreBuiltUsecase ()
     },
     (errorResponse) => {
       this.isErrorAvailable = true;
@@ -82,7 +84,7 @@ export class AllUseCaseComponent implements OnInit {
       }
     });
     
-  }
+  } 
 
   getMyUsecases(){
     var my_usecaseId = localStorage.getItem('logedInUsername')
@@ -225,9 +227,11 @@ displayMyusecaseChange(values:any):void {
 
 //pre-built use cases pin to home screen by onload
 pinTpHomeScreenPreBuiltUsecase () {
+  console.log('all case component')
   this.pinToHomeArray = JSON.parse(localStorage.getItem("pinToHomeArray"))
   for (var i = 0; i < this.preBuiltUsecases.length; i++) {
     this.pinToHomeArray.push(this.preBuiltUsecases[i]) 
+    console.log('all case component')
   }
   console.log ("pre built use case flow",this.pinToHomeArray)
   localStorage.setItem("pinToHomeArray",JSON.stringify(this.pinToHomeArray))
