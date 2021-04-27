@@ -1,77 +1,5 @@
-<!--<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
-<div class="data-Container">
-    <ng-container *ngIf="!viewHistory">
-        <p-table [columns]="cols" [value]="result" #dt [rowHover]="true" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" pageLinks="3">
-            <ng-template pTemplate="caption">
-                Model List
-            </ng-template>
-            <ng-template pTemplate="header" let-columns>
-                <tr class="header-label">
-                    <th style="width: 2%;"></th>
-                    <th *ngFor="let col of columns" class="table-head header-label">
-                        {{col.header}}
-                    </th>
-                    <th>
-                        Operations
-                        <i class="fa fa-refresh fa-1x btn-refresh" (click)="getTableData()"></i>
-                    </th>
-                </tr>
 
-            </ng-template>
-            <ng-template pTemplate="body" let-result let-columns="columns" *ngIf="!spinnerActive">
-                <!-- result.isExpanded=!result.isExpanded -->
-               <!--- <tr (click)="getModelHistory(result)">
-                    <td class="table-data">
-                        <i class="fa fa-1x" [ngClass]="{'fa-chevron-right': !result.isExpanded, 'fa-chevron-down': result.isExpanded}" (click)="getTableData()"></i>
-                    </td>
-                    <td *ngFor="let col of columns" class="table-data">
-                        <ng-container *ngIf="col.field == 'status'; else otherFields">
-                            <i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': result[col.field] == 'Trained', 'fa-exclamation-circle status-not-trained': result[col.field] != 'Trained'}"></i>
-                        </ng-container>
-                        <ng-template #otherFields>
-                            {{result[col.field] === 'null' ? '-' : result[col.field]}}
-                        </ng-template>
-                    </td>
-
-                    <td>
-                        <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" [disabled]="result.trainable != true">Train</button>
-                        <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="open_model_new_page(result.model_route)"  [disabled]="result.status != 'Trained'">Test </button>
-                    </td>
-                    
-                </tr>
-                <ng-container *ngIf="result.isExpanded">
-                    <ng-container *ngIf="historyArray != undefined; else noHistoryData">
-                    <ng-container *ngFor="let historyRow of result.history">
-                        <tr (click)="getModelHistoryDetail(historyRow)"> 
-                            <td></td>
-                            <td>{{historyRow.experiment_name}}</td>
-                            <td>{{historyRow.experiment_description}}</td>
-                            <td><i class="fa fa-2x" [ngClass]="{'fa-check-circle status-trained': historyRow.status == 'Trained', 'fa-exclamation-circle status-not-trained': historyRow.status != 'Trained'}"></i></td>
-                            <td>{{historyRow.accuracy === 'null' ? '-' : historyRow.accuracy}}</td>
-                            <td>{{historyRow.training_start_time}}</td>
-                            <td> 
-                                <a (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn">Test</button></a>
-                            </td>
-                        </tr>
-                    </ng-container>
-                </ng-container>
-                <ng-template #noHistoryData>
-                    <!-- History data is absent -->
-               <!--  </ng-template>
-                </ng-container>
-            </ng-template>
-        </p-table>
-    </ng-container>
-    <ng-container *ngIf="viewHistory">
-        <p-table class="table_model_cpation">
-            <ng-template pTemplate="caption">
-                <i class="fa fa-1x fa-chevron-left pointer" (click)="closeHistory()"></i>&nbsp;  Model Table
-            </ng-template>
-        </p-table>
-        <app-model-history [receiveHistoryData]="passHistoryData"></app-model-history>
-    </ng-container>
-</div>
-======================================New Chnages===================================== -->
+<!---======================================New Chnages===================================== -->
 
 <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <div class="data-Container">
@@ -111,7 +39,8 @@
                     </td>
 
                     <td>
-                        <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" [disabled]="result.trainable != true">Train</button>
+                        <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" *ngIf="result.status != 'Not Trained'"  [disabled]="result.trainable != true">Train</button>
+                        
                         <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="open_model_new_page(result.model_route)"  *ngIf="result.status != 'Trained' && result.trainable == false"   [disabled]="(result.status == 'Trained' || result.trainable == true ) && result.status != 'Trained'">Test </button>
                     </td>
                     
@@ -127,7 +56,7 @@
                             <td>{{historyRow.accuracy === 'null' ? '-' : historyRow.accuracy}}</td>
                             <td>{{historyRow.training_start_time}}</td>
                             <td> 
-                                &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                               
                                 <a (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-raised operation-btn active-btn" *ngIf="result.status != 'Not Trained'">Test</button></a>
                             </td>
                         </tr>
