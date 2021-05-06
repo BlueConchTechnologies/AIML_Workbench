@@ -96,13 +96,13 @@ export class Constants {
   };
 
   static webApis = {
-    login: environment.workbenchUrl + '/api/account/login',
+    login: environment.apiUrl + 'account/login',
     logout: environment.apiUrl + 'account/logout',
-    getSharedData: environment.apiUrl + 'user/getUserData',
-    getUserData: environment.apiUrl + 'user/getUserData',
-    sendEmail: environment.apiUrl + 'user/sendEmail',
-    resetPassword: environment.apiUrl + 'user/resetPassword',
-    setPassword: environment.apiUrl + 'user/setPassword'
+    getSharedData: environment.apiUrl + 'account/getUserData',
+    getUserData: environment.apiUrl + 'account/getUserData',
+    sendEmail: environment.apiUrl + 'account/sendEmail',
+    resetPassword: environment.apiUrl + 'account/resetPassword',
+    setPassword: environment.apiUrl + 'account/setPassword'
   };
 
   static businessExceptions = {

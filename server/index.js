@@ -57,7 +57,7 @@ app.post('/api/account/logout', function (req, res) {
 })
 
 
-app.get('/api/user/getUserData', function (req, res) {
+app.get('/api/account/getUserData', function (req, res) {
 
   var isAdmin = req.query.id == 1;
   const token = session; // { roleId: 2, userId: 2 };
@@ -102,7 +102,7 @@ app.get('/api/user/resetPassword/:usertoken', function (req, res) {
   }
 })
 
-app.post('/api/user/setPassword', function (req, res) {
+app.post('user/setPassword', function (req, res) {
 
   if (req) {
     res.status(200).send({

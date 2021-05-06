@@ -17,7 +17,7 @@ export class Constants {
     };
 
     static webApis = {
-        getSharedData: environment.apiUrl + 'user/getUserData'
+        getSharedData: environment.apiUrl + 'account/getUserData'
       
     };
 

@@ -68,7 +68,7 @@
 
 .card-header:hover {
     background-color: #15BAF3;
-    color: #FFF;
+    color: #FFF !important;
     cursor: pointer;
 }
 

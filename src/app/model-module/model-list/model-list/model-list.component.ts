@@ -36,11 +36,11 @@ export class ModelListComponent implements OnInit {
   ngOnInit(): void {
     this.loggedUser = localStorage.getItem('logedInUsername')
     this.cols = [
-      { field: 'model_name', header: 'Model Name', isShowInHistory: true },
-      { field: 'model_description', header: 'Model Details', isShowInHistory: false },
-      { field: 'status', header: 'Status', isShowInHistory: true },
-      { field: 'accuracy', header: 'Accuracy', isShowInHistory: true },
-      { field: 'training_end_time', header: 'Last Trained Date', isShowInHistory: true },
+      { field: 'model_name', header: 'Model Name', isShowInHistory: true,width:'15%' },
+      { field: 'model_description', header: 'Model Details', isShowInHistory: false,width:'32%' },
+      { field: 'status', header: 'Status', isShowInHistory: true,width:'10%' },
+      { field: 'accuracy', header: 'Accuracy', isShowInHistory: true,width:'10%' },
+      { field: 'training_end_time', header: 'Last Trained Date', isShowInHistory: true,width:'20%' },
     ];
     this.getTableData();
    
@@ -130,6 +130,11 @@ export class ModelListComponent implements OnInit {
           else if (this.result[i].original_model_name == 'FaceRecognition'){this.result[i].model_route = "face-recognition"; } 
           else if (this.result[i].original_model_name == 'ProductCategorization'){this.result[i].model_route = "products-categorization"; }
 
+           // format training start time
+            var split_model_array = this.result[i].training_end_time.split(".");
+            this.result[i].training_end_time = split_model_array[0]
+            
+      
         }
         this.result.map(obj => ({
           ...obj,
@@ -152,8 +157,14 @@ export class ModelListComponent implements OnInit {
           this.spinnerActive = this.spinner.stop()
           model.history = response;
           this.modelHistory = response
-          console.log("model.history", model.history)
-
+          
+          // format training start time
+          for (var i = 0; i < this.modelHistory.length; i++) {
+            var split_model_array = this.modelHistory[i].training_start_time.split(".");
+            this.modelHistory[i].training_start_time = split_model_array[0]
+            
+          }
+          console.log("model.history", this.modelHistory)
           this.historyArray = model.history.length
         },
         (error) => {
@@ -175,7 +186,7 @@ export class ModelListComponent implements OnInit {
 
   open_model_new_page(model_route) {
     console.log(model_route)
-    window.open("http://localhost:4201/" + model_route, "_blank");
+    window.open(environment.dahUrl + model_route, "_blank");
   }
 
   open_trained_model_new_page(History, modelRoute_url) {
@@ -194,7 +205,7 @@ export class ModelListComponent implements OnInit {
     console.log('this.urlParameter', this.urlParameter)
 
     // set parameter to url
-    window.open("http://localhost:4201/" + modelRoute_url + '?' + this.urlParameter, "_blank");
+    window.open(environment.dahUrl + modelRoute_url + '?' + this.urlParameter, "_blank");
   }
   receiveModelHistoryEvent($event) {
     console.log($event);

@@ -11,12 +11,12 @@ export const environment = {
   domain: '.client1.com',
   appUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:9043/api/',
+  dahUrl:'http://dah-qa.blueconchtech.com:9008/',
   workbenchUrl:'https://aiworkbench.xpanxion.co.in:5672',
   workbenchPublicUrl:'https://aiworkbench.xpanxion.co.in:5672',
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',
   nodeRedUrl: 'http://localhost:1880/',
-  dahUrl:'http://dah.xpanxion.co.in:9008/'
   
 };

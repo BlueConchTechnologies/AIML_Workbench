@@ -27,23 +27,25 @@
          
           <div class="col-lg-12">
             <div class="row">
-              <div class="col-6 custom_file_input">
+              <div class="col-8 custom_file_input">
                 <input type="text" class="form-control search-class drag-drop-field" id="colFormLabelSm"
                   placeholder="Path to directory/ drag and drop files" readonly formControlName="colFormLabelSm" />
                   <input #fileId type="file" hidden accept=".csv" formControlName="upload" (change)="
                   handleUpload($event, fileId.files); handleErrorMessage()
                 " />
-              <button class="btn btn-info component-button float-right" style="height: 38px;" id="buttonid" value="Upload"
+              <button class="btn btn-info component-button float-right" style="height: 38px; width: 150px;" id="buttonid" value="Upload"
                 (click)="openDialog()">
                 Upload
               </button>
               </div>
-              <div class="col-12">
-                <button class="btn btn-primary component-button float-right my-4" (click)="findAnmolies()">
-                  Run Your Workflow
-                </button>
-              </div>
+              
             </div>
+            <div class="form-row float-right">
+              <div class="form-group col-md-12">
+                <button type="submit" class="btn btn-primary component-button mt-4" (click)="findAnmolies()">Run Your Workflow</button>
+              </div>
+            </div> 
+           
           </div>
         
         </div>

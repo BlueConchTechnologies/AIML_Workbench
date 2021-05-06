@@ -1,6 +1,3 @@
-
-<!---======================================New Chnages===================================== -->
-
 <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <div class="data-Container">
     <ng-container *ngIf="!viewHistory">
@@ -9,9 +6,9 @@
                 Model List
             </ng-template>
             <ng-template pTemplate="header" let-columns>
-                <tr class="header-label">
+                <tr class="header-label ">
                     <th style="width: 2%;"></th>
-                    <th *ngFor="let col of columns" class="table-head header-label">
+                    <th *ngFor="let col of columns" class="table-head header-label " [ngStyle]="{'width': col.width}">
                         {{col.header}}
                     </th>
                     <th>
@@ -24,7 +21,7 @@
             <ng-template pTemplate="body" let-result let-columns="columns" *ngIf="!spinnerActive">
                 <!-- result.isExpanded=!result.isExpanded -->
                 <tr (click)="getModelHistory(result)">
-                    <td class="table-data">
+                    <td class="table-data ">
                         <i class="fa fa-1x" [ngClass]="{'fa-chevron-right': !result.isExpanded || result.status == 'Not Trained', 'fa-chevron-down': result.isExpanded && result.status == 'Trained'}" (click)="getTableData()"></i>
                     </td>
                    
@@ -39,15 +36,14 @@
                     </td>
 
                     <td>
-                        <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" *ngIf="result.status != 'Not Trained'"  [disabled]="result.trainable != true">Train</button>
-                        
+                        <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();"  *ngIf= " result.status == 'Trained' || result.trainable ==true " [disabled]="result.trainable != true">Train</button>                        
                         <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="open_model_new_page(result.model_route)"  *ngIf="result.status != 'Trained' && result.trainable == false"   [disabled]="(result.status == 'Trained' || result.trainable == true ) && result.status != 'Trained'">Test </button>
                     </td>
                     
                 </tr>
                 <ng-container *ngIf="result.isExpanded">
                     <ng-container *ngIf="historyArray != undefined; else noHistoryData">
-                    <ng-container *ngFor="let historyRow of result.history">
+                    <ng-container *ngFor="let historyRow of result.history; let i=index; first as isFirst">
                         <tr (click)="getModelHistoryDetail(historyRow)"> 
                             <td></td>
                             <td>{{historyRow.experiment_name}}</td>
@@ -56,8 +52,7 @@
                             <td>{{historyRow.accuracy === 'null' ? '-' : historyRow.accuracy}}</td>
                             <td>{{historyRow.training_start_time}}</td>
                             <td> 
-                               
-                                <a (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-raised operation-btn active-btn" *ngIf="result.status != 'Not Trained'">Test</button></a>
+                                <a  (click)="open_trained_model_new_page(historyRow,result.model_route)" target="_blank"><button pButton type="button" class="ui-button-raised operation-btn active-btn" *ngIf="result.status != 'Not Trained' && i === 0">Test</button></a>
                             </td>
                         </tr>
                     </ng-container>

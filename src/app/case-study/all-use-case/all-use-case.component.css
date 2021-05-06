@@ -10,8 +10,16 @@ h5.modal-title {
     font-weight: bold;    
     font-family: sans-serif;
     font-weight: 500;
-    color:#15BAF3;
+    color: #2bc5f4 !important;
+    background-color: rgba(0,0,0,.03);
+    font-size: 1rem;
 }
+.card-header:hover {
+    background-color: #15BAF3;
+    color: #FFF !important;
+    cursor: pointer;
+}
+
 .usecase-header {
     color: #545454;
     line-height: inherit;

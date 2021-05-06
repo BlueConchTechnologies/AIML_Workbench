@@ -62,8 +62,7 @@ spinnerActive = false;
         var flow = this.pinToHomeScreen[i].flow
         // set workflow to localstorage
         localStorage.setItem("workflow_to_nodered",JSON.stringify (flow) );
-        this.router.navigate(['/runworkflow']);
-      }
+        this.router.navigate(['/displayWorkflow']);      }
     }
    }
   
