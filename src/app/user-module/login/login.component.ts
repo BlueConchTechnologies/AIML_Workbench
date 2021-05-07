@@ -65,17 +65,19 @@ export class LoginComponent implements OnInit {
             this._toastrService.showError(ToastrCode.EmptyPassword);
         } else {
             this.model.isAuthInitiated = true;
-            this._loginService.logOn({ UserName: this.model.emailAddress, Password: this.model.password })
+            this._loginService.logOn(this.model.emailAddress, this.model.password )
                 .subscribe(
                     (successResponse) => {
                         const response = successResponse;
-                        console.log("login response",response)
+                        console.log("login response",response.data._id)
                         this.model.isAuthInitiated = false;
                         localStorage.setItem(Constants.localStorageKeys.isLoggedIn, 'true');    
                         localStorage.setItem("logedInUsername", this.model.emailAddress);
+                        localStorage.setItem("logedInUser_id", response.data._id);
                         location.reload()
                     },
                     (errorResponse) => {
+                        console.log('errorResponse',errorResponse)
                         this.resetModel();
                         this.model.isAuthInitiated = false;
                         throw new HttpError(ErrorCode.AuthFailedInvalidAuthResponse, ErroNotificationType.Dialog, errorResponse);

@@ -54,6 +54,7 @@ export class Constants {
     default: ConfigurationSettings.defaultRoutePrefix,
     adminhome: 'adminhome',
     login: 'login',
+    signup:'signup',
     resetpassword: 'resetpassword',
     product: 'product',
     order: 'order',
@@ -96,10 +97,11 @@ export class Constants {
   };
 
   static webApis = {
-    login: environment.apiUrl + 'account/login',
+    login: environment.apiUrl + 'login',
+    register: environment.apiUrl + 'register',
     logout: environment.apiUrl + 'account/logout',
     getSharedData: environment.apiUrl + 'account/getUserData',
-    getUserData: environment.apiUrl + 'account/getUserData',
+    // getUserData: environment.apiUrl + 'account/getUserData',
     sendEmail: environment.apiUrl + 'account/sendEmail',
     resetPassword: environment.apiUrl + 'account/resetPassword',
     setPassword: environment.apiUrl + 'account/setPassword'

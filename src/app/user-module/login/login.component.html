@@ -20,14 +20,15 @@
                                 *ngIf="model.isAuthInitiated == true"> ... <i class='fa fa-spinner fa-spin'>
                                 </i></span></button>
 
-                        <div class="form-group pos-relative">
-                            <input type="checkbox" class="login-pg-remember-checkbox" />
-                            <a [routerLink]="['/sendemail']" routerLinkActive="router-link-active">Remember Me
-                                        </a>
+                        <div class="form-group text-right mt-2">
+                            <!-- <input type="checkbox" class="login-pg-remember-checkbox" /> -->
+                            <!-- <a [routerLink]="['/sendemail']" routerLinkActive="router-link-active">Remember Me
+                                        </a> -->
                             <span>&nbsp;</span>
                             <a [routerLink]="['/sendemail']" routerLinkActive="router-link-active">Forgot
                                 Password?</a>
                         </div>
+                        <div class="text-left mt-2">Dont have account <a [routerLink]="['/signup']">Sign Up</a></div>
                     </form>
                 </div>
             </div>

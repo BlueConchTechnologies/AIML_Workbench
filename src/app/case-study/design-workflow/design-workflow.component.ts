@@ -193,9 +193,9 @@ export class DesignWorkflowComponent implements OnInit {
 
 
                   //     // set trained and non trainable model to node-red-Component
-                  //     var strJSON = encodeURIComponent(JSON.stringify(allModelData));
-                  //     this.url = environment.nodeRedUrl+'?'+  strJSON
-                  //     this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+                      // var strJSON = encodeURIComponent(JSON.stringify(allModelData));
+                      // this.url = environment.nodeRedUrl+'?'+  strJSON
+                      // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
                       
                   //   },
                   //   (error) => {

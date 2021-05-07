@@ -16,8 +16,9 @@ export class Constants {
         MessageCode: 'MessageCode'
     };
 
+    
     static webApis = {
-        getSharedData: environment.apiUrl + 'account/getUserData'
+        getSharedData: environment.apiUrl + 'account/getUserData/'
       
     };
 

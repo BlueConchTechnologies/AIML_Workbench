@@ -38,7 +38,9 @@ export class SharedDataService {
             return;
         }
 
-        const promise = this._apiService.get(`${Constants.webApis.getSharedData}`).toPromise();
+        // set loged in user id
+        var logedIn_id = localStorage.getItem('logedInUser_id')
+        const promise = this._apiService.get(`${Constants.webApis.getSharedData+logedIn_id}`).toPromise();
 
         promise.then(
             (successResponse: SharedData) => {

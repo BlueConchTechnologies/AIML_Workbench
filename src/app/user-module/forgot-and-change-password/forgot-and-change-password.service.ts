@@ -11,7 +11,7 @@ export class ForgotandchangepasswordService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public getUserData() {
-    return this.httpClient.get(this.SERVER_URL + 'users');
-  }
+  // public getUserData() {
+  //   return this.httpClient.get(this.SERVER_URL + 'users');
+  // }
 }

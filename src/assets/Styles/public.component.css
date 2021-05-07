@@ -27,10 +27,14 @@
  #login-pg .forgot-pass{position:relative; z-index:12;  color:#333333; font-size:13px; text-decoration:none; }
  #login-pg .login-form{position:relative; z-index:12;  width:232px;}
  #login-pg .login-form input{border-radius:2px;}
- #login-pg .login-form input[type=email]{font-family:Calibri; border-radius:5px 5px 0 0; border: 1px solid #fdfdfd!important; padding-left: 35px;}
- #login-pg .login-form input[type=password]{font-family:Calibri; border-radius:0 0 5px 5px; border: 1px solid #fdfdfd!important; padding-left: 35px; margin-top:29px; }
+ #login-pg .login-form input[type=email]{font-family:Calibri; border-radius:5px 5px 0 0;  padding-left: 35px;}
+ #login-pg .login-form input[type=text]{font-family:Calibri; border-radius:5px 5px 0 0; padding-left: 35px;}
+
+ #login-pg .login-form input[type=password]{font-family:Calibri; border-radius:0 0 5px 5px; padding-left: 35px; margin-top:29px; }
  #login-pg .remember{color:#7F7F7F; font-size:11px;}
- #login-pg .login-form button[type=button]{background:#01BAF2; margin:20px 0 53px 0; padding:9px 30px!important; border:0px solid #333333; font-size: 18px; height:43px; color:#ffffff; width:100%;}
+ #login-pg .login-form button[type=button]{background:#01BAF2; margin:20px 0 5px 0; padding:9px 30px!important; border:0px solid #333333; font-size: 18px; height:43px; color:#ffffff; width:100%;}
+ #login-pg .login-form button[type=submit]{background:#01BAF2; margin:20px 0 5px 0; padding:9px 30px!important; border:0px solid #333333; font-size: 18px; height:43px; color:#ffffff; width:100%;}
+
  #login-pg .form-group{ margin-bottom:0px;}
  .reset-password-base-container .form-control:focus{/*border-color: #fdfdfd!important;*/ box-shadow:0!important; outline: 1px solid #4D90FE!important;}
  .reset-password-base-container .form-control:active{/*border-color: #fdfdfd!important;*/ box-shadow:0!important; outline: 1px solid #4D90FE!important;}

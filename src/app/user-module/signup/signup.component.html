@@ -1,0 +1,33 @@
+<div class="container-fluid" >
+    <div class="row">
+        <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="login-pg-bg1"><img src="assets/Images/Image 2@2x.png" class="img-fluid"></div>
+            <div class="login-base-container">
+                <div class="login-form">
+                    <img src="assets/Images/Original.png" class="img-fluid login-pg-logo">
+                    <form  [formGroup]="signupform" (ngSubmit)="onsignupformSubmit()">
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="fname"  type="text" name="fname" class="form-control rounded-pill" id="email" placeholder="First Name" >
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="lname"  type="text" name="lname" class="form-control rounded-pill" id="email" placeholder="Last Name" >
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="email"  type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" >
+                        </div>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Password" >
+                        </div>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="c_password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Confirm Password" >
+                        </div>
+                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Sign Up</button>
+
+                       
+                    </form>
+                </div>
+            </div>
+            <div class="login-pg-bg2"><img src="assets/Images/Image 3@2x.png" class="img-fluid"></div>
+        </div>
+    </div>
+</div>

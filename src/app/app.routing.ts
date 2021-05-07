@@ -11,6 +11,8 @@ import { Constants, Role } from '@shared';
 
 import { ForgotAndChangePasswordComponent } from './user-module/forgot-and-change-password/forgot-and-change-password.component';
 import { LoginComponent } from './user-module/login/login.component';
+import { SignupComponent } from './user-module/signup/signup.component';
+
 import { SendEmailComponent } from './user-module/send-email/send-email.component';
 import { AdminHomeComponent } from './admin-module/admin-home/admin-home.component';
 import { UnauthorizeComponent } from '@core/unauthorize/unauthorize.component';
@@ -20,6 +22,10 @@ const appRoutes: Routes = [
     {
         path: Constants.uiRoutes.empty,
         component: LoginComponent
+    },
+    {
+        path: Constants.uiRoutes.signup,
+        component:SignupComponent
     },
     {
         path: Constants.uiRoutes.adminhome,
