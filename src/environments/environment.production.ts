@@ -12,7 +12,7 @@ export const environment = {
   appUrl: 'http://172.26.21.9:81/AI-workbench/',
   apiUrl: 'http://172.26.21.9:9043/api/',
   //workbenchUrl : 'http://172.26.21.10:9003',
-  workbenchUrl: 'http://121.244.33.115:9003',
+  workbenchUrl: 'https://aiworkbenchprod.xpanxion.co.in:5672',
   serverLogLevel: NgxLoggerLevel.ERROR,
   logLevel: NgxLoggerLevel.TRACE,
   serverLoggingUrl: 'http://172.26.21.9:9043/api/logs',

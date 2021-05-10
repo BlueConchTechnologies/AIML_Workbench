@@ -12,8 +12,9 @@ export const environment = {
   appUrl: 'http://localhost:4200/',
   apiUrl: 'http://localhost:2000/api/user/',
   dahUrl:'http://localhost:4201/',
-  workbenchUrl:'https://aiworkbench.xpanxion.co.in:5672',
-  workbenchPublicUrl:'https://aiworkbench.xpanxion.co.in:5672',
+  workbenchUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
+  workbenchPublicUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
+
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',

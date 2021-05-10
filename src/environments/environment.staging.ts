@@ -9,6 +9,7 @@ export const environment = {
     workbenchUrl:'https://aiworkbench.xpanxion.co.in:5672',
     dahUrl:'http://dah-qa.blueconchtech.com:9008/',
     nodeRedUrl: 'http://172.26.21.9:1880/',
+
     logLevel: NgxLoggerLevel.ERROR,
     serverLogLevel: NgxLoggerLevel.ERROR,
     serverLoggingUrl: 'https://dah.xpanxion.co.in:9007/api/logs'
