@@ -36,7 +36,11 @@
                     </td>
 
                     <td>
+
                         <button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();"  *ngIf= " result.status == 'Trained' || result.trainable ==true " [disabled]="result.trainable != true">Train</button>                        
+
+                        <!--<button pButton type="button" class="ui-button-secondary ui-button-raised operation-btn" (click)="getModelDetailsAndTrainModel(result);$event.stopPropagation();" *ngIf="result.status != 'Not Trained'"  [disabled]="result.trainable != true">Train</button> -->
+                        
                         <button pButton type="button" class="ui-button-raised operation-btn active-btn" (click)="open_model_new_page(result.model_route)"  *ngIf="result.status != 'Trained' && result.trainable == false"   [disabled]="(result.status == 'Trained' || result.trainable == true ) && result.status != 'Trained'">Test </button>
                     </td>
                     

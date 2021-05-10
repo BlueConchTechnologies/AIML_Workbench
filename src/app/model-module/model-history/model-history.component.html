@@ -6,11 +6,11 @@
         (click)='switchTab("Config")'>
         Config
 </button>
-<button type="button" class="btn btn-outline-primary btn-lg mr-2"  
+<!--<button type="button" class="btn btn-outline-primary btn-lg mr-2"  
         [ngClass]="{'model-tab-active' : showHistoryType == 'Graph'}"
         (click)='switchTab("Graph")'>
         Graph
-</button>
+</button>-->
   <div [ngSwitch]="showHistoryType">
     <ng-template [ngSwitchCase]="'Config'">
       <div class="col-md-4 shadow my-3 px-0">
@@ -45,9 +45,9 @@
       </div>
 
     </ng-template>
-    <ng-template [ngSwitchCase]="'Graph'">
+   <!-- <ng-template [ngSwitchCase]="'Graph'">
         Graph Tab
-    </ng-template>
+    </ng-template>-->
   </div>    
   
 
