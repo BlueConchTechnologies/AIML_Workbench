@@ -7,22 +7,42 @@
                     <img src="assets/Images/Original.png" class="img-fluid login-pg-logo">
                     <form  [formGroup]="signupform" (ngSubmit)="onsignupformSubmit()">
                         <div class="form-group pos-relative">
-                            <input focusIndex="1" formControlName="fname"  type="text" name="fname" class="form-control rounded-pill"  placeholder="First Name" >
+                            <input focusIndex="1" formControlName="fname"  type="text" name="fname" class="form-control rounded-pill"  placeholder="First Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.fname.errors }" >
+                            <div *ngIf="regi_submitted && f_register.fname.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.fname.errors.required">Please enter the Firstname</div>
+                            </div>
                         </div><br>
                         <div class="form-group pos-relative">
-                            <input focusIndex="1" formControlName="lname"  type="text" name="lname" class="form-control rounded-pill"  placeholder="Last Name" >
+                            <input focusIndex="1" formControlName="lname"  type="text" name="lname" class="form-control rounded-pill"  placeholder="Last Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.lname.errors }"  >
+                            <div *ngIf="regi_submitted && f_register.lname.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.lname.errors.required">Please enter the Lastname</div>
+                            </div>
                         </div><br>
                         <div class="form-group pos-relative">
-                            <input focusIndex="1" formControlName="email"  type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" >
+                            <input focusIndex="1" formControlName="email"  type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': regi_submitted && f_register.email.errors }" >
+                            <div *ngIf="regi_submitted && f_register.email.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.email.errors.required">Please enter the Email Id</div>
+                                <div *ngIf="f_register.email.errors.pattern">You have entered an invalid e-mail address</div>
+                            </div>
                         </div>
                         <div class="form-group pos-relative">
-                            <input focusIndex="1" formControlName="password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Password" >
+                            <input focusIndex="1" formControlName="password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Password" [ngClass]="{ 'is-invalid': regi_submitted && f_register.password.errors }" >
+                            <div *ngIf="regi_submitted && f_register.password.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.password.errors.required">Please enter the Password</div>
+                                <div *ngIf="f_register.password.errors.pattern">The password must be at least 8 characters long and contain at least one upper and lower case letter and a number. Special characters (+ * , % _ = ! $ @ # &) are allowed but not mandatory.</div>
+                            </div>
                         </div>
                         <div class="form-group pos-relative">
-                            <input focusIndex="1" formControlName="c_password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Confirm Password" >
+                            <input focusIndex="1" formControlName="c_password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Confirm Password" [ngClass]="{ 'is-invalid': regi_submitted && f_register.c_password.errors }" >
+                            <div *ngIf="regi_submitted && f_register.c_password.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.c_password.errors.required">Please enter the Confirm Password</div>
+                                <div *ngIf="f_register.c_password.errors.mustMatch">Password and Confirm Password does not match</div>
+                            </div>
                         </div>
-                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Sign Up</button>
-
+                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Sign Up<span
+                            *ngIf="regi_submitted == true"> ... <i class='fa fa-spinner fa-spin'>
+                            </i></span></button>
+                        <div class="text-left mt-2">Already have account <a [routerLink]="['/login']">Login</a></div>
                        
                     </form>
                 </div>

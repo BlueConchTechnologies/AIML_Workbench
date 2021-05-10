@@ -6,6 +6,7 @@
 import { Router } from '@angular/router';
 
 import { LoggerService } from '@core';
+import { FormBuilder, FormGroup, Validators,ValidatorFn,ValidationErrors, FormControl, NgModel, AbstractControl } from '@angular/forms';
 
 import {
     HttpError,
@@ -32,19 +33,26 @@ import { environment } from '@env';
 })
 export class LoginComponent implements OnInit {
 
-    model: LoginModel;
+    // model: LoginModel;
+    model : FormGroup
     showLogin = false;
     showLink: any;
-
+    isInError: boolean;
+    errorCode: string;
+    errorMessage: string;
+    // isAuthInitiated: boolean;
+    login_submitted = false
     constructor(
         private _router: Router,
         private _loginService: LoginService,
         private _utilityService: UtilityService,
         private _toastrService: ToastrService,
-        private _authServiece: AuthService
+        private _authServiece: AuthService,
+        private formBuilder: FormBuilder
     ) {
-        this.model = new LoginModel();
-        this.model.isAuthInitiated = false;
+        // this.model = new LoginModel();
+        // this.model.isAuthInitiated = false;
+        // this.model.emailAddress  
 
     }
 
@@ -53,36 +61,42 @@ export class LoginComponent implements OnInit {
         if (this._authServiece.isUserLoggedIn()) {
             this._router.navigate([Constants.uiRoutes.home]);
         }
+
+        this.model = this.formBuilder.group({
+            emailAddress: ['', [Validators.required] ],
+            password: ['', [Validators.required]],
+           
+          });
+
+        
+      
     }
 
+    get f_login() { return this.model.controls; }
     login() {
-        this.model.isAuthInitiated = true;
-        if (!this.model.emailAddress) {
-            this.model.isAuthInitiated = false;
-            this._toastrService.showError(ToastrCode.EmptyEmailAddress);
-        } else if (!this.model.password) {
-            this.model.isAuthInitiated = false;
-            this._toastrService.showError(ToastrCode.EmptyPassword);
-        } else {
-            this.model.isAuthInitiated = true;
-            this._loginService.logOn(this.model.emailAddress, this.model.password )
+        this.login_submitted = true;
+        if (this.model.invalid) {
+          return;
+        }
+            this._loginService.logOn(this.model.value.emailAddress, this.model.value.password )
                 .subscribe(
                     (successResponse) => {
+                        this.login_submitted = false;
                         const response = successResponse;
                         console.log("login response",response.data._id)
-                        this.model.isAuthInitiated = false;
                         localStorage.setItem(Constants.localStorageKeys.isLoggedIn, 'true');    
-                        localStorage.setItem("logedInUsername", this.model.emailAddress);
+                        localStorage.setItem("logedInUsername", this.model.value.emailAddress);
                         localStorage.setItem("logedInUser_id", response.data._id);
                         location.reload()
                     },
                     (errorResponse) => {
+                        this.login_submitted = false;
+                        this._toastrService.showError('Please enter valid username and password');
                         console.log('errorResponse',errorResponse)
                         this.resetModel();
-                        this.model.isAuthInitiated = false;
                         throw new HttpError(ErrorCode.AuthFailedInvalidAuthResponse, ErroNotificationType.Dialog, errorResponse);
                     });
-        }
+       
     }
 
     processLoginRequest(response: any) {
@@ -94,7 +108,7 @@ export class LoginComponent implements OnInit {
     }
 
     resetModel() {
-        this.model.emailAddress = '';
-        this.model.password = '';
+        this.model.value.emailAddress = '';
+        this.model.value.password = '';
     }
 }

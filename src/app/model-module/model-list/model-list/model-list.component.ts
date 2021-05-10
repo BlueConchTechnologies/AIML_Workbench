@@ -141,6 +141,10 @@ export class ModelListComponent implements OnInit {
           isExpanded: false
         }));
 
+      },
+      (error) => {
+        console.log(error);
+        this.spinnerActive = this.spinner.stop()
       }
     )
     this.spinnerActive = this.spinner.stop()
