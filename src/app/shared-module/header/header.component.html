@@ -19,10 +19,11 @@
                     <i class="fa fa-user-circle fa-2x text-white"></i>
                 </a>
             <div class="dropdown-menu dropdown-menu_custom ">
-                <a class="dropdown-item logout_user" (click)="showLogoutConfirmation()">
-                    Logout
-                        <!-- {{'SHARED.HEADER.userMenu.logoutMenu' | translate }}  -->
-                        <!-- <i class="fa fa-user-circle fa-2x"></i> -->
+                <a class="dropdown-item logout_user" [routerLink]="['/profile']">
+                    Your profile
+                    </a>
+                    <a class="dropdown-item logout_user" (click)="showLogoutConfirmation()">
+                        Logout
                     </a>
             </div>
         </div>

@@ -1,0 +1,55 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<div class="login-pg-bg1"><img src="assets/Images/Image 2@2x.png" class="img-fluid"></div>
+<div class="container-fluid updateProfileContainer" >
+    
+    <div class="row">
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+        <div class="login-pg-container col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+            <div class="login-base-container card p-4">
+                <h3 class="text-center mb-4"><b>Update profile</b></h3>
+                <div class="login-form">
+                    <form  [formGroup]="updateform" (ngSubmit)="onupdateformSubmit()">
+                        <div class="form-group pos-relative">
+
+                            <input focusIndex="1" formControlName="fname" [(ngModel)]='userData.firstName' type="text" name="fname" class="form-control rounded-pill"  placeholder="First Name" [ngClass]="{ 'is-invalid': update_submitted && f_update.fname.errors }" >
+                            <div *ngIf="update_submitted && f_update.fname.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_update.fname.errors.required">Please enter the Firstname</div>
+                            </div>
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="lname" [(ngModel)]='userData.lastName' type="text" name="lname" class="form-control rounded-pill"  placeholder="Last Name" [ngClass]="{ 'is-invalid': update_submitted && f_update.lname.errors }"  >
+                            <div *ngIf="update_submitted && f_update.lname.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_update.lname.errors.required">Please enter the Lastname</div>
+                            </div>
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="email" [(ngModel)]='userData.email' disabled type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': update_submitted && f_update.email.errors }" >
+                            <div *ngIf="update_submitted && f_update.email.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_update.email.errors.required">Please enter the Email Id</div>
+                                <div *ngIf="f_update.email.errors.pattern">You have entered an invalid e-mail address</div>
+                            </div>
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Password" [ngClass]="{ 'is-invalid': update_submitted && f_update.password.errors }" >
+                            <div *ngIf="update_submitted && f_update.password.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_update.password.errors.required">Please enter the Password</div>
+                                <div *ngIf="f_update.password.errors.pattern">The password must be at least 8 characters long and contain at least one upper and lower case letter and a number. Special characters (+ * , % _ = ! $ @ # &) are allowed but not mandatory.</div>
+                            </div>
+                        </div><br>
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="c_password"  type="password" name="password" class="form-control rounded-pill" id="email" placeholder="Confirm Password" [ngClass]="{ 'is-invalid': update_submitted && f_update.c_password.errors }" >
+                            <div *ngIf="update_submitted && f_update.c_password.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_update.c_password.errors.required">Please enter the Confirm Password</div>
+                                <div *ngIf="f_update.c_password.errors.mustMatch">Password and Confirm Password does not match</div>
+                            </div>
+                        </div><br>
+                        <button type="submit" class="btn btn-default rounded-pill updateBtn" id="loadButton" focusIndex="3">Update</button>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12"></div>
+
+    </div>
+</div>

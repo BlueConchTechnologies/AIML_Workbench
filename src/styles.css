@@ -65,7 +65,9 @@ p, h1, h2, h3, h4, h5, h6, ul, li, ol{font-family: 'Poppins', sans-serif;}
     z-index: 9999999999;
     overflow: hidden;
   }
-
+  .spin {
+    margin: auto !important;
+}
   .component-button {
     /* max-width: 162px; */
     width: 100%;

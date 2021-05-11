@@ -25,6 +25,10 @@ a:hover{text-decoration: none;}
 a {
     color: grey;
 }
-
+.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+  }
 
 

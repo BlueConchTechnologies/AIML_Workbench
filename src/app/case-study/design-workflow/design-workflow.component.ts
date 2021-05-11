@@ -203,7 +203,7 @@ export class DesignWorkflowComponent implements OnInit {
                   //     console.log(error)
                   //   })
 
-
+                 console.log(this.loggedUser)
                   this.modelDataService.getAllmodeltrainhistory(this.loggedUser).subscribe(
                     (response: any) => {
                       this.trainableModelData = response

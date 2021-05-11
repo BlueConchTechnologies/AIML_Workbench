@@ -70,6 +70,7 @@ export class Constants {
     invoice: 'invoice',
     modellist: 'model-list',
     account: 'account',
+    profile: 'profile',
     runworkflow: 'runworkflow',
     displayWorkflow: 'displayWorkflow',
     TableExtractorComponent: 'tableExtractorComponent',

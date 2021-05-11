@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators,ValidatorFn,ValidationErrors, FormControl, NgModel, AbstractControl } from '@angular/forms';
-import { LoginService } from '../login/login.service';
+import { LoginService } from '../../user-module/login/login.service';
 import { Router } from '@angular/router';
 import { Constants } from '@shared';
-import { MustMatch } from '../helper/must-match.validator';
+import { MustMatch } from '../../user-module/helper/must-match.validator';
 import { SpinnerService } from '@core'
 
-
-
 @Component({
-  selector: 'app-signup',
-  templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
 })
-export class SignupComponent implements OnInit {
-  signupform: FormGroup;
-  regi_submitted = false
+export class ProfileComponent implements OnInit {
+ updateform: FormGroup;
+  update_submitted = false
   spinnerActive = false;
+  userData:any;
   constructor(private formBuilder: FormBuilder,private _loginService: LoginService,private _router: Router,private spinner: SpinnerService
     ) { }
 
   ngOnInit(): void {
-    this.signupform = this.formBuilder.group({
+    this.userData = JSON.parse(localStorage.getItem('logedInUserData'))
+    console.log(this.userData)
+    this.updateform = this.formBuilder.group({
       fname: ['', Validators.required],
       lname: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i)]],
@@ -33,16 +34,16 @@ export class SignupComponent implements OnInit {
       ]});
   }
 
-  get f_register() { return this.signupform.controls; }
-  onsignupformSubmit() {
-    this.regi_submitted = true;
-    if (this.signupform.invalid) {
+  get f_update() { return this.updateform.controls; }
+  onupdateformSubmit() {
+    this.update_submitted = true;
+    if (this.updateform.invalid) {
       return;
     }
-    var firstName = this.signupform.value.fname;
-    var lastName = this.signupform.value.lname;
-    var email = this.signupform.value.email;
-    var password = this.signupform.value.password;
+    var firstName = this.updateform.value.fname;
+    var lastName = this.updateform.value.lname;
+    var email = this.updateform.value.email;
+    var password = this.updateform.value.password;
 
     console.log(firstName,lastName,email,password)
     this.spinnerActive = this.spinner.start();
@@ -50,7 +51,7 @@ export class SignupComponent implements OnInit {
     .subscribe(
         (successResponse) => {
           this.spinnerActive = this.spinner.stop();
-          this.regi_submitted = false;
+          this.update_submitted = false;
             const response = successResponse;
             console.log("login response",response)
             this._router.navigate([Constants.uiRoutes.empty]);
@@ -58,7 +59,7 @@ export class SignupComponent implements OnInit {
         (errorResponse) => {
           this.spinnerActive = this.spinner.stop();
 
-          this.regi_submitted = false;
+          this.update_submitted = false;
             console.log('errorResponse',errorResponse)
         });
   }

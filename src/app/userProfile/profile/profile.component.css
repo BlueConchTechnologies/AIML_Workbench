@@ -1,0 +1,10 @@
+.updateProfileContainer{
+    height: 100vh;
+    margin-top: 5rem !important;
+}
+.updateBtn{
+    background-color: brown;
+    color: white;
+    border: 1px solid grey;
+}
+.login-pg-bg1{width:100%;left:0px;background-size: cover;}

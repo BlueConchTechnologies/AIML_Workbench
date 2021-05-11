@@ -1,4 +1,6 @@
-﻿<div class="container-fluid" *ngIf="showLogin">
+﻿
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<div class="container-fluid" *ngIf="showLogin">
     <div class="row">
         <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
             <div class="login-pg-bg1"><img src="assets/Images/Image 2@2x.png" class="img-fluid"></div>
@@ -21,9 +23,7 @@
                                 <div *ngIf="f_login.password.errors.required">Please enter the Password</div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default rounded-pill"  id="loadButton"  focusIndex="3">Login<span
-                            *ngIf="login_submitted == true"> ... <i class='fa fa-spinner fa-spin'>
-                            </i></span></button>
+                        <button type="submit" class="btn btn-default rounded-pill"  id="loadButton"  focusIndex="3">Login</button>
                         <!-- <button type="button" class="btn btn-default rounded-pill" id="loadButton" (click)="login()" focusIndex="3">{{'PUBLIC.Login.loginButton' | translate }}<span
                             *ngIf="model.isAuthInitiated == true"> ... <i class='fa fa-spinner fa-spin'>
                             </i></span></button> -->

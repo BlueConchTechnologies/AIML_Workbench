@@ -25,6 +25,8 @@ import { LoginModel } from './login.model';
 import { LoginService } from './login.service';
 
 import { environment } from '@env';
+import { SpinnerService } from '@core'
+
 
 @Component({
     selector: 'login-app',
@@ -42,13 +44,15 @@ export class LoginComponent implements OnInit {
     errorMessage: string;
     // isAuthInitiated: boolean;
     login_submitted = false
+    spinnerActive = false;
     constructor(
         private _router: Router,
         private _loginService: LoginService,
         private _utilityService: UtilityService,
         private _toastrService: ToastrService,
         private _authServiece: AuthService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        private spinner: SpinnerService
     ) {
         // this.model = new LoginModel();
         // this.model.isAuthInitiated = false;
@@ -78,18 +82,23 @@ export class LoginComponent implements OnInit {
         if (this.model.invalid) {
           return;
         }
+        this.spinnerActive = this.spinner.start();
             this._loginService.logOn(this.model.value.emailAddress, this.model.value.password )
                 .subscribe(
                     (successResponse) => {
+                        this.spinnerActive = this.spinner.stop();
                         this.login_submitted = false;
                         const response = successResponse;
-                        console.log("login response",response.data._id)
+                        console.log("login response",response.data)
                         localStorage.setItem(Constants.localStorageKeys.isLoggedIn, 'true');    
                         localStorage.setItem("logedInUsername", this.model.value.emailAddress);
                         localStorage.setItem("logedInUser_id", response.data._id);
+                        
+                        localStorage.setItem('logedInUserData',JSON.stringify(response.data));   
                         location.reload()
                     },
                     (errorResponse) => {
+                        this.spinnerActive = this.spinner.stop();
                         this.login_submitted = false;
                         this._toastrService.showError('Please enter valid username and password');
                         console.log('errorResponse',errorResponse)

@@ -31,14 +31,13 @@ export class AllUseCaseComponent implements OnInit {
  title_myUseCase = '';
  isErrorAvailable = false
  errMessage = ''
+ checkoutModel :any
   constructor(private _caseStudyService: CaseStudyService, private router: Router,private designWorkflowService: DesignWorkflowService, private toastService: ToastrService, private spinner: SpinnerService,private formBuilder: FormBuilder) { 
   }
 
   ngOnInit(): void {
-    // this._caseStudyService.getAllUseCases().subscribe(resp => {
-    //   this.usecaseList = resp.records;
-    //   console.log('usecaseList',this.usecaseList)
-    // });
+    this.checkoutModel = localStorage.getItem('CheckoutModelItem');
+    console.log(this.checkoutModel)
     this.displayworkflowForm = this.formBuilder.group({
       display_prebuiltUsecase: true,
       display_myUsecase: true
@@ -47,13 +46,7 @@ export class AllUseCaseComponent implements OnInit {
    this.getPrebuiltUsecases()
     this.getMyUsecases()
 
-    // set empty pinToHomeArray to localstorage
-    // var pinToHomeArray = 
-   /*if (JSON.parse(localStorage.getItem("pinToHomeArray")) == null) {
-      var emptyArray = []
-      localStorage.setItem("pinToHomeArray",JSON.stringify(emptyArray))
-    } */
-
+    
    
     
   }

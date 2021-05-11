@@ -1,3 +1,5 @@
+<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+
 <div class="container-fluid" >
     <div class="row">
         <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -39,9 +41,7 @@
                                 <div *ngIf="f_register.c_password.errors.mustMatch">Password and Confirm Password does not match</div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Sign Up<span
-                            *ngIf="regi_submitted == true"> ... <i class='fa fa-spinner fa-spin'>
-                            </i></span></button>
+                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Sign Up</button>
                         <div class="text-left mt-2">Already have account <a [routerLink]="['/login']">Login</a></div>
                        
                     </form>

@@ -4,7 +4,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-8 text-right mb-2">
-            <button type="button" (click)='createUseCase()' class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
+            <button type="button" (click)='createUseCase()' [disabled]="checkoutModel == 'null'" class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
           </div>
       </div>
         <form [formGroup]="displayworkflowForm">

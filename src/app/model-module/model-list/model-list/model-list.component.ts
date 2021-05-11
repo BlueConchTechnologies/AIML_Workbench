@@ -30,6 +30,7 @@ export class ModelListComponent implements OnInit {
   historyArray: any;
   modelHistory: any;
   loggedUser:any
+  noRecordFound :any
   constructor(private modalService: MatDialog, private modelDataService: ModelDataService,
     private toastrService: ToastrService, private spinner: SpinnerService) { }
 
@@ -144,6 +145,11 @@ export class ModelListComponent implements OnInit {
       },
       (error) => {
         console.log(error);
+        this.noRecordFound = error.error.message
+        if (error.error.message = 'No record found') {
+          localStorage.setItem("CheckoutModelItem",null );
+        }
+        console.log(error.error.message)
         this.spinnerActive = this.spinner.stop()
       }
     )

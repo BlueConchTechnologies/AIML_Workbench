@@ -34,6 +34,7 @@ import { CartReducer } from '@shared/state-management/store/reducer/cart.reducer
 import { TrainModelComponent } from './model-module/train-model/train-model/train-model.component';
 import {AccountComponent} from './account-info/account/account/account.component';
 import { SignupComponent } from './user-module/signup/signup.component';
+import { ProfileComponent } from './userProfile/profile/profile.component';
 
 
 @NgModule({
@@ -43,7 +44,7 @@ import { SignupComponent } from './user-module/signup/signup.component';
     HomeComponent,
     TrainModelComponent,
     AccountComponent, 
-    SignupComponent 
+    SignupComponent, ProfileComponent 
   ],
   imports: [
     BrowserModule,

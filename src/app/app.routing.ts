@@ -18,6 +18,8 @@ import { AdminHomeComponent } from './admin-module/admin-home/admin-home.compone
 import { UnauthorizeComponent } from '@core/unauthorize/unauthorize.component';
 import { HomeComponent } from './home/home.component';
 import {AccountComponent} from './account-info/account/account/account.component';
+import { ProfileComponent } from './userProfile/profile/profile.component';
+
 const appRoutes: Routes = [
     {
         path: Constants.uiRoutes.empty,
@@ -54,6 +56,10 @@ const appRoutes: Routes = [
     {
         path: Constants.uiRoutes.account,
         component: AccountComponent
+    },
+    {
+        path: Constants.uiRoutes.profile,
+        component: ProfileComponent
     },
     {
         path: '**',
