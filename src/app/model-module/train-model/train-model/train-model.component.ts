@@ -38,6 +38,7 @@ export class TrainModelComponent implements OnInit {
   display_thirdFormGroup = false;
   fileObj: any;
   inputFile: string | ArrayBuffer;
+  logedInUsername :any;
 
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 
@@ -55,10 +56,14 @@ export class TrainModelComponent implements OnInit {
   @ViewChild('fileId', { static: false }) fileId: ElementRef;
 
   ngOnInit(): void {
+
+    this.logedInUsername = JSON.parse(localStorage.getItem("logedInUserData"));
     this.firstFormGroup = this.fb.group({
       experiment_name: [this.modelData.modelName, Validators.required],
       upload: ['', Validators.required],
       experiment_description: [this.modelData.modelDiscription, Validators.required]
+
+
     });
 
     this.secondFormGroup = this.fb.group({
@@ -74,6 +79,8 @@ export class TrainModelComponent implements OnInit {
     if (this.modelData.modelHistory && this.modelData.modelHistory.length > 0) {
       this.firstFormGroup.controls.upload.setValue(this.modelData.modelHistory[0]._id);
     }
+    
+
   }
 
   // display third form for product categorization model
@@ -114,13 +121,12 @@ export class TrainModelComponent implements OnInit {
     this.fileObj = e.target.files[0];
     let modal = {
       "_id": "Test123",
-      "user_id": "banu",
-      // "user_id": "xpanxion",
+      "user_id": this.logedInUsername.firstName,
       "model_name": this.modelData.modelName,
       "file_name": this.fileObj.name,
       "created_date_time": this.fileObj.lastModifiedDate
     }
-
+    console.log("user first name", this.logedInUsername.firstName);
     let modalDataType1 = this.modelData.modelHistory.find(x => x._id == "Test123");
     if (!modalDataType1) {
       this.modelData.modelHistory.push(modal);
@@ -164,14 +170,20 @@ export class TrainModelComponent implements OnInit {
       const formData = new FormData();
       formData.append('file', this.fileObj);
       formData.append('trainTracker_id', this.modelData.trainTrackerId);
+      formData.forEach((value,key) => {
+        console.log("formdata_new",key+" "+value)
+         });
       this.modelDataService.uploadData(formData).subscribe(
         (response: any) => {
+          console.log(response);
           if (response.status === 'Success') {
             this.toastrService.showSuccess(ToastrCode.Success)
             this.onStepComplete();
           }
           else {
+            console.log("Failed");
             this.toastrService.showError(ToastrCode.ApiError);
+            console.log("Failed");
             
           }
           this.spinnerActive = this.spinner.stop()
