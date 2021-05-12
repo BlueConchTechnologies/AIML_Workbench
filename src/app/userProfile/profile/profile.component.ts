@@ -47,20 +47,43 @@ export class ProfileComponent implements OnInit {
 
     console.log(firstName,lastName,email,password)
     this.spinnerActive = this.spinner.start();
-    this._loginService.signUp(firstName,lastName,email,password)
-    .subscribe(
-        (successResponse) => {
-          this.spinnerActive = this.spinner.stop();
-          this.update_submitted = false;
-            const response = successResponse;
-            console.log("login response",response)
-            this._router.navigate([Constants.uiRoutes.empty]);
-        },
-        (errorResponse) => {
-          this.spinnerActive = this.spinner.stop();
 
-          this.update_submitted = false;
-            console.log('errorResponse',errorResponse)
-        });
+  
+
+    //call update details
+    this._loginService.updatedetails(firstName,lastName).subscribe(
+      (successResponse) => {
+        this.spinnerActive = this.spinner.stop();
+        this.update_submitted = false;
+          const response = successResponse;
+          console.log("updatedetails response",response)
+
+          //call update password
+            this._loginService.updatePassword(password).subscribe(
+              (successResponse) => {
+                this.spinnerActive = this.spinner.stop();
+                this.update_submitted = false;
+                  const response = successResponse;
+                  console.log("updatePassword response",response)
+                  alert("Profile updated successfully")
+              },
+              (errorResponse) => {
+                this.spinnerActive = this.spinner.stop();
+                this.update_submitted = false;
+                  console.log('errorResponse',errorResponse)
+              });
+
+        
+      },
+      (errorResponse) => {
+
+        this.spinnerActive = this.spinner.stop();
+
+        this.update_submitted = false;
+          console.log('errorResponse',errorResponse)
+      });
+
+        
+    
   }
 }

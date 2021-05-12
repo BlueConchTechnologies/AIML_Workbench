@@ -10,12 +10,14 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class LoginService {
     headers:any
+    getLogedinuserId:any
     constructor(
         private _http: HttpClient,
         private _logger: LoggerService,
     ) {
         this._logger.info('LoginService : constructor ');
         // this.callHeaders()
+       
     }
     // callHeaders(){
     //     return this.headers = new HttpHeaders({
@@ -29,10 +31,20 @@ export class LoginService {
         this._logger.info('LoginService : logOn ');
         return this._http.post(`${Constants.webApis.login}`,{email,password} );
     }
-
+    getUserId () {
+        this.getLogedinuserId = JSON.parse(localStorage.getItem('logedInUserData'));
+         return this.getLogedinuserId._id
+    }
     signUp(firstName,lastName,email,password): Observable<any> {
-        console.log(firstName,lastName,email,password)
         return this._http.post(`${Constants.webApis.register}`,{firstName,lastName,email,password} );
+    }
+    updatePassword(password){
+        console.log(`${Constants.webApis.change_password}`+this.getUserId ())
+        return this._http.patch(`${Constants.webApis.change_password}`+this.getUserId (),{password} );
+    }
+    updatedetails(firstName,lastName){
+        console.log(`${Constants.webApis.update}`+this.getUserId ())
+        return this._http.put(`${Constants.webApis.update}`+this.getUserId (),{firstName,lastName} );
     }
     onForgotClick(): Observable<any> {
         return this._http.get(`${Constants.webApis.sendEmail}`);

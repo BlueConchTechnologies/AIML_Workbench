@@ -101,6 +101,8 @@ export class Constants {
     login: environment.apiUrl + 'login',
     register: environment.apiUrl + 'register',
     logout: environment.apiUrl + 'account/logout',
+    update:environment.apiUrl+'update/',
+    change_password:environment.apiUrl+'change_password/',
     getSharedData: environment.apiUrl + 'account/getUserData',
     // getUserData: environment.apiUrl + 'account/getUserData',
     sendEmail: environment.apiUrl + 'account/sendEmail',
