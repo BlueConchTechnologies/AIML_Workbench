@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loggedUser = localStorage.getItem('logedInUsername')
+        this.loggedUser =  JSON.parse(localStorage.getItem('logedInUserData'));
         this.subscriptions.push(
             this._notificationService.productAddedToCartNotification.subscribe(() => {
                 this.cartCount = 10; // get from server

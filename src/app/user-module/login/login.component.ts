@@ -45,6 +45,8 @@ export class LoginComponent implements OnInit {
     // isAuthInitiated: boolean;
     login_submitted = false
     spinnerActive = false;
+    loggedUser:any
+    newUser:any
     constructor(
         private _router: Router,
         private _loginService: LoginService,
@@ -91,8 +93,16 @@ export class LoginComponent implements OnInit {
                         const response = successResponse;
                         console.log("login response",response.data)
                         localStorage.setItem(Constants.localStorageKeys.isLoggedIn, 'true');    
-                        localStorage.setItem("logedInUsername", this.model.value.emailAddress);
+                        //localStorage.setItem("logedInUsername", this.model.value.emailAddress);
                         localStorage.setItem("logedInUser_id", response.data._id);
+
+                        //  remove the @, . from the email id(username)
+                        this.loggedUser = this.model.value.emailAddress;
+                
+                        this.newUser = this.loggedUser.replace('@','').replace('.','');
+                        console.log('user logged in is',this.loggedUser);
+                        console.log('user',this.newUser);
+                        localStorage.setItem("logedInUsername", this.newUser);
                         
                         localStorage.setItem('logedInUserData',JSON.stringify(response.data));   
                         location.reload()
@@ -107,6 +117,14 @@ export class LoginComponent implements OnInit {
                     });
        
     }
+
+    getUserData(){
+        this.loggedUser = localStorage.getItem('logedInUsername');
+        this.newUser = this.loggedUser.replace('@','').replace('.','');
+        console.log('user logged in is',this.loggedUser);
+        console.log('user',this.newUser);
+    
+       }
 
     processLoginRequest(response: any) {
         if (response) {
