@@ -37,7 +37,8 @@ export class AllUseCaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkoutModel = localStorage.getItem('CheckoutModelItem');
-    console.log(this.checkoutModel)
+    if (this.checkoutModel == null){this.checkoutModel = 'null'}
+    console.log("this.checkoutModel",this.checkoutModel)
     this.displayworkflowForm = this.formBuilder.group({
       display_prebuiltUsecase: true,
       display_myUsecase: true

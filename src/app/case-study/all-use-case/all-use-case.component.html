@@ -4,6 +4,7 @@
           <div class="col-md-4">
           </div>
           <div class="col-md-8 text-right mb-2">
+
             <button type="button" (click)='createUseCase()' [disabled]="checkoutModel == 'null'" class="btn btn-outline-primary btn-lg mr-2">Create Use Case</button>            
           </div>
       </div>
@@ -24,7 +25,6 @@
              </div>
           </div>
         </form><br>
-         
                <div  *ngIf="display_prebuiltUseCase">
                     <p class="font-weight-bold "><u>{{title_prebuiltUseCase}}</u></p>
                     <!-- <span class="badge_custom badge-pill badge-primary">Pre-Built Use Cases</span><br> -->

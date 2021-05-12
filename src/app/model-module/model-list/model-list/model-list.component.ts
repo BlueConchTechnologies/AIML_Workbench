@@ -31,6 +31,7 @@ export class ModelListComponent implements OnInit {
   modelHistory: any;
   loggedUser:any
   noRecordFound :any
+  trainedAndNonTraianbel = []
   constructor(private modalService: MatDialog, private modelDataService: ModelDataService,
     private toastrService: ToastrService, private spinner: SpinnerService) { }
 
@@ -134,9 +135,25 @@ export class ModelListComponent implements OnInit {
            // format training start time
             var split_model_array = this.result[i].training_end_time.split(".");
             this.result[i].training_end_time = split_model_array[0]
+
+            // get non_trainable and trained model
+            if(this.result[i].status == 'Trained' || this.result[i].trainable == false){
+              this.trainedAndNonTraianbel.push(this.result[i])
+            }
             
       
         }
+
+        // set non_trainable and trained model to disabel createusecase button
+        console.log(this.trainedAndNonTraianbel)
+        console.log(this.trainedAndNonTraianbel.length)
+        if (this.trainedAndNonTraianbel.length < 1){
+          localStorage.setItem("CheckoutModelItem",null);
+        }else {
+          localStorage.setItem("CheckoutModelItem",this.trainedAndNonTraianbel.length.toString());
+        }
+
+        
         this.result.map(obj => ({
           ...obj,
           isExpanded: false

@@ -63,9 +63,10 @@ export class ProfileComponent implements OnInit {
               (successResponse) => {
                 this.spinnerActive = this.spinner.stop();
                 this.update_submitted = false;
-                  const response = successResponse;
+                  const response = successResponse['data'];
                   console.log("updatePassword response",response)
-                  alert("Profile updated successfully")
+                  localStorage.setItem('logedInUserData',JSON.stringify(response));   
+                        location.reload()
               },
               (errorResponse) => {
                 this.spinnerActive = this.spinner.stop();
