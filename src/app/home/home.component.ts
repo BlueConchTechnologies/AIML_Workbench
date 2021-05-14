@@ -35,7 +35,7 @@ spinnerActive = false;
     
   }
 
-  /*unPinModel(event) {
+  unPinModel(event) {
     var idAttr = event.srcElement.attributes.id;
     var usecaseId = idAttr.nodeValue;
     console.log(usecaseId)
@@ -50,7 +50,7 @@ spinnerActive = false;
     this.spinnerActive = this.spinner.start() 
     location.reload();
     this.spinnerActive = this.spinner.stop() 
-  }*/
+  }
 
   runUsecase(event) {
     var idAttr = event.srcElement.attributes.id;

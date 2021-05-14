@@ -52,14 +52,15 @@ export class SignupComponent implements OnInit {
           this.spinnerActive = this.spinner.stop();
           this.regi_submitted = false;
             const response = successResponse;
-            console.log("login response",response)
+            console.log("Register response",response)
             this._router.navigate([Constants.uiRoutes.empty]);
         },
         (errorResponse) => {
           this.spinnerActive = this.spinner.stop();
 
           this.regi_submitted = false;
-            console.log('errorResponse',errorResponse)
+            console.log('errorResponse',errorResponse.error)
+            alert(errorResponse.error);
         });
   }
 }
