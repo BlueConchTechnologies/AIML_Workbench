@@ -14,7 +14,7 @@ const JWT_SECRET = "some super secret..."
 //============================register=================================
 
 router.post('/register', async (req,res) => {
-
+    console.log("*************************************************************************register node js connected++++++++++++++++++++++++++++==========================================================")
     //validate the data
    const { error } = registerValidation(req.body);
    if (error) return res.status(400).send(error.details[0].message);
@@ -38,11 +38,15 @@ router.post('/register', async (req,res) => {
         res.status(400).send(err);
     }
 });
-
+router.get('/data', (req, res) => {
+    res.send('Hello World!')
+  })
 //=======================login========================
 
 router.post('/login', async (req,res) => {
     //validation
+    console.log("*************************************************************************login node js connected++++++++++++++++++++++++++++==========================================================")
+
    const { error } = loginValidation(req.body);
    if (error) return res.status(400).send(error.details[0].message);
 

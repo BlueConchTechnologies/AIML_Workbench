@@ -110,7 +110,7 @@ export class AppComponent implements OnInit {
 pinToHomeScreenPreBuilt () {
     console.log(this.pinToHomeArray)
     console.log('inside the home screen')
-    var preBuilt_usecaseId = "xpanxion"
+    var preBuilt_usecaseId = "aimlworkbenchbuleconchtectcom"
       this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
         this.preBuiltUsecases = resp.records;
         console.log('Data Received');
