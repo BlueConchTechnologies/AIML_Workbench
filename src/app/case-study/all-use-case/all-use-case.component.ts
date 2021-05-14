@@ -55,7 +55,7 @@ export class AllUseCaseComponent implements OnInit {
 
   getPrebuiltUsecases(){
     console.log('all case component')
-    var preBuilt_usecaseId = "aimlworkbenchbuleconchtectcom"
+    var preBuilt_usecaseId = "aimlworkbenchblueconchtechcom"
     this.spinnerActive = this.spinner.start() 
     this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
       this.preBuiltUsecases = resp.records;

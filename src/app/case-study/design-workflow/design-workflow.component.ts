@@ -73,7 +73,7 @@ export class DesignWorkflowComponent implements OnInit {
         console.log('usecaseUserId********************************************', this.useCaseUserId)
 
 
-        if (this.usecaseId == 'null' || this.useCaseUserId == 'aimlworkbenchbuleconchtectcom') {
+        if (this.usecaseId == 'null' || this.useCaseUserId == 'aimlworkbenchblueconchtechcom') {
           this.saveWorkflowToDB();
         }
         else {
