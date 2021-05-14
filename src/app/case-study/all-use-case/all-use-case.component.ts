@@ -10,6 +10,7 @@ import { CaseStudyService } from '../services/case-study.service';
 import { DesignWorkflowService } from '../services/design-workflow.service';
 import { ToastrCode, SpinnerService } from '@core';
 import { FormsModule, FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-all-use-case',
@@ -55,7 +56,7 @@ export class AllUseCaseComponent implements OnInit {
 
   getPrebuiltUsecases(){
     console.log('all case component')
-    var preBuilt_usecaseId = "aimlworkbenchblueconchtechcom"
+    var preBuilt_usecaseId = environment.admin_username;
     this.spinnerActive = this.spinner.start() 
     this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
       this.preBuiltUsecases = resp.records;

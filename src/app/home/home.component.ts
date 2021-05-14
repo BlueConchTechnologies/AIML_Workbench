@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 import { SpinnerService } from '@core';
+import { environment } from '@env';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ export class HomeComponent implements OnInit {
 pinToHomeScreen:any
 display_UseCases = false
 spinnerActive = false;
+admin_username= environment.admin_username;
 
 
 

@@ -30,6 +30,7 @@ import {
 } from '../app/case-study/services/case-study.service';
 
 import { SpinnerService } from '@core';
+import { environment } from '@env';
 //============================================================
 
 @Component({
@@ -110,7 +111,7 @@ export class AppComponent implements OnInit {
 pinToHomeScreenPreBuilt () {
     console.log(this.pinToHomeArray)
     console.log('inside the home screen')
-    var preBuilt_usecaseId = "aimlworkbenchblueconchtechcom"
+    var preBuilt_usecaseId = environment.admin_username;
       this._caseStudyService.getPrebuiltUseCases(preBuilt_usecaseId).subscribe(resp => {
         this.preBuiltUsecases = resp.records;
         console.log('Data Received');

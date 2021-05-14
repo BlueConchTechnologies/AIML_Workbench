@@ -10,7 +10,7 @@ export const environment = {
   environmentName: 'Dev',
   domain: '.client1.com',
   appUrl: 'http://localhost:4200/',
-  apiUrl: 'http://localhost:2000/api/user/',
+  apiUrl: 'http://172.26.21.9:8080/api/user/',
   dahUrl:'http://localhost:4201/',
   workbenchUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
   workbenchPublicUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
@@ -18,6 +18,7 @@ export const environment = {
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',
-  nodeRedUrl: 'http://localhost:1880/',
+  nodeRedUrl: 'http://172.26.21.9:1880/',
+  admin_username: 'aimlworkbenchblueconchtechcom'
   
 };
