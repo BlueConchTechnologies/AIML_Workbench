@@ -245,7 +245,8 @@ findAnmolies() {
         } else {
           this.isResultAvailable = false;
           this.isErrorAvailable = true;
-          this.errMessage = 'Server Error, Please contact system administrator';;
+          //this.errMessage = 'Server Error, Please contact system administrator!!!!';;
+          this.errMessage = response.response.message;
         }
         this.spinneractive = this.spinner.stop();
       },

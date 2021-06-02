@@ -12,6 +12,9 @@ import { Constants, Role } from '@shared';
 import { ForgotAndChangePasswordComponent } from './user-module/forgot-and-change-password/forgot-and-change-password.component';
 import { LoginComponent } from './user-module/login/login.component';
 import { SignupComponent } from './user-module/signup/signup.component';
+import { QuestionComponent } from './user-module/security-question/question/question.component';
+import { ChangePasswordComponent } from './user-module/change-password/change-password/change-password.component';
+import { MarketPlaceComponent } from './model-market-place/market-place/market-place.component';
 
 import { SendEmailComponent } from './user-module/send-email/send-email.component';
 import { AdminHomeComponent } from './admin-module/admin-home/admin-home.component';
@@ -19,6 +22,7 @@ import { UnauthorizeComponent } from '@core/unauthorize/unauthorize.component';
 import { HomeComponent } from './home/home.component';
 import {AccountComponent} from './account-info/account/account/account.component';
 import { ProfileComponent } from './userProfile/profile/profile.component';
+
 
 const appRoutes: Routes = [
     {
@@ -38,7 +42,12 @@ const appRoutes: Routes = [
     {
         path: Constants.uiRoutes.home,
         component: HomeComponent,
-        //canActivate: [AuthGuardService]
+        canActivate: [AuthGuardService]
+    },
+    {
+        path: Constants.uiRoutes.marketplace,
+        component: MarketPlaceComponent,
+        canActivate: [AuthGuardService]
     },
     {
         path: Constants.uiRoutes.unauthorize,
@@ -62,10 +71,23 @@ const appRoutes: Routes = [
         component: ProfileComponent
     },
     {
+        path: Constants.uiRoutes.security_question,
+        component: QuestionComponent
+    },
+    {
+        path: Constants.uiRoutes.forgot_password,
+        component: ChangePasswordComponent
+    },
+    
+    {
         path: '**',
         component: PageNotFoundComponent,
         canActivate: [AuthGuardService]
-    }
+    },
+    {
+        path: Constants.uiRoutes.security_question,
+        component: QuestionComponent
+    },
 ];
 
 export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot(appRoutes);

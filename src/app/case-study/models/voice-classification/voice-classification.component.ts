@@ -46,10 +46,21 @@ runYourWorkflow() {
      .subscribe(
        (successResponse) => {
          console.log('successResponse', successResponse)
-         this.Output_result = successResponse.response.Result
-         this.isSuccess = true;
-         this.isErrorAvailable = false;  
-         this.spinnerActive = this.spinner.stop()
+         console.log(successResponse.response.status);
+          if(successResponse.response.status == 'Success'){
+            this.Output_result = successResponse.response.Result;
+            this.isSuccess = true;
+            this.isErrorAvailable = false;  
+            this.spinnerActive = this.spinner.stop()
+          }
+          else{
+            this.Output_result = successResponse.response.Message;
+            this.isSuccess = false;
+            this.isErrorAvailable = false;  
+            this.spinnerActive = this.spinner.stop()
+          }
+          console.log(successResponse.response.Message);
+         
        },
        (errorResponse) => {
          console.log('ERROR', errorResponse);

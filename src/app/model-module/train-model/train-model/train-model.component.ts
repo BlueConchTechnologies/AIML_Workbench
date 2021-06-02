@@ -119,6 +119,41 @@ export class TrainModelComponent implements OnInit {
   handleUpload(e, files) {
     this.termFileLabel = e.target.files[0].name;
     this.fileObj = e.target.files[0];
+    console.log(this.modelData);
+
+    this.modelToBeTrain = JSON.parse(localStorage.getItem('modelToBeTrain'))
+    console.log("originalModelName for train",this.modelToBeTrain.original_model_name)
+
+    if(this.modelToBeTrain.original_model_name == 'TimeSeries' || this.modelToBeTrain.original_model_name == 'Classification' || this.modelToBeTrain.original_model_name == 'AnamolyDetection' || this.modelToBeTrain.original_model_name == 'ProductCategorization'  )
+    { 
+        console.log(e.target.files[0]);
+        console.log(e.target.files[0].type)
+        if (e.target.files[0] && e.target.files[0].type === 'application/vnd.ms-excel'){
+        
+
+        }
+        else{
+          this.toastrService.showWarn('Please upload file with extension .csv only')
+         // this.toastrService.showWarn('Please upload file approprite file');
+          return 
+        }
+  }
+
+  else if(this.modelToBeTrain.original_model_name == 'NER' )
+  { 
+      console.log(e.target.files[0]);
+      console.log(e.target.files[0].type)
+      if (e.target.files[0] && e.target.files[0].type === 'text/plain'){
+      
+
+      }
+      else{
+        this.toastrService.showWarn('Please upload file with extension .txt only')
+       // this.toastrService.showWarn('Please upload file approprite file');
+        return 
+      }
+  }
+
     let modal = {
       "_id": "Test123",
       "user_id": this.logedInUsername.firstName,
@@ -151,6 +186,7 @@ export class TrainModelComponent implements OnInit {
       }
     }
     e.target.value = null;
+  
   }
 
   //Upload Model Details
@@ -177,7 +213,7 @@ export class TrainModelComponent implements OnInit {
         (response: any) => {
           console.log(response);
           if (response.status === 'Success') {
-            this.toastrService.showSuccess(ToastrCode.Success)
+            this.toastrService.showSuccess('File Uploaded')
             this.onStepComplete();
           }
           else {
@@ -195,15 +231,16 @@ export class TrainModelComponent implements OnInit {
       )
     }
   }
-  reset() {
+  /*reset() {
     this.firstFormGroup.reset();
     this.termFileLabel = '';
-  }
+  }*/
   //Add Model Hyper-Parameters
   addModelParam() {
     this.secondFormGroup.controls.TrainingParamValues.setValidators(minSelectedCheckboxes(1));;
     this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
       this.spinnerActive = this.spinner.start();
+     
 
       const selectedOrderIds = this.secondFormGroup.value.TrainingParamValues
         .map((v, i) => v ? this.modelData.modelTrainingParamValues[i] : null)
@@ -220,7 +257,7 @@ export class TrainModelComponent implements OnInit {
       else {
         modelData.algorithmname = selectedOrderIds;
       }
-
+      console.log('=========================================',this.secondFormGroup.value.TrainingParamValues);
       if (this.firstFormGroup.controls.upload.value && this.firstFormGroup.controls.upload.value != "Test123") {
         modelData.dataTracker_id = this.firstFormGroup.controls.upload.value;
       }
@@ -233,27 +270,44 @@ export class TrainModelComponent implements OnInit {
         modelData.col_name = this.thirdFormGroup.controls.col_name.value
       }
 
-      console.log("*******************************************************************add algorithm :**************************************")
+      console.log("**************************************add algorithm :**************************************")
       console.log(modelData)
+      console.log(modelData.algorithmname.length);
+
+      if(this.modelToBeTrain.original_model_name == 'TimeSeries' || this.modelToBeTrain.original_model_name == 'Classification' || this.modelToBeTrain.original_model_name == 'AnamolyDetection'){
+       if(modelData.algorithmname.length <= 0){ 
+         console.log('model name',this.modelToBeTrain.original_model_name)
+        this.toastrService.showWarn('Please Select Algorithms to the Train Model.');
+        this.spinnerActive = this.spinner.stop();
+        return
+       }
+      }
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
-          if (response.status === 'Success') {
-            this.toastrService.showSuccess(ToastrCode.Success)
+          console.log(response);
+          console.log(response.message.status);
+          if (response.message.status === 'Success') {
+            console.log('Success')
+            this.toastrService.showSuccess('Model is trained');
+            this.spinnerActive = this.spinner.stop();
+          }
+          else{
+            console.log(response);
+            this.toastrService.showError(response.message);
           }
           this.onClose();
-          window.location.reload();
+          //window.location.reload();
           this.spinnerActive = this.spinner.stop();
           console.log("workflow running success")
 
         },
         (error) => {
-          this.spinnerActive = this.spinner.stop();
           console.log(error);
           this.toastrService.showError(ToastrCode.ApiError);
-          console.log("workflow faild")
+          console.log("workflow failed")
         }
       );
-      this.toastrService.showSuccess(ToastrCode.Training);
+      //this.toastrService.showSuccess(ToastrCode.Training);
     
   }
 
@@ -281,3 +335,7 @@ function minSelectedCheckboxes(min = 1) {
 
   return validator;
 }
+
+
+//==========================================================================
+

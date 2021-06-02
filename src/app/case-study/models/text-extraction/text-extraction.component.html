@@ -1,4 +1,4 @@
-<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<!-- <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
     <div class="form-row">
       <div class="form-group col-md-12">
@@ -10,11 +10,13 @@
        <div class="row">
          <div class="col-md-6">
           <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
-          <div class="custom-file">
+          <!-- <div class="custom-file">
             <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
         uploadFileInput($event.target.files)" accept="image/*,.pdf">
             <label class="custom-file-label">{{termFileLabel}}</label>
         </div>
+        <p class="text-danger">{{fileExtensionMessage}}</p>
+
         </div>
        </div>
       </div>
@@ -22,7 +24,7 @@
 
     <div class="form-row float-right">
       <div class="form-group col-md-12">
-        <button type="submit" class="btn btn-primary component-button mt-4">Run Your Workflow</button>
+        <button type="submit"  [disabled]="(!workflowForm['controls']['file'].value) || fileExtensionError" class="btn btn-primary component-button mt-4">Run Your Workflow</button>
       </div>
     </div> 
   </form>
@@ -32,7 +34,14 @@
   <h2>Results</h2>
  
   <div>
-      <div *ngIf="singleModel_isSuccess">
+    <div *ngIf="fileExtensionError">
+      <p>
+        <b> File Name : </b>{{ termFileLabel}}
+         <br><br>
+         <b> {{fileExtensionMessage}} </b>
+     </p>
+    </div>
+      <div *ngIf="singleModel_isSuccess"> 
           <p>
              <b> FileName : </b>{{ termFileLabel}}
               <br><br>
@@ -50,7 +59,77 @@
           <p>
               {{errMessage}}
           </p>
-      </div>
+      </div>  
+    
   </div>
 
-</section>
+</section> --> 
+
+
+<!------------------------------------------------------------------------------>
+ <spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+<form  [formGroup]="workflowForm" (ngSubmit)="runYourWorkflow()" >
+    <div class="form-row">
+      <div class="form-group col-md-12">
+       <div class="row">
+         <div class="col-md-12">
+          <label>File Browse</label>
+      </div>
+       </div>
+       <div class="row">
+         <div class="col-md-6">
+          <!-- <input  formControlName="file" type="file" id="file" (change)="uploadFileInput($event.target.files)"> -->
+           <div class="custom-file">
+            <input #fileId type="file" class="custom-file-input" formControlName="file" (change)="
+        uploadFileInput($event.target.files)" accept="image/*,.pdf">
+            <label class="custom-file-label">{{termFileLabel}}</label>
+        </div>
+        <p class="text-danger">{{fileExtensionMessage}}</p>
+
+        </div>
+       </div>
+      </div>
+    </div>
+
+    <div class="form-row float-right">
+      <div class="form-group col-md-12">
+        <button type="submit"   class="btn btn-primary component-button mt-4">Run Your Workflow</button>
+      </div>
+    </div> 
+  </form>
+
+ <br><br>
+<section class="results container p-4 mb-4">
+  <h2>Results</h2>
+ 
+  <div>
+    <div *ngIf="fileExtensionMessage">
+      <p>
+        <b> File Name : </b>{{ termFileLabel}}
+         <br><br>
+         <b> Error : </b> {{fileExtensionMessage}}
+     </p>
+    </div>
+      <div *ngIf="singleModel_isSuccess"> 
+          <p>
+             <b> FileName : </b>{{ termFileLabel}}
+              <br><br>
+              <b>Text : </b> {{ Output_result }}
+          </p>
+      </div>
+      <div *ngIf="doubleModel_isSuccess">
+        <p>
+           <b> FileName : </b>{{ termFileLabel}}
+            <br><br>
+            <b>Documents Type : </b> {{ Output_result }}
+        </p>
+    </div>
+      <div *ngIf = 'isErrorAvailable  || !spinnerActive'>
+          <p>
+              {{errMessage}}
+          </p>
+      </div>  
+    
+  </div>
+
+</section> 

@@ -2,3 +2,11 @@
     /* margin-left: 10px; */
     margin: auto !important;
 }
+ .login-base-container{position:relative; background: #ffffff; display: block; padding: 24px; z-index: 11; text-align:center; min-height:323px; width:400px !important; margin:0 auto;}
+.login-form{position:relative; z-index:12;  width:100% !important;}
+
+.form-container{
+    width: 250px  !important;
+    margin: auto !important;
+
+}

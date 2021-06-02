@@ -95,6 +95,8 @@ export class Constants {
     SpeakerDiarizationComponent:'SpeakerDiarizationComponent',
     ProductCategorizationComponent:'ProductCategorizationComponent',
     DocumentClassificationComponent:'DocumentClassificationComponent',
+    security_question:'question',
+    forgot_password : 'change-password'
   };
 
   static webApis = {
@@ -107,7 +109,9 @@ export class Constants {
     // getUserData: environment.apiUrl + 'account/getUserData',
     sendEmail: environment.apiUrl + 'account/sendEmail',
     resetPassword: environment.apiUrl + 'account/resetPassword',
-    setPassword: environment.apiUrl + 'account/setPassword'
+    setPassword: environment.apiUrl + 'account/setPassword',
+    security_question :environment.apiUrl + 'question',
+    forgot_password : environment.apiUrl + 'change-password/'
   };
 
   static businessExceptions = {

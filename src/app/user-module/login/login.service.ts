@@ -11,6 +11,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 export class LoginService {
     headers:any
     getLogedinuserId:any
+    getPassworduserId:any
     constructor(
         private _http: HttpClient,
         private _logger: LoggerService,
@@ -35,9 +36,23 @@ export class LoginService {
         this.getLogedinuserId = JSON.parse(localStorage.getItem('logedInUserData'));
          return this.getLogedinuserId._id
     }
-    signUp(firstName,lastName,email,password): Observable<any> {
-        return this._http.post(`${Constants.webApis.register}`,{firstName,lastName,email,password} );
+    getPasswordUserId(){
+        this.getPassworduserId = JSON.parse(localStorage.getItem('Password_Data'));
+        return this.getPassworduserId._id
     }
+    signUp(firstName,lastName,email,password,ques1,ques2,ques3): Observable<any> {
+        return this._http.post(`${Constants.webApis.register}`,{firstName,lastName,email,password,ques1,ques2,ques3} );
+    }
+
+    securityQuestion(email,ques1,ques2,ques3): Observable<any> {
+        return this._http.post(`${Constants.webApis.security_question}`,{email,ques1,ques2,ques3} );
+    }
+
+    changePassword(password) {
+        return this._http.patch(`${Constants.webApis.forgot_password}`+this.getPasswordUserId (),{password} );
+    }
+
+
     updatePassword(password){
         console.log(`${Constants.webApis.change_password}`+this.getUserId ())
         return this._http.patch(`${Constants.webApis.change_password}`+this.getUserId (),{password} );

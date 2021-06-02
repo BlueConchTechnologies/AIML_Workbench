@@ -5,10 +5,12 @@ import { SendEmailComponent } from './send-email/send-email.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { AuthGuardService } from '@global';
+import { QuestionComponent } from './security-question/question/question.component';
+import { ChangePasswordComponent } from './change-password/change-password/change-password.component';
 
 
 @NgModule({
-  declarations: [ForgotAndChangePasswordComponent, SendEmailComponent],
+  declarations: [ForgotAndChangePasswordComponent, SendEmailComponent, QuestionComponent, ChangePasswordComponent],
   imports: [
     CommonModule,
     FormsModule,

@@ -25,7 +25,7 @@
                             </select>
                             <div class="input-group-append">
                               <input #fileId type="file" name="upload" hidden (change)="
-                            handleUpload($event, fileId.files);" class="form-control">
+                            handleUpload($event, fileId.files);" accept=".csv" class="form-control">
                               <button class="btn ml-1 upload-button " id="buttonid" value="Upload" (click)="openDialog()"><i class="fa fa-upload upload-icon" aria-hidden="true"></i></button>
 
                             </div>
@@ -67,16 +67,20 @@
                   <div class="row" formArrayName="TrainingParamValues">
                     <div class="col-md-6 pl-4" *ngFor="let param of trainingParamValues.controls; let i = index">
                       <input class="form-check-input" type="checkbox" value="{{modelData.modelTrainingParamValues[i]}}" id="{{i}}"
-                             [formControlName]="i">
+                             [formControlName]="i" >
                       <label class="text-secondary" for="{{i}}">{{modelData.modelTrainingParamValues[i]}}</label>
                     </div>
                   </div>
                 </div>
-                  <button mat-button matStepperPrevious class="ui-button-raised modal-action-button active-btn" (click)="reset()">Back</button>
-                  <button type="submit" mat-button matStepperNext class="ui-button-raised modal-action-button active-btn" (click)="addModelParam()">Train Model</button>
+                  <button mat-button matStepperPrevious class="ui-button-raised modal-action-button active-btn" >Back</button>
+                  <button type="submit"  mat-button matStepperNext class="ui-button-raised modal-action-button active-btn"  (click)="addModelParam()"  >Train Model</button>
               </form>
              
             </mat-step>
         </mat-horizontal-stepper>
     </div>
-</div>
+</div> 
+
+
+
+ 

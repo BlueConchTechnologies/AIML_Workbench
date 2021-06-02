@@ -41,6 +41,13 @@
               <b>Speaker : </b> {{ Output_result.Speaker }}
           </p>
       </div>
+      <div *ngIf="!isSuccess">
+        <p>
+          
+             {{ Output_result }}
+        
+        </p>
+    </div>
       <div *ngIf = 'isErrorAvailable'>
           <p>
               {{errMessage}}

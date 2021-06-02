@@ -1,0 +1,52 @@
+
+<!--------------------------------Answer the security question template----------------------------->
+<div class="container-fluid" >
+    <div class="row">
+        <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+            <div class="login-pg-bg1"><img src="assets/Images/Image 2@2x.png" class="img-fluid"></div>
+            <div class="login-base-container">
+                <div class="login-form">
+                    <img src="assets/Images/Original.png" class="img-fluid login-pg-logo">
+                    <h1 class="login-title">Answer the Security Questions</h1>
+                    <form [formGroup]="questionForm" (ngSubmit)="onsignupformSubmit()">
+                           
+                        <div class="form-group pos-relative">
+                            <i class="fa fa-user login-ico" aria-hidden="true"></i>
+                            <input focusIndex="1" formControlName="emailAddress"  type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': regi_submitted && f_register.emailAddress.errors }" >
+                            <div *ngIf="regi_submitted && f_register.emailAddress.errors" class="invalid-feedback text-left">
+                                 <div *ngIf="f_register.emailAddress.errors.required">Please enter the Email Id</div>
+                            </div>
+                           
+                        </div><br>
+
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="ques1"  type="text" name="ques1" class="form-control rounded-pill"  placeholder="Mother's Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.ques1.errors }" >
+                            <div *ngIf="regi_submitted && f_register.ques1.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.ques1.errors.required">Please enter the Mother's name</div>
+                            </div>
+                        </div><br>
+
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="ques2"  type="text" name="ques2" class="form-control rounded-pill"  placeholder="Pet Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.ques2.errors }" >
+                            <div *ngIf="regi_submitted && f_register.ques2.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.ques2.errors.required">Please enter the Pet name</div>
+                            </div>
+                        </div><br>
+
+                        <div class="form-group pos-relative">
+                            <input focusIndex="1" formControlName="ques3"  type="text" name="ques3" class="form-control rounded-pill"  placeholder="Favourite Sport" [ngClass]="{ 'is-invalid': regi_submitted && f_register.ques3.errors }" >
+                            <div *ngIf="regi_submitted && f_register.ques3.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_register.ques3.errors.required">Please enter the Sport Name</div>
+                            </div>
+                        </div><br>
+        
+                        <div>
+                          <button type="submit" class="btn btn-default rounded-pill" id="loadButton" focusIndex="3">Submit</button>
+                        </div>
+                      </form>
+                </div>
+            </div>
+            <div class="login-pg-bg2"><img src="assets/Images/Image 3@2x.png" class="img-fluid"></div>
+        </div>
+    </div>
+</div>
