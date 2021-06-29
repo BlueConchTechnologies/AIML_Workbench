@@ -8,8 +8,8 @@ const appRoutes: Routes = [
 
     {
         path: Constants.uiRoutes.marketplace,
-        component: MarketPlaceComponent
-      
+        component: MarketPlaceComponent,
+        canActivate: [AuthGuardService]
     },
 ];
 export const routing: ModuleWithProviders<RouterModule> = RouterModule.forChild(appRoutes);

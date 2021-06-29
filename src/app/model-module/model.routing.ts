@@ -8,8 +8,8 @@ const appRoutes: Routes = [
 
     {
         path: Constants.uiRoutes.modellist,
-        component: ModelListComponent
-      
+        component: ModelListComponent,
+        canActivate: [AuthGuardService]
     },
 ];
 export const routing: ModuleWithProviders<RouterModule> = RouterModule.forChild(appRoutes);

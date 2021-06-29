@@ -46,7 +46,7 @@ export class TimeSeriesComponent implements OnInit {
       { name: 'Arima Model', value: 'arima_model', checked: false, isDisabled: true  },
       { name: 'Ar Model', value: 'ar_model', checked: false, isDisabled: true  },
       { name: 'Sarimax Model', value: 'sarimax_model', checked: false, isDisabled: true  },
-      { name: 'Var Model', value: 'var_model', checked: false, isDisabled: true  },
+      // { name: 'Var Model', value: 'var_model', checked: false, isDisabled: true  },
       { name: 'Lstm', value: 'lstm', checked: false, isDisabled: true  },
     ];
 
@@ -68,9 +68,9 @@ export class TimeSeriesComponent implements OnInit {
     if (algorithum_array[i] === 'sarimax_model') {
       this.algorithmList[3] = { name: 'Sarimax Model', value: 'sarimax_model', checked: true, isDisabled: false };
     }
-    if (algorithum_array[i] === 'var_model') {
-      this.algorithmList[4] = { name: 'Var Model', value: 'var_model', checked: true, isDisabled: false };
-    }
+    // if (algorithum_array[i] === 'var_model') {
+    //   this.algorithmList[4] = { name: 'Var Model', value: 'var_model', checked: true, isDisabled: false };
+    // }
     if (algorithum_array[i] === 'lstm') {
       this.algorithmList[5] = { name: 'Lstm', value: 'lstm', checked: true, isDisabled: false };
     }

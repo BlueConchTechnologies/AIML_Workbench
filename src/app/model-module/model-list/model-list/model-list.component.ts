@@ -131,6 +131,8 @@ export class ModelListComponent implements OnInit {
           else if (this.result[i].original_model_name == 'DuplicatePrediction'){this.result[i].model_route = "duplicates-prediction"; } 
           else if (this.result[i].original_model_name == 'FaceRecognition'){this.result[i].model_route = "face-recognition"; } 
           else if (this.result[i].original_model_name == 'ProductCategorization'){this.result[i].model_route = "products-categorization"; }
+          else if (this.result[i].original_model_name == 'VoiceClassification'){this.result[i].model_route = "audio-analytics"; }
+          else if (this.result[i].original_model_name == 'SpeakerDiarization'){this.result[i].model_route = "audio-analytics"; }
 
            // format training start time
             var split_model_array = this.result[i].training_end_time.split(".");
@@ -146,6 +148,7 @@ export class ModelListComponent implements OnInit {
 
         // set non_trainable and trained model to disabel createusecase button
         console.log(this.trainedAndNonTraianbel)
+        localStorage.setItem('Model_list',JSON.stringify(this.trainedAndNonTraianbel));
         console.log(this.trainedAndNonTraianbel.length)
         if (this.trainedAndNonTraianbel.length < 1){
           localStorage.setItem("CheckoutModelItem",null);

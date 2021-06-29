@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 
 import { PageNotFoundComponent } from '@core';
-import { AuthGuardService } from '@global';
+import { AuthGuardService } from 'app/global-module/services/auth-guard.service';
 import { Constants, Role } from '@shared';
 
 import { ForgotAndChangePasswordComponent } from './user-module/forgot-and-change-password/forgot-and-change-password.component';

@@ -11,13 +11,9 @@ export const environment = {
   domain: '.client1.com',
   appUrl: 'http://localhost:4200/',
   
-  apiUrl: 'http://localhost:8080/api/user/',
-  //apiUrl: 'http://localhost:2000/api/user/',
-  //apiUrl: 'http://172.26.21.9:8080/api/user/',
- // dahUrl:'http://localhost:4201/',
-  dahUrl:'https://dah-qa.blueconchtech.com:9008/',
-  workbenchUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
-  workbenchPublicUrl:'https://aiworkbenchprod.xpanxion.co.in:5672',
+  apiUrl: 'https://aimlloginserver.blueconchtech.com/api/user/',
+  dahUrl:'https://dah.blueconchtech.com:9008/',
+  workbenchUrl:'https://aiworkbench.xpanxion.co.in:5672/',
 
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,

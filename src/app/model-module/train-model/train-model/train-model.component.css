@@ -133,3 +133,8 @@
     z-index: 9999999999;
     overflow: hidden;
   }
+  .invalid{
+    border-color: none;
+    border-width: none;
+    border-style: none;
+}

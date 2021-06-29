@@ -36,37 +36,46 @@ const appRoutes: Routes = [
 
   {
     path: Constants.uiRoutes.casestudy,
-    component: AllUseCaseComponent
+    component: AllUseCaseComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: Constants.uiRoutes.createdesign,
-    component: CreateDesignComponent
+    component: CreateDesignComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: Constants.uiRoutes.createusecase,
-    component: CreateUseCaseComponent
+    component: CreateUseCaseComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: Constants.uiRoutes.designWorkflow,
-    component: DesignWorkflowComponent
+    component: DesignWorkflowComponent,
+    canActivate: [AuthGuardService]
   },
   {
     path: Constants.uiRoutes.runworkflow,
-    component: RunworkflowComponent
+    component: RunworkflowComponent,
+    canActivate: [AuthGuardService]
   },{
     path: Constants.uiRoutes.displayWorkflow,
-    component: DisplayWorkflowComponent
+    component: DisplayWorkflowComponent,
+    canActivate: [AuthGuardService]
   },{
     path: Constants.uiRoutes.TableExtractorComponent,
-    component:TableExtractorComponent 
+    component:TableExtractorComponent,
+    canActivate: [AuthGuardService] 
   },
   {
     path: Constants.uiRoutes.TextSummarizationComponent ,
-    component:TextSummarizationComponent  
+    component:TextSummarizationComponent,
+    canActivate: [AuthGuardService]  
   },
   {
     path: Constants.uiRoutes.SentimentClassificationComponent ,
-    component:SentimentClassificationComponent  
+    component:SentimentClassificationComponent,
+    canActivate: [AuthGuardService]  
   }
 
 ];

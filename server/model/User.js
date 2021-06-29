@@ -27,6 +27,18 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    ques1 : {
+        type : String,
+        required: true,
+    },
+    ques2 : {
+        type : String,
+        required: true,
+    },
+    ques3 : {
+        type : String,
+        required: true,
+    }
     
 });
 

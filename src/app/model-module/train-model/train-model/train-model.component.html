@@ -64,7 +64,7 @@
               <form [formGroup]="secondFormGroup">
                 <ng-template matStepLabel>Model Trainings</ng-template>
                 <div class="container">
-                  <div class="row" formArrayName="TrainingParamValues">
+                  <div class="row invalid" formArrayName="TrainingParamValues">
                     <div class="col-md-6 pl-4" *ngFor="let param of trainingParamValues.controls; let i = index">
                       <input class="form-check-input" type="checkbox" value="{{modelData.modelTrainingParamValues[i]}}" id="{{i}}"
                              [formControlName]="i" >
@@ -72,9 +72,12 @@
                     </div>
                   </div>
                 </div>
+                <div>
                   <button mat-button matStepperPrevious class="ui-button-raised modal-action-button active-btn" >Back</button>
+                  <!-- <button type="button"  class="ui-button-raised modal-action-button active-btn"  (click)="goBack(stepper)">Back</button> -->
                   <button type="submit"  mat-button matStepperNext class="ui-button-raised modal-action-button active-btn"  (click)="addModelParam()"  >Train Model</button>
-              </form>
+                </div>
+                </form>
              
             </mat-step>
         </mat-horizontal-stepper>

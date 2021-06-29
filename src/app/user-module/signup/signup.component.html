@@ -92,15 +92,17 @@
                             <form  class= "form-container" [formGroup]="firstFormGroup" >
                               
                                 <div class="form-group pos-relative">
-                                    <input focusIndex="1" formControlName="fname"   type="text"  name="fname" class="form-control rounded-pill"  placeholder="First Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.fname.errors }" >
+                                    <input focusIndex="1" formControlName="fname"   type="text"  name="fname" class="form-control rounded-pill"  placeholder="First Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.fname.errors }" ngModel pattern="[a-zA-Z ]*" >
                                     <div *ngIf="regi_submitted && f_register.fname.errors" class="invalid-feedback text-left">
                                         <div *ngIf="f_register.fname.errors.required">Please enter the Firstname</div>
+                                        <div *ngIf="f_register.fname.errors.pattern">You have entered an invalid First Name</div>
                                     </div>
                                 </div><br>
                                 <div class="form-group pos-relative">
-                                    <input focusIndex="1" formControlName="lname"  type="text"  name="lname" class="form-control rounded-pill"  placeholder="Last Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.lname.errors }"  >
+                                    <input focusIndex="1" formControlName="lname"  type="text"  name="lname" class="form-control rounded-pill"  placeholder="Last Name" [ngClass]="{ 'is-invalid': regi_submitted && f_register.lname.errors }" ngModel pattern="[a-zA-Z ]*" >
                                     <div *ngIf="regi_submitted && f_register.lname.errors" class="invalid-feedback text-left">
                                         <div *ngIf="f_register.lname.errors.required">Please enter the Lastname</div>
+                                        <div *ngIf="f_register.lname.errors.pattern">You have entered an invalid Last Name</div>
                                     </div>
                                 </div><br>
                                 <div class="form-group pos-relative">
@@ -131,7 +133,7 @@
                             </form>
                           </mat-step>
                           
-                        <mat-step [stepControl]="secondFormGroup" label="Seurity Questions" >
+                        <mat-step [stepControl]="secondFormGroup" label="Security Questions" >
                           <form [formGroup]="secondFormGroup" (ngSubmit)="onsignupformSubmit()"> 
                             
                             <div class="form-group pos-relative">

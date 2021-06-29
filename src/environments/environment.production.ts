@@ -10,7 +10,7 @@ export const environment = {
   environmentName: 'Production',
   domain: '.client1.com',
   appUrl: 'http://172.26.21.9:81/AI-workbench/',
-  apiUrl: 'http://172.26.21.9:9043/api/',
+  apiUrl: 'https://aimlloginserver.blueconchtech.com/api/user/',
   //workbenchUrl : 'http://172.26.21.10:9003',
   workbenchUrl: 'https://aiworkbenchprod.xpanxion.co.in:5672',
   serverLogLevel: NgxLoggerLevel.ERROR,

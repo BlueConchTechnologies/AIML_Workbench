@@ -39,6 +39,7 @@ export class TrainModelComponent implements OnInit {
   fileObj: any;
   inputFile: string | ArrayBuffer;
   logedInUsername :any;
+  mail_id:any;
 
   @ViewChild(MatHorizontalStepper) stepper: MatHorizontalStepper;
 
@@ -73,6 +74,10 @@ export class TrainModelComponent implements OnInit {
       //epochs: [''],
       //DropOut: ['']
     });
+
+    this.thirdFormGroup = this.fb.group({
+      col_name : ['',Validators.required]
+    });
     
     this.getModelToBeTrainData ()
     this.addTrainingParamCheckboxes();
@@ -82,6 +87,11 @@ export class TrainModelComponent implements OnInit {
     
 
   }
+  /*goBack(stepper: MatStepper){
+    console.log('Previous');
+     stepper.previous();
+}*/
+
 
   // display third form for product categorization model
   getModelToBeTrainData () {
@@ -92,7 +102,7 @@ export class TrainModelComponent implements OnInit {
          this.display_thirdFormGroup = true;
     }
     this.thirdFormGroup = this.fb.group({
-     col_name: [''],
+     col_name: ['',Validators.required],
     });
   }
   private addTrainingParamCheckboxes() {
@@ -162,6 +172,8 @@ export class TrainModelComponent implements OnInit {
       "created_date_time": this.fileObj.lastModifiedDate
     }
     console.log("user first name", this.logedInUsername.firstName);
+    this.mail_id = localStorage.getItem('logedInUsername');
+    console.log(this.mail_id);
     let modalDataType1 = this.modelData.modelHistory.find(x => x._id == "Test123");
     if (!modalDataType1) {
       this.modelData.modelHistory.push(modal);
@@ -257,7 +269,7 @@ export class TrainModelComponent implements OnInit {
       else {
         modelData.algorithmname = selectedOrderIds;
       }
-      console.log('=========================================',this.secondFormGroup.value.TrainingParamValues);
+      console.log('=====================================',this.secondFormGroup.value.TrainingParamValues);
       if (this.firstFormGroup.controls.upload.value && this.firstFormGroup.controls.upload.value != "Test123") {
         modelData.dataTracker_id = this.firstFormGroup.controls.upload.value;
       }
@@ -282,11 +294,21 @@ export class TrainModelComponent implements OnInit {
         return
        }
       }
+
+      if(this.modelToBeTrain.original_model_name == 'ProductCategorization'){
+        if(!this.thirdFormGroup.valid){ 
+          console.log('model name',this.modelToBeTrain.original_model_name)
+          this.toastrService.showError(ToastrCode.RequiredFeilds)
+         this.spinnerActive = this.spinner.stop();
+         return
+        }
+       }
+
       this.modelDataService.trainModel(modelData).subscribe(
         (response: any) => {
           console.log(response);
           console.log(response.message.status);
-          if (response.message.status === 'Success') {
+          if (response.message.status === 'Success' || response.message.status === 'success') {
             console.log('Success')
             this.toastrService.showSuccess('Model is trained');
             this.spinnerActive = this.spinner.stop();
@@ -304,7 +326,8 @@ export class TrainModelComponent implements OnInit {
         (error) => {
           console.log(error);
           this.toastrService.showError(ToastrCode.ApiError);
-          console.log("workflow failed")
+          console.log("workflow failed");
+          this.spinnerActive = this.spinner.stop();
         }
       );
       //this.toastrService.showSuccess(ToastrCode.Training);
@@ -313,7 +336,7 @@ export class TrainModelComponent implements OnInit {
 
   onStepComplete() {
     this.stepper.selected.completed = true;
-    this.stepper.selected.editable = false;
+    this.stepper.selected.editable = true;
     this.stepper.next();
   }
 

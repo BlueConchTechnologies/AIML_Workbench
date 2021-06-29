@@ -35,6 +35,8 @@ import { TrainModelComponent } from './model-module/train-model/train-model/trai
 import {AccountComponent} from './account-info/account/account/account.component';
 import { SignupComponent } from './user-module/signup/signup.component';
 import { ProfileComponent } from './userProfile/profile/profile.component';
+import { AuthGuardService } from 'app/global-module/services/auth-guard.service';
+
 
 
 @NgModule({
@@ -76,7 +78,7 @@ import { ProfileComponent } from './userProfile/profile/profile.component';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
   ],
-  providers: [],
+  providers: [AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

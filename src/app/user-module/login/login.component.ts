@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
     spinnerActive = false;
     loggedUser:any
     newUser:any
+    newUser1:any
     constructor(
         private _router: Router,
         private _loginService: LoginService,
@@ -99,9 +100,10 @@ export class LoginComponent implements OnInit {
                         //  remove the @, . from the email id(username)
                         this.loggedUser = this.model.value.emailAddress;
                 
-                        this.newUser = this.loggedUser.replace('@','').replace('.','');
+                        this.newUser1 = this.loggedUser.replace('@','').replace('.','').replace('.','');
                         console.log('user logged in is',this.loggedUser);
-                        console.log('user',this.newUser);
+                        console.log('user',this.newUser1);
+                        this.newUser = this.newUser1.toLowerCase();
                         localStorage.setItem("logedInUsername", this.newUser);
                         
                         localStorage.setItem('logedInUserData',JSON.stringify(response.data));   

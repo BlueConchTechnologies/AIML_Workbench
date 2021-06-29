@@ -5,9 +5,9 @@
             <h6 class="marketplace-header"> Model Marketplace </h6>
         </div>
         <div class="col-md-8 text-right mb-2">
-            <button type="button" class="btn btn-outline-primary btn-sm mr-2"><i class="fa fa-upload" aria-hidden="true"></i>
-            Upload Custom Model</button>
-            <button type="button" (click)="nonTrainableModelCheckout()" [disabled]="checkedCount == 0" class="btn btn-outline-primary btn-sm mr-2" style="position: relative;"> {{checkedCount}}<i class="fa fa-check fa-checkout" aria-hidden="true"></i>
+            <!-- <button type="button" class="btn btn-outline-primary btn-sm mr-2"><i class="fa fa-upload" aria-hidden="true"></i>
+            Upload Custom Model</button> -->
+            <button type="button" (click)="nonTrainableModelCheckout()" [disabled]=" checkedCount == 0  " class="btn btn-outline-primary btn-sm mr-2" style="position: relative;"> {{checkedCount}}<i class="fa fa-check fa-checkout" aria-hidden="true"></i>
             &nbsp;&nbsp;Checkout</button>
 
         </div>
