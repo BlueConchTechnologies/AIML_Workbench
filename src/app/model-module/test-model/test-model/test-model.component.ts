@@ -125,6 +125,7 @@ export class TestModelComponent implements OnInit {
   }
   //Add Model Hyper-Parameters
   addModelParam() {
+    console.log("-------1--------------");
     var paramData = {
       "_id": "5ee9ce3781b551127a6aee32",
       "learnRate": this.secondFormGroup.controls.learnRate.value,

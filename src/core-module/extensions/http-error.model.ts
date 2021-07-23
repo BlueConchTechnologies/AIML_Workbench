@@ -37,7 +37,8 @@ export enum ToastrCode {
   ApiError = <any>'Something Bad happened',
   DesignedFinalized = <any>'DesignedFinalized',
   Fatal = <any>'Fatal',
-  FlowRunSuccess = <any>'FlowRunSuccess'
+  FlowRunSuccess = <any>'FlowRunSuccess',
+  NamealreadyExist = <any> 'Please change the Experiment Name'
 }
 
 export class HttpError {

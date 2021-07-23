@@ -16,5 +16,7 @@ export const environment = {
   serverLogLevel: NgxLoggerLevel.ERROR,
   logLevel: NgxLoggerLevel.TRACE,
   serverLoggingUrl: 'http://172.26.21.9:9043/api/logs',
-  nodeRedUrl: 'http://172.26.21.9:1880/'
+  // nodeRedUrl: 'https://172.26.21.9:1880/'
+  nodeRedUrl: 'https://nodered.blueconchtech.com:1880/'
+  // nodeRedUrl: 'https://localhost:1880/'
 };

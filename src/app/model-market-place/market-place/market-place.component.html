@@ -109,6 +109,7 @@
                             <div class="form-group col-md-12">
                                 <label for="modelName" class="inputTitle">Model Name</label>&nbsp;<span class="mandatory">*</span>
                                 <input type="text" class="form-control" formControlName="model_name" >
+                                <div class="error" *ngIf="isErrorAvailable">Model name already exist</div>
                             </div>
                         </div>
                         <div class="form-row">
