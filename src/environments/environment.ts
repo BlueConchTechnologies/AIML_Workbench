@@ -18,8 +18,10 @@ export const environment = {
   logLevel: NgxLoggerLevel.TRACE,
   serverLogLevel: NgxLoggerLevel.OFF,
   serverLoggingUrl: 'http://localhost:9043/api/logs',
-  nodeRedUrl: 'http://172.26.21.9:1880/',
-  //nodeRedUrl: 'http://localhost:1880/',
-  admin_username: 'aimlworkbenchblueconchtechcom'
+  // nodeRedUrl: 'https://nodered.blueconchtech.com:1880/',
+  // nodeRedUrl: 'https://172.26.21.9:1880/',
+  nodeRedUrl: 'http://localhost:1880/',
+  admin_username: 'aimlworkbenchblueconchtechcom',
+  
   
 };
