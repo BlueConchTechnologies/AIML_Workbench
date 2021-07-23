@@ -93,6 +93,9 @@
 .mandatory {
     color: red;
 }
+.error {
+    color: red;
+}
 
 
 /* //mat-dialog CSS override */

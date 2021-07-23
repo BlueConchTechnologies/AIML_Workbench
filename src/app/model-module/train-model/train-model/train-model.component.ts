@@ -203,7 +203,11 @@ export class TrainModelComponent implements OnInit {
 
   //Upload Model Details
   uploadData() {
-    if (!this.firstFormGroup.controls.upload.value) {
+    this.modelToBeTrain = JSON.parse(localStorage.getItem('modelToBeTrain'))
+     if (this.firstFormGroup.controls.experiment_name.value ===  this.modelToBeTrain.model_name) {
+      this.toastrService.showError(ToastrCode.NamealreadyExist)
+    }
+    else if (!this.firstFormGroup.controls.upload.value) {
       this.toastrService.showError(ToastrCode.UploadFile)
     }
     else if (!this.firstFormGroup.valid) {
@@ -249,6 +253,7 @@ export class TrainModelComponent implements OnInit {
   }*/
   //Add Model Hyper-Parameters
   addModelParam() {
+    console.log("------2----------------")
     this.secondFormGroup.controls.TrainingParamValues.setValidators(minSelectedCheckboxes(1));;
     this.secondFormGroup.controls.TrainingParamValues.updateValueAndValidity();
       this.spinnerActive = this.spinner.start();

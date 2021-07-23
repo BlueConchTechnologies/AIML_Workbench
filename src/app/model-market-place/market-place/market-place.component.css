@@ -152,3 +152,6 @@
     border-radius: 50%;
     background-color: #def6fd;
 }
+.error {
+    color: red;
+}
