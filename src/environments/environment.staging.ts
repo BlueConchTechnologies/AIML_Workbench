@@ -9,7 +9,7 @@ export const environment = {
     apiUrl: 'https://aimlloginserver.blueconchtech.com/api/user/',
     // nodeRedUrl: 'https://172.26.21.9:1880/',
     // nodeRedUrl: 'http://localhost:1880/',
-    nodeRedUrl: 'https://nodered.blueconchtech.com:1880/',
+    nodeRedUrl: 'https://nodered.blueconchtech.com:1881/',
     workbenchUrl: 'https://aiworkbench.xpanxion.co.in:5672/',
 
     dahUrl: 'https://dah.blueconchtech.com:9008/',
