@@ -4,6 +4,9 @@ export const environment = {
     production: true,
     environmentName: 'Staging',
     domain: 'dah.xpanxion.co.in',
+    admin_username: 'aimlworkbenchblueconchtechcom',
+    // admin_username: 'aimlworkbenchblueconchtechcom',
+
     appUrl: 'https://aimlworkbench.blueconchtech.com/',
     //appUrl:'http://aimlworkbench.blueconchtech.com/',
     apiUrl: 'https://aimlloginserver.blueconchtech.com/api/user/',
@@ -16,6 +19,6 @@ export const environment = {
 
     logLevel: NgxLoggerLevel.ERROR,
     serverLogLevel: NgxLoggerLevel.ERROR,
-    serverLoggingUrl: 'https://dah.xpanxion.co.in:9007/api/logs',
-    admin_username: 'aimlworkbenchblueconchtechcom'
+    serverLoggingUrl: 'https://dah.xpanxion.co.in:9007/api/logs'
+    
 };

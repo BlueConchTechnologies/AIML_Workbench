@@ -9,6 +9,9 @@ export const environment = {
   production: false,
   environmentName: 'Dev',
   domain: '.client1.com',
+  // admin_username: 'aimlworkbenchblueconchtechcom',
+  admin_username: 'asifshaikhblueconchtechcom',
+
   appUrl: 'http://localhost:4200/',
   
   apiUrl: 'https://aimlloginserver.blueconchtech.com/api/user/',
@@ -20,8 +23,8 @@ export const environment = {
   serverLoggingUrl: 'http://localhost:9043/api/logs',
   // nodeRedUrl: 'https://nodered.blueconchtech.com:1880/',
   // nodeRedUrl: 'https://172.26.21.9:1880/',
-  nodeRedUrl: 'http://localhost:1880/',
-  admin_username: 'aimlworkbenchblueconchtechcom',
+  nodeRedUrl: 'http://localhost:1880/'
+ 
   
   
 };
