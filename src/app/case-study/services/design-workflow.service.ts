@@ -14,6 +14,7 @@ export class DesignWorkflowService {
   constructor(private httpClient: HttpClient) { }
 
   createFlow(flow: any) {
+    console.log("-----flow-----", flow)
     return this.httpClient.post(this.nodeRedUrl + 'flows', flow);
   }
 
@@ -31,7 +32,7 @@ export class DesignWorkflowService {
     return this.httpClient.get(url);
   }
   checkDesign(){
-    return this.httpClient.get(this.nodeRedUrl + 'flows');
+    return this.httpClient.get<any[]>(this.nodeRedUrl + 'flows');
   }
   saveWorkflow (user_id,usecase_name,usecase_description,flow) {
     return this.httpClient.post(this.apiUrl + '/api/usecases',[ { user_id,usecase_name,usecase_description,flow}] );
