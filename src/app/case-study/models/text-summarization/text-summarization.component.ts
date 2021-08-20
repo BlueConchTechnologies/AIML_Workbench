@@ -51,15 +51,12 @@ export class TextSummarizationComponent implements OnInit {
             this.resultSummary = data.response.summary;
             this.isResultAvailable = true;
             this.isErrorAvailable = false;
-            
-
           } else {
             this.spinnerActive = this.spinner.stop();
             this.resultShow = true;
-            this.resultSummary = data.message;
+            this.resultSummary = data.response.message;
           }
           console.log("result",data)
-         
          },
          (errorResponse) => {
           this.errMessage = 'Server Error, Please contact system administrator';
