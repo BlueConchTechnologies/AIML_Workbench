@@ -16,8 +16,6 @@
     <div class="container">
         <iframe [src]="urlSafe" width="100%" height="550px" allowfullscreen="true"></iframe>
         <div class="button-wrapper"><br>
-            <span style="color: red;"  (click)="finalizedDesign()" >=======================</span>
-            <button type="submit" style="color: red;">test</button>
             <button *ngIf="usecaseId != 'null'; else finalDesign" type="submit" (click)="finalizedDesign()"
                 class="btn btn-outline-primary flow-button">Update
                 Workflow</button>
@@ -27,6 +25,5 @@
             </ng-template>
 
         </div>
-        <span style="color: red;">=======================</span>
         <br><br><br>
     </div>

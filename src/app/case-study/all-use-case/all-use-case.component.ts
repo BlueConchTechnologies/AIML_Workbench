@@ -20,6 +20,7 @@ import { ModelDataService } from '@shared/services/model-data.service';
 })
 export class AllUseCaseComponent implements OnInit {
   prebuiltusecase: boolean = true;
+  myusecase: boolean = true;
   usecaseList: any;
   usecaseID: any;
   preBuiltUsecases: any;
@@ -37,6 +38,7 @@ export class AllUseCaseComponent implements OnInit {
   mytUsecasesId = [];
   trainingTrackerId = []
   result: any;
+  checkoutNonTrainableModelList = [];
 
   constructor(private modelDataService: ModelDataService, private _caseStudyService: CaseStudyService, private router: Router, private designWorkflowService: DesignWorkflowService, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder) {
   }
@@ -148,65 +150,74 @@ export class AllUseCaseComponent implements OnInit {
   editPrebuiltUsecase(event): void {
     var idAttr = event.srcElement.attributes.id;
     this.usecaseID = idAttr.nodeValue;
-
-    console.log('this.usecaseID', this.usecaseID)
     for (var i = 0; i < this.preBuiltUsecases.length; i++) {
       if (this.preBuiltUsecases[i]._id == this.usecaseID) {
-        console.log("use case flow", this.preBuiltUsecases[i])
         var flow = this.preBuiltUsecases[i].flow
         var usecaseUserId = this.preBuiltUsecases[i].user_id
-
-
         // set workflow to localstorage
         localStorage.setItem("usecaseId", this.usecaseID);
         localStorage.setItem('usecaseUserId', usecaseUserId)
         localStorage.setItem("workflow_to_nodered", JSON.stringify(flow));
         // add flow to nodered
+        this.designWorkflowService.createFlow(flow).subscribe(data => {
+        });
+        this.router.navigate(['design-workflow']);
       }
     }
-    // for (let i = 0; i < flow.length; i++) {
-    //   for (var j = 0; j < this.mytUsecases.length; j++) {
-    //     if (this.mytUsecases[j]._id === flow[i].trainingTracker_id && flow[i].trainingTracker_id === undefined) {
-    //       console.log("ok.................")
-    //     } else {
-    // this.modelDataService.getModelDetail(flow[i].trainingTracker_id).subscribe(
-    //   (response: any) => {
-    //     console.log("sajdf asdjfh.............", response)
-    //   },
-    //   (errorResponse) => {
-    //   });
-
-    //     }
-    //   }
-    // }
     if (this.mytUsecases !== undefined) {
       for (let i = 0; i < this.mytUsecases.length; i++) {
         this.mytUsecasesId.push(this.mytUsecases[i]._id)
       }
     }
-    console.log("my usecase id = ", this.mytUsecasesId)
-
     for (let i = 0; i < flow.length; i++) {
       if (this.mytUsecasesId.includes('flow[i].trainingTracker_id')) {
         console.log("ok....")
       } else {
-        console.log("trin id ================== ", flow[i].trainingTracker_id)
         if (flow[i].trainingTracker_id !== undefined) {
-          this.modelDataService.getModelData(flow[i].trainingTracker_id).subscribe(
+          this.modelDataService.getModelDetails(flow[i].original_model_name).subscribe(
             (response: any) => {
               this.result = response.records;
-              console.log("*****************", this.result)
-              
-            },
-            (errorResponse) => {
+              var flow1 = flow[i]
+              var user_id = this.mytUsecases[0].user_id;
+              var model_description = this.result[0].model_description;
+              var model_name = this.result[0].original_model_name;
+              var original_model_name = this.result[0].original_model_name;
+              var prediction_params = this.result[0].prediction_params;
+              var trainable = this.result[0].trainable;
+              var training_params = this.result[0].training_params;
+
+              this.checkoutNonTrainableModelList.push({
+                user_id: user_id,
+                model_description: model_description,
+                model_name: model_name,
+                original_model_name: original_model_name,
+                prediction_params: prediction_params,
+                trainable: trainable,
+                training_params: training_params
+              });
+
+              // set workflow to localstorage
+              localStorage.setItem("usecaseId", this.usecaseID);
+              localStorage.setItem('usecaseUserId', user_id)
+              localStorage.setItem("workflow_to_nodered", JSON.stringify(flow1));
+              this.modelDataService.selectedModels(this.checkoutNonTrainableModelList).subscribe(
+                (successResponse) => {
+                  console.log("successResponse....", successResponse)
+                });
+              // add flow to nodered
+              this.designWorkflowService.createFlow(flow1).subscribe(data => {
+                console.log("Data= ", data)
+              });
+
+              this.router.navigate(['design-workflow']);
+
+            }, (errorResponse) => {
             });
         }
       }
     }
 
-    this.designWorkflowService.createFlow(flow).subscribe(data => {
-    });
-    this.router.navigate(['design-workflow']);
+
   };
 
   editMyUsecase(event): void {
