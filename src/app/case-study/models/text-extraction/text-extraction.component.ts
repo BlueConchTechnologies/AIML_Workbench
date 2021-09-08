@@ -213,6 +213,8 @@ export class TextExtractionComponent implements OnInit {
 }
 
 runYourWorkflow() {
+
+  console.log("hear.....................")
   const formData = new FormData();
   var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
    formData.append('trainingTracker_id', firstTrainTrackerId);
@@ -283,11 +285,12 @@ runYourWorkflow() {
      this.spinnerActive = this.spinner.stop()
    },
    (errorResponse) => {
-    //  this.toastService.showError('Something went wrong');
+     this.toastService.showError(errorResponse.error.response);
      console.log('ERROR', errorResponse);
      this.doubleModel_isSuccess = false
      this.isErrorAvailable = true;
-     this.errMessage = 'Server Error, Please contact system administrator';
+    //  this.errMessage = 'Server Error, Please contact system administrator';
+    this.errMessage = errorResponse.error.response
      this.spinnerActive = this.spinner.stop()
 
    });

@@ -23,12 +23,18 @@ export class ProductCategorizationComponent implements OnInit {
   isSuccess: any;
   isErrorAvailable: any;
   errMessage: any;
+  doubleModel_isSuccess:any;
+  trainTrackerIdLength: any;
+
+
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
       col_name : '',
       desc : ''
     })
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
    // upload file 
@@ -50,6 +56,8 @@ runYourWorkflow() {
    this._caseStudyService.runWorkflow(formData)
      .subscribe(
        (successResponse) => {
+
+        if (this.trainTrackerIdLength <= 1) {
          console.log('successResponse', successResponse)
           if(successResponse.response.status == 'Success'){
               this.Output_result = successResponse.response.result;
@@ -62,6 +70,11 @@ runYourWorkflow() {
          
          this.isErrorAvailable = false;
          this.spinnerActive = this.spinner.stop()
+        }else{
+          this.errMessage = successResponse.response.error;
+          this.spinnerActive = this.spinner.stop()
+          this.secondFlow(successResponse.response)
+        }
        },
        (errorResponse) => {
          this.toastService.showError('Something went wrong');
@@ -73,6 +86,38 @@ runYourWorkflow() {
 
        });
    
+}
+secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+  formData_new.append('trainingTracker_id', secondTrainTrackerId);
+  formData_new.append('text', firstflowResponse);
+
+  formData_new.forEach((value, key) => {
+    console.log("formdata_second model", key + " " + value)
+  });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+    .subscribe(
+      (successResponse) => {
+        console.log('successResponse', successResponse)
+        this.doubleModel_isSuccess = true
+        this.isErrorAvailable = false;
+        this.Output_result = successResponse.response.Result
+        this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+        this.spinnerActive = this.spinner.stop()
+      },
+      (errorResponse) => {
+        this.toastService.showError(errorResponse.error.response);
+        console.log('ERROR', errorResponse);
+        this.doubleModel_isSuccess = false
+        this.isErrorAvailable = true;
+        //  this.errMessage = 'Server Error, Please contact system administrator';
+        this.errMessage = errorResponse.error.response
+        this.spinnerActive = this.spinner.stop()
+
+      });
 }
 
 

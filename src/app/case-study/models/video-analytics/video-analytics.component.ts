@@ -13,8 +13,10 @@ import { DesignWorkflowService } from '../../services/design-workflow.service';
   styleUrls: ['./video-analytics.component.css']
 })
 export class VideoAnalyticsComponent implements OnInit {
-  constructor(private videoAnalyticsService: CaseStudyService,
+  constructor(private _caseStudyService: CaseStudyService,
+    private videoAnalyticsService: CaseStudyService,
     private spinner: SpinnerService,
+    private toastService: ToastrService,
     private domSanitizer: DomSanitizer) { }
   // ----------------------------------------------------------------------------------------------
   // Private Variables
@@ -35,61 +37,109 @@ export class VideoAnalyticsComponent implements OnInit {
   public status = null;
   public url: any;
   public ext: string;
-  termFileLabel= 'choose file....'
+  termFileLabel = 'choose file....'
+  Output_result: any
+  doubleModel_isSuccess: any;
+  trainTrackerIdLength: any;
+  selectedIndex: number = null;
+  fileExtensionMessage: any;
 
   ngOnInit(): void {
-   
+
   }
 
 
-onFileUpload(file) {
-  this.initializeState();
-  
-   var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-   this.formdata.append('trainingTracker_id', firstTrainTrackerId);
-  this.formdata.append('file', file[0]);
-  this.ext =  file[0].name.split('.').pop();
-  this.termFileLabel = file[0].name
-  
-}
+  onFileUpload(file) {
+    this.initializeState();
 
-onClickProcessBtn() {
-  this.spinnerActive = this.spinner.start();
-  this.videoAnalyticsService.runWorkflow_imageFormatOutput(this.formdata).subscribe((res: any) => {
-    this.spinnerActive = this.spinner.stop();
-    if (res && ['jpg', 'jpeg', 'png', 'mp4','gif'].includes(this.ext.toLowerCase())) {
-      const reader = new FileReader();
-      reader.readAsDataURL(res);
-      reader.onload = () => {
-        // base 64 string
-        this.result = reader.result;
-        const newUrl = 'data:video' + this.result.split('data:image')[1];
-        this.url = this.domSanitizer.bypassSecurityTrustUrl(newUrl);
-      };
-      this.isSuccess = true;
-      this.status = 'Success';
-    } else {
-      this.status = 'Fail';
-      this.errMessage = 'Server Error, Please contact system administrator';
-      this.isErrorAvailable = true;     
-    }
-  },
-    error => {
-      this.status = 'Fail';
-      this.isSuccess = false;
-      console.log(error)
-      this.errMessage = 'Server Error, Please contact system administrator';
-      this.isErrorAvailable = true;     
+    var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+    this.formdata.append('trainingTracker_id', firstTrainTrackerId);
+    this.formdata.append('file', file[0]);
+    this.ext = file[0].name.split('.').pop();
+    this.termFileLabel = file[0].name
+
+  }
+
+  onClickProcessBtn() {
+    this.spinnerActive = this.spinner.start();
+    this.videoAnalyticsService.runWorkflow_imageFormatOutput(this.formdata).subscribe((res: any) => {
       this.spinnerActive = this.spinner.stop();
-    });
-}
 
-private initializeState() {
-  this.result = {};
-  this.status = null;
-  this.isErrorAvailable = false;
-  this.errMessage = null;
-  this.isSuccess = false;
-}
+      if (this.trainTrackerIdLength <= 1) {
+
+      if (res && ['jpg', 'jpeg', 'png', 'mp4', 'gif'].includes(this.ext.toLowerCase())) {
+        const reader = new FileReader();
+        reader.readAsDataURL(res);
+        reader.onload = () => {
+          // base 64 string
+          this.result = reader.result;
+          const newUrl = 'data:video' + this.result.split('data:image')[1];
+          this.url = this.domSanitizer.bypassSecurityTrustUrl(newUrl);
+        };
+        this.isSuccess = true;
+        this.status = 'Success';
+      } else {
+        this.status = 'Fail';
+        this.errMessage = 'Server Error, Please contact system administrator';
+        this.isErrorAvailable = true;
+      }
+    }else{
+      
+      this.fileExtensionMessage = res.response.error;
+      this.spinnerActive = this.spinner.stop()
+      this.secondFlow(res.response)
+    }
+    },
+      error => {
+        this.status = 'Fail';
+        this.isSuccess = false;
+        console.log(error)
+        this.errMessage = 'Server Error, Please contact system administrator';
+        this.isErrorAvailable = true;
+        this.spinnerActive = this.spinner.stop();
+      });
+  }
+
+  secondFlow(firstflowResponse) {
+    const formData_new = new FormData();
+    var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+    formData_new.append('trainingTracker_id', secondTrainTrackerId);
+    formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value, key) => {
+      console.log("formdata_second model", key + " " + value)
+    });
+
+
+    this._caseStudyService.runWorkflow(formData_new)
+      .subscribe(
+        (successResponse) => {
+          console.log('successResponse', successResponse)
+          this.doubleModel_isSuccess = true
+          this.isErrorAvailable = false;
+          this.Output_result = successResponse.response.Result
+          this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+          this.spinnerActive = this.spinner.stop()
+        },
+        (errorResponse) => {
+          this.toastService.showError(errorResponse.error.response);
+          console.log('ERROR', errorResponse);
+          this.doubleModel_isSuccess = false
+          this.isErrorAvailable = true;
+          //  this.errMessage = 'Server Error, Please contact system administrator';
+          this.errMessage = errorResponse.error.response
+          this.spinnerActive = this.spinner.stop()
+
+        });
+  }
+
+
+  private initializeState() {
+    this.result = {};
+    this.status = null;
+    this.isErrorAvailable = false;
+    this.errMessage = null;
+    this.isSuccess = false;
+  }
 
 }
