@@ -30,7 +30,7 @@
  #login-pg .login-form input[type=email]{font-family:Calibri; border-radius:5px 5px 0 0;  padding-left: 35px;}
  #login-pg .login-form input[type=text]{font-family:Calibri; border-radius:5px 5px 0 0; padding-left: 35px;}
 
- #login-pg .login-form input[type=password]{font-family:Calibri; border-radius:0 0 5px 5px; padding-left: 35px; margin-top:29px; }
+ #login-pg .login-form input[type=password]{font-family:Calibri; border-radius:0 0 5px 5px; padding-left: 35px; }
  #login-pg .remember{color:#7F7F7F; font-size:11px;}
  #login-pg .login-form button[type=button]{background:#01BAF2; margin:20px 0 5px 0; padding:9px 30px!important; border:0px solid #333333; font-size: 18px; height:43px; color:#ffffff; width:100%;}
  #login-pg .login-form button[type=submit]{background:#01BAF2; margin:20px 0 5px 0; padding:9px 30px!important; border:0px solid #333333; font-size: 18px; height:43px; color:#ffffff; width:100%;}
@@ -43,7 +43,7 @@
  #login-pg .entity-login-banner{margin:0 auto; width:100%; text-align:center; vertical-align:middle;}
  #login-pg .entity-login-banner img{vertical-align:middle; width:auto;}
  #login-pg .empty-login-banner {margin-bottom:71px;width:100%; min-height: 84px;}
- #login-pg .login-ico{position:absolute; right: 13px; top:10px; color:#a7a9ac;}
+ #login-pg .login-ico{position:absolute; right: 13px; top:10px; color:#a7a9ac; cursor: pointer;font-size: 17px;}
  #login-pg .xp-login-footer{margin:0 auto; background:#d4d4d4; min-height: 50px; padding-top:13px; font-weight:bold; font-size:15px; line-height: normal; width:100%; margin-top:71px; text-align:center; vertical-align:middle;}
  #login-pg .sign-up{color:#104061;}
  #login-pg .sign-up a{color:#104061; text-decoration:none;}
