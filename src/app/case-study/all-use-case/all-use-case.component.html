@@ -91,7 +91,7 @@
                                                             <button class="btn" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i></button>
                                                             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                                                             <button ngbDropdownItem  id={{usecase._id}} (click)="editMyUsecase($event)"><i class="fa fa-pencil" aria-hidden="true"></i> Edit Use Case</button>
-                                                            <button ngbDropdownItem><i class="fa fa-trash" aria-hidden="true"></i> Delete Use Case</button>
+                                                            <button ngbDropdownItem id={{usecase._id}} (click)="deleteMyUsecase($event)"><i class="fa fa-trash" aria-hidden="false"></i> Delete Use Case</button>
                                                             <button ngbDropdownItem id={{usecase._id}} (click)='pinTpHomeScreenMyUsecase($event)'><i class="fa fa-thumb-tack" aria-hidden="true"></i> Pin on Home page</button>
                                                             </div>
                                                        </div>
