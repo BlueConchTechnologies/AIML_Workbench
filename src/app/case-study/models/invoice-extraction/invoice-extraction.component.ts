@@ -23,6 +23,7 @@ export class InvoiceExtractionComponent implements OnInit {
   isSuccess:any;
   isErrorAvailable:any;
   errMessage:any
+  firstTrainTrackerId: any;
   trainTrackerIdLength: any;
   doubleModel_isSuccess:any;
 
@@ -31,6 +32,8 @@ export class InvoiceExtractionComponent implements OnInit {
       file: '',
       input : ''
     })
+      // get train trackerId length
+      this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
    // upload file 
@@ -42,8 +45,8 @@ export class InvoiceExtractionComponent implements OnInit {
 
 runYourWorkflow() {
   const formData = new FormData();
-  var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-   formData.append('trainingTracker_id', firstTrainTrackerId);
+   this.firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+   formData.append('trainingTracker_id', this.firstTrainTrackerId);
    formData.append('file', this.fileToUpload);
    formData.append('input', '');
 

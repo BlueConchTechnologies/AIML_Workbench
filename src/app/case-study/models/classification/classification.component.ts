@@ -310,6 +310,7 @@ export class ClassificationComponent implements OnInit {
     var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
     formData_new.append('trainingTracker_id', secondTrainTrackerId);
     formData_new.append('text', firstflowResponse);
+    console.log("formData_new=",formData_new)
 
     formData_new.forEach((value, key) => {
       console.log("formdata_second model", key + " " + value)
@@ -332,9 +333,10 @@ export class ClassificationComponent implements OnInit {
           this.doubleModel_isSuccess = false
           this.isErrorAvailable = true;
           //  this.errMessage = 'Server Error, Please contact system administrator';
-          this.errMessage = errorResponse.error.response
           this.spinneractive = this.spinner.stop()
 
+          this.errMessage = errorResponse.error.response
+          
         });
   }
 }
