@@ -1,5 +1,4 @@
-﻿
-<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
+﻿<spinner *ngIf="spinnerActive" class="spinner-position"></spinner>
 <div class="container-fluid" *ngIf="showLogin">
     <div class="row">
         <div class="login-pg-container col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -7,23 +6,53 @@
             <div class="login-base-container">
                 <div class="login-form">
                     <img src="assets/Images/Original.png" class="img-fluid login-pg-logo">
+
                     <form role="form" [formGroup]="model" (ngSubmit)="login()">
                         <div class="form-group pos-relative">
-                            <i class="fa fa-user login-ico" aria-hidden="true"></i>
-                            <input focusIndex="1" formControlName="emailAddress"  type="email" name="email" class="form-control rounded-pill" id="email" placeholder="Email" [ngClass]="{ 'is-invalid': login_submitted && f_login.emailAddress.errors }" >
-                            <div *ngIf="login_submitted && f_login.emailAddress.errors" class="invalid-feedback text-left">
-                                 <div *ngIf="f_login.emailAddress.errors.required">Please enter the Email Id</div>
+                            <i class="fa fa-user login-ico" aria-hidden="true" style="pointer-events: none;"></i>
+                            <input focusIndex="1" formControlName="emailAddress" type="email" name="email"
+                                class="form-control rounded-pill" id="email" placeholder="Email"
+                                style="background-image:none"
+                                [ngClass]="{ 'is-invalid': login_submitted && f_login.emailAddress.errors }">
+
+                            <div *ngIf="login_submitted && f_login.emailAddress.errors"
+                                class="invalid-feedback text-left">
+                                <div *ngIf="f_login.emailAddress.errors.required">Please enter the Email Id</div>
+                                <div *ngIf="f_login.emailAddress.errors.pattern">Email must be a valid email address
+                                </div>
                             </div>
-                           
+
+
+
+                            <!-- <div *ngIf="login_submitted && f_login.emailAddress.errors"
+                                class="invalid-feedback text-left">
+                                <div *ngIf="f_login.emailAddress.errors.required">Please enter the Email Id</div>
+                            </div>-->
+
                         </div>
                         <div class="form-group pos-relative">
-                            <i class="fa fa-eye login-ico" aria-hidden="true"></i>
-                            <input focusIndex="1" formControlName="password"  type="password" name="password" class="form-control rounded-pill" id="password" placeholder="Password" [ngClass]="{ 'is-invalid': login_submitted && f_login.password.errors }" >
+                            <i class="fa fa-eye login-ico" aria-hidden="true"
+                                [ngClass]="{ 'fa-eye-slash': !fieldTextType,  'fa-eye': fieldTextType }"
+                                (click)="toggleFieldTextType()"></i>
+                            <input focusIndex="1" formControlName="password" type="password" name="password"
+                                style="margin-top: 20px;background-image:none" class="form-control rounded-pill"
+                                id="password" placeholder="Password"
+                                [ngClass]="{ 'is-invalid': login_submitted && f_login.password.errors }"
+                                [type]="fieldTextType ? 'text' : 'password'">
+
+                            <!--  <div *ngIf="login_submitted && f_login.password.errors" class="invalid-feedback text-left">
+                                <div *ngIf="f_login.password.errors.required">Please enter the Password</div>
+                            </div>-->
+
                             <div *ngIf="login_submitted && f_login.password.errors" class="invalid-feedback text-left">
                                 <div *ngIf="f_login.password.errors.required">Please enter the Password</div>
+                                <div *ngIf="f_login.password.errors.minlength">Password must be at least 8 characters
+                                </div>
                             </div>
+
                         </div>
-                        <button type="submit" class="btn btn-default rounded-pill"  id="loadButton"  focusIndex="3">Login</button>
+                        <button type="submit" class="btn btn-default rounded-pill" id="loadButton"
+                            focusIndex="3">Login</button>
                         <!-- <button type="button" class="btn btn-default rounded-pill" id="loadButton" (click)="login()" focusIndex="3">{{'PUBLIC.Login.loginButton' | translate }}<span
                             *ngIf="model.isAuthInitiated == true"> ... <i class='fa fa-spinner fa-spin'>
                             </i></span></button> -->
@@ -36,7 +65,7 @@
                                 Password?</a>
                         </div>
                         <div class="text-left mt-2">Dont have account ?<a [routerLink]="['/signup']">Sign Up</a></div>
-                        
+
                     </form>
                 </div>
             </div>
