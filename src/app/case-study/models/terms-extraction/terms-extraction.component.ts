@@ -27,7 +27,9 @@ export class TermsExtractionComponent implements OnInit {
   errMessage = '';
   headerData = [];
   headerValue = [];
-
+  Output_result:any
+  doubleModel_isSuccess: any;
+   
   ngOnInit(): void {
     this.termFileLabel = 'Path To Directory';
     this.termExtractorForm = this.formBuilder.group({
@@ -155,6 +157,39 @@ getTermValue(termData) {
   } else {
     return termData;
   }
+}
+
+secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+   formData_new.append('trainingTracker_id', secondTrainTrackerId);
+   formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value,key) => {
+   console.log("formdata_second model",key+" "+value)
+   });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+ .subscribe(
+   (successResponse) => {
+     console.log('successResponse',successResponse)
+     this.doubleModel_isSuccess = true
+     this.isErrorAvailable = false;
+     this.Output_result = successResponse.response.Result
+     this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+     this.spinnerActive = this.spinner.stop()
+   },
+   (errorResponse) => {
+     this.toastService.showError(errorResponse.error.response);
+     console.log('ERROR', errorResponse);
+     this.doubleModel_isSuccess = false
+     this.isErrorAvailable = true;
+    //  this.errMessage = 'Server Error, Please contact system administrator';
+    this.errMessage = errorResponse.error.response
+     this.spinnerActive = this.spinner.stop()
+
+   });
 }
 
 

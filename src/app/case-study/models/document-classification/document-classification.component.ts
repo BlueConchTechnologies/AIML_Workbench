@@ -13,15 +13,16 @@ import { DesignWorkflowService } from '../../services/design-workflow.service';
   styleUrls: ['./document-classification.component.css']
 })
 export class DocumentClassificationComponent implements OnInit {
-  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder,private designWorkflowService: DesignWorkflowService) { }
+  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder, private designWorkflowService: DesignWorkflowService) { }
   workflowForm: FormGroup;
-  Output_result:any
+  Output_result: any
   spinnerActive = false;
   result;
   status;
   isSuccess: boolean;
-  isErrorAvailable =false
-  errMessage :any
+  isErrorAvailable = false
+  errMessage: any
+  doubleModel_isSuccess: any;
 
   ngOnInit(): void {
 
@@ -34,13 +35,13 @@ export class DocumentClassificationComponent implements OnInit {
   runYourWorkflow() {
     const formData = new FormData();
     var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-     formData.append('trainingTracker_id', firstTrainTrackerId);
-     formData.append('text',this.workflowForm.value.text);
-    
-     this.spinnerActive = this.spinner.start();
-     this._caseStudyService.runWorkflow(formData)
-       .subscribe(
-         (data) => {
+    formData.append('trainingTracker_id', firstTrainTrackerId);
+    formData.append('text', this.workflowForm.value.text);
+
+    this.spinnerActive = this.spinner.start();
+    this._caseStudyService.runWorkflow(formData)
+      .subscribe(
+        (data) => {
           this.spinnerActive = this.spinner.stop();
           if (data.status) {
             this.result = data.response.Result;
@@ -53,16 +54,51 @@ export class DocumentClassificationComponent implements OnInit {
             this.isErrorAvailable = true
             this.errMessage = 'Server Error, Please contact system administrator';
           }
-         
-         },
-         (errorResponse) => {
+
+        },
+        (errorResponse) => {
           this.isSuccess = false;
           this.isErrorAvailable = true
-           console.log('ERROR', errorResponse);
-           this.spinnerActive = this.spinner.stop()
-           this.errMessage = 'Server Error, Please contact system administrator';
-  
-         });
-     
+          console.log('ERROR', errorResponse);
+          this.spinnerActive = this.spinner.stop()
+          this.errMessage = 'Server Error, Please contact system administrator';
+
+        });
+
+  }
+
+  //  second flow 
+
+  secondFlow(firstflowResponse) {
+    const formData_new = new FormData();
+    var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+    formData_new.append('trainingTracker_id', secondTrainTrackerId);
+    formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value, key) => {
+      console.log("formdata_second model", key + " " + value)
+    });
+
+
+    this._caseStudyService.runWorkflow(formData_new)
+      .subscribe(
+        (successResponse) => {
+          console.log('successResponse', successResponse)
+          this.doubleModel_isSuccess = true
+          this.isErrorAvailable = false;
+          this.Output_result = successResponse.response.Result
+          this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+          this.spinnerActive = this.spinner.stop()
+        },
+        (errorResponse) => {
+          this.toastService.showError(errorResponse.error.response);
+          console.log('ERROR', errorResponse);
+          this.doubleModel_isSuccess = false
+          this.isErrorAvailable = true;
+          //  this.errMessage = 'Server Error, Please contact system administrator';
+          this.errMessage = errorResponse.error.response
+          this.spinnerActive = this.spinner.stop()
+
+        });
   }
 }

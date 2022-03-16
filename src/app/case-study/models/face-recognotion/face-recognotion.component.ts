@@ -21,16 +21,19 @@ export class FaceRecognotionComponent implements OnInit {
   imageUrl:any;
   videoUrl:any;
   domSanitizer:any;
-
+  doubleModel_isSuccess:any;
   public errMessage: any;
   public isSuccess = false;
   public isErrorAvailable = false;
   termFileLabel= 'choose file....'
-
+  trainTrackerIdLength:any;
+  
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
     })
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
    // upload file 
@@ -52,6 +55,8 @@ runYourWorkflow() {
    this._caseStudyService.runWorkflow_imageFormatOutput(formData)
      .subscribe(
        (res:any) => {
+        if (this.trainTrackerIdLength <= 1) {
+
          this.spinnerActive = this.spinner.stop();
          console.log("get response******************************")
          if (res && ['image/jpg', 'image/png', 'image/jpeg', 'image/mp4'].includes(res.type)) {
@@ -79,7 +84,11 @@ runYourWorkflow() {
             this.isErrorAvailable = true;
           this.errMessage = 'Server Error, Please contact system administrator';
          }
-       
+        }else{
+          this.errMessage = res.response.error;
+          this.spinnerActive = this.spinner.stop()
+          this.secondFlow(res.response)
+        }
        },
        (errorResponse) => {
         this.isSuccess = false;
@@ -91,6 +100,40 @@ runYourWorkflow() {
        });
   
    
+}
+
+
+secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+   formData_new.append('trainingTracker_id', secondTrainTrackerId);
+   formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value,key) => {
+   console.log("formdata_second model",key+" "+value)
+   });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+ .subscribe(
+   (successResponse) => {
+     console.log('successResponse',successResponse)
+     this.doubleModel_isSuccess = true
+     this.isErrorAvailable = false;
+     this.Output_result = successResponse.response.Result
+     this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+     this.spinnerActive = this.spinner.stop()
+   },
+   (errorResponse) => {
+     this.toastService.showError(errorResponse.error.response);
+     console.log('ERROR', errorResponse);
+     this.doubleModel_isSuccess = false
+     this.isErrorAvailable = true;
+    //  this.errMessage = 'Server Error, Please contact system administrator';
+    this.errMessage = errorResponse.error.response
+     this.spinnerActive = this.spinner.stop()
+
+   });
 }
 
 }

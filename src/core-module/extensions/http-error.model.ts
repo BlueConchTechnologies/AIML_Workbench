@@ -38,7 +38,8 @@ export enum ToastrCode {
   DesignedFinalized = <any>'DesignedFinalized',
   Fatal = <any>'Fatal',
   FlowRunSuccess = <any>'FlowRunSuccess',
-  NamealreadyExist = <any> 'Please change the Experiment Name'
+  NamealreadyExist = <any> 'Please change the Experiment Name',
+  useCaseNotJoined = <any> 'Please connect and deploy models before proceeding'
 }
 
 export class HttpError {

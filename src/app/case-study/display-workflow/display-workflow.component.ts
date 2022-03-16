@@ -29,7 +29,7 @@ export class DisplayWorkflowComponent implements OnInit {
   firstModel_algorithm_names: any;
   secondModel_algorithm_names: any;
 
-//non tranable model
+  //non tranable model
   display_tableExtractor = false;
   display_textSummarization = false;
   display_sentimentClassification = false;
@@ -46,7 +46,7 @@ export class DisplayWorkflowComponent implements OnInit {
   display_DocumentClassification = false;
 
   // tranable model
-  
+
   display_TimeSeries = false;
   display_Classification = false;
   display_AnamolyDetection = false;
@@ -54,7 +54,7 @@ export class DisplayWorkflowComponent implements OnInit {
   display_VoiceClassification = false;
   display_SpeakerDiarization = false;
   display_ProductCategorization = false;
-  
+
 
 
   ngOnInit(): void {
@@ -112,79 +112,162 @@ export class DisplayWorkflowComponent implements OnInit {
 
 
 
-  /*******************************************************************************************
-  ****************************** display model section********************************************** */
+  /****************************** display model section********************************************** */
+
   displayFormByModelname() {
-    console.log('this.firstModel_type', this.firstModel_type)
-
-    //Non tranable model
-    if (this.firstModel_type == 'TableExtractor') {
-      this.display_tableExtractor = true
+    switch (this.firstModel_type !== undefined) {
+      case this.firstModel_type === 'TableExtractor': {
+        this.display_tableExtractor = true
+        break;
+      }
+      case this.firstModel_type === 'TextSummarization': {
+        this.display_textSummarization = true
+        break;
+      } case this.firstModel_type === 'SentimentClassification': {
+        this.display_sentimentClassification = true
+          break;
+      }
+      case this.firstModel_type === 'VideoAnalytics': {
+        this.display_VideoAnalytics = true
+        break;
+      }
+      case this.firstModel_type === 'ObjectDetection': {
+        this.display_ObjectDetection = true
+        break;
+      }
+      case this.firstModel_type === 'QNA-KB': {
+        this.display_QNA_KB = true
+        break;
+      }
+      case this.firstModel_type === 'TicketClassification': {
+        this.display_TicketClassification = true
+        break;
+      }
+      case this.firstModel_type === 'TermsExtraction': {
+        this.display_TermsExtraction = true
+        break;
+      }
+      case this.firstModel_type === 'TextExtraction': {
+        this.display_TextExtraction = true
+        break;
+      }
+      case this.firstModel_type === 'InvoiceExtraction': {
+        this.display_InvoiceExtraction = true
+        break;
+      }
+      case this.firstModel_type === 'InstanceSegmentation': {
+        this.display_InstanceSegmentation = true
+        break;
+      }
+      case this.firstModel_type === 'DuplicatePrediction': {
+        this.display_DuplicatePrediction = true
+        break;
+      } case this.firstModel_type === 'FaceRecognition': {
+        this.display_FaceRecognotion = true
+        break;
+      }
+      case this.firstModel_type === 'DocumentClassification': {
+        this.display_DocumentClassification = true
+        break;
+      }
+      case this.firstModel_type === 'TimeSeries': {
+        this.display_TimeSeries = true 
+        break;
+      }
+      case this.firstModel_type === 'Classification': {
+        this.display_Classification = true
+        break;
+      }
+      case this.firstModel_type === 'AnamolyDetection': {
+        this.display_AnamolyDetection = true
+        break;
+      }
+      case this.firstModel_type === 'NER': {
+        this.display_NER = true
+        break;
+      }
+      case this.firstModel_type === 'VoiceClassification': {
+        this.display_VoiceClassification = true
+        break;
+      }
+      case this.firstModel_type === 'ProductCategorization': {
+        this.display_ProductCategorization = true
+        break;
+      }
     }
-    else if (this.firstModel_type == 'TextSummarization') {
-      this.display_textSummarization = true
-    }
-    else if (this.firstModel_type == 'SentimentClassification') {
-      this.display_sentimentClassification = true
-    }
-    else if (this.firstModel_type == 'VideoAnalytics') {
-      this.display_VideoAnalytics = true
-    }
-    else if (this.firstModel_type == 'ObjectDetection') {
-      this.display_ObjectDetection = true
-    }
-    else if (this.firstModel_type == 'QNA-KB') {
-      this.display_QNA_KB = true
-    }
-    else if (this.firstModel_type == 'TicketClassification') {
-      this.display_TicketClassification = true
-    } 
-    else if (this.firstModel_type == 'TermsExtraction') {
-      this.display_TermsExtraction = true
-    }
-     else if (this.firstModel_type == 'TextExtraction') {
-      this.display_TextExtraction = true
-    } 
-    else if (this.firstModel_type == 'InvoiceExtraction') {
-      this.display_InvoiceExtraction = true
-    }
-     else if (this.firstModel_type == 'InstanceSegmentation') {
-      this.display_InstanceSegmentation = true
-    }
-     else if (this.firstModel_type == 'DuplicatePrediction') {
-      this.display_DuplicatePrediction = true
-    }
-     else if (this.firstModel_type == 'FaceRecognition') {
-      this.display_FaceRecognotion = true
-    }
-     else if (this.firstModel_type == 'DocumentClassification') {
-      this.display_DocumentClassification = true
-    } 
-    
-    // tranable model
-    else if (this.firstModel_type == 'TimeSeries') {
-      this.display_TimeSeries = true
-    }
-     else if (this.firstModel_type == 'Classification') {
-      this.display_Classification = true
-    }
-     else if (this.firstModel_type == 'AnamolyDetection') {
-      this.display_AnamolyDetection = true
-    }
-     else if (this.firstModel_type == 'NER') {
-      this.display_NER = true
-    }
-     else if (this.firstModel_type == 'VoiceClassification') {
-      this.display_VoiceClassification = true
-    } 
-    else if (this.firstModel_type == 'SpeakerDiarization') {
-      this.display_SpeakerDiarization = true
-    }
-     else if (this.firstModel_type == 'ProductCategorization') {
-      this.display_ProductCategorization = true
-    } 
-
   }
+
+  // displayFormByModelname() {
+  //   console.log('this.firstModel_type', this.firstModel_type)
+
+  //   //Non tranable model
+  //   if (this.firstModel_type == 'TableExtractor') {
+  //     this.display_tableExtractor = true
+  //   }
+  //   else if (this.firstModel_type == 'TextSummarization') {
+  //     this.display_textSummarization = true
+  //   }
+  //   else if (this.firstModel_type == 'SentimentClassification') {
+  //     this.display_sentimentClassification = true
+  //   }
+  //   else if (this.firstModel_type == 'VideoAnalytics') {
+  //     this.display_VideoAnalytics = true
+  //   }
+  //   else if (this.firstModel_type == 'ObjectDetection') {
+  //     this.display_ObjectDetection = true
+  //   }
+  //   else if (this.firstModel_type == 'QNA-KB') {
+  //     this.display_QNA_KB = true
+  //   }
+  //   else if (this.firstModel_type == 'TicketClassification') {
+  //     this.display_TicketClassification = true
+  //   } 
+  //   else if (this.firstModel_type == 'TermsExtraction') {
+  //     this.display_TermsExtraction = true
+  //   }
+  //    else if (this.firstModel_type == 'TextExtraction') {
+  //     this.display_TextExtraction = true
+  //   } 
+  //   else if (this.firstModel_type == 'InvoiceExtraction') {
+  //     this.display_InvoiceExtraction = true
+  //   }
+  //    else if (this.firstModel_type == 'InstanceSegmentation') {
+  //     this.display_InstanceSegmentation = true
+  //   }
+  //    else if (this.firstModel_type == 'DuplicatePrediction') {
+  //     this.display_DuplicatePrediction = true
+  //   }
+  //    else if (this.firstModel_type == 'FaceRecognition') {
+  //     this.display_FaceRecognotion = true
+  //   }
+  //    else if (this.firstModel_type == 'DocumentClassification') {
+  //     this.display_DocumentClassification = true
+  //   } 
+
+  //   // tranable model
+  //   else if (this.firstModel_type == 'TimeSeries') {
+  //     this.display_TimeSeries = true
+  //   }
+  //    else if (this.firstModel_type == 'Classification') {
+  //     this.display_Classification = true
+  //   }
+  //    else if (this.firstModel_type == 'AnamolyDetection') {
+  //     this.display_AnamolyDetection = true
+  //   }
+  //    else if (this.firstModel_type == 'NER') {
+  //     this.display_NER = true
+  //   }
+  //    else if (this.firstModel_type == 'VoiceClassification') {
+  //     this.display_VoiceClassification = true
+  //   } 
+  //   else if (this.firstModel_type == 'SpeakerDiarization') {
+  //     this.display_SpeakerDiarization = true
+  //   }
+  //    else if (this.firstModel_type == 'ProductCategorization') {
+  //     this.display_ProductCategorization = true
+  //   } 
+
+  // }
 
 
 }

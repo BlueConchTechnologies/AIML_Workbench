@@ -29,6 +29,8 @@ export class QNAKBComponent implements OnInit {
   spinneractive = false;
   errMessage: string;
   isErrorAvailable: boolean;
+  doubleModel_isSuccess:any;
+  trainTrackerIdLength: any;
 
 
   ngOnInit(): void {
@@ -37,6 +39,8 @@ export class QNAKBComponent implements OnInit {
       kb_id: 'A1',
       top_n: '2'
     })
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
   runYourWorkflow() {
@@ -57,11 +61,17 @@ export class QNAKBComponent implements OnInit {
     this._caseStudyService.runWorkflow(formData)
       .subscribe(
         (response) => {
+
+          if (this.trainTrackerIdLength <= 1) {
           this.result = response.response;
           this.isResultAvailable = true;
           this.isErrorAvailable = false;
           this.spinnerActive = this.spinner.stop();
-
+        }else{
+          this.errMessage = response.response.error;
+          this.spinnerActive = this.spinner.stop()
+          this.secondFlow(response.response)
+        }
         },
         (error) => {
           console.log(error)
@@ -70,6 +80,39 @@ export class QNAKBComponent implements OnInit {
           this.isResultAvailable = false;
           this.isErrorAvailable = true;
           this.spinnerActive = this.spinner.stop();
+
+        });
+  }
+
+  secondFlow(firstflowResponse) {
+    const formData_new = new FormData();
+    var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+    formData_new.append('trainingTracker_id', secondTrainTrackerId);
+    formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value, key) => {
+      console.log("formdata_second model", key + " " + value)
+    });
+
+
+    this._caseStudyService.runWorkflow(formData_new)
+      .subscribe(
+        (successResponse) => {
+          console.log('successResponse', successResponse)
+          this.doubleModel_isSuccess = true
+          this.isErrorAvailable = false;
+          this.Output_result = successResponse.response.Result
+          this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+          this.spinneractive = this.spinner.stop()
+        },
+        (errorResponse) => {
+          this.toastService.showError(errorResponse.error.response);
+          console.log('ERROR', errorResponse);
+          this.doubleModel_isSuccess = false
+          this.isErrorAvailable = true;
+          //  this.errMessage = 'Server Error, Please contact system administrator';
+          this.errMessage = errorResponse.error.response
+          this.spinneractive = this.spinner.stop()
 
         });
   }

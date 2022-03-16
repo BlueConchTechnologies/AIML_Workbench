@@ -13,9 +13,9 @@ import { DesignWorkflowService } from '../../services/design-workflow.service';
 })
 export class SentimentClassificationComponent implements OnInit {
 
-  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder,private designWorkflowService: DesignWorkflowService) { }
+  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder, private designWorkflowService: DesignWorkflowService) { }
   workflowForm: FormGroup;
-  Output_result:any
+  Output_result: any
   spinnerActive = false;
   inputText;
   isSuccess;
@@ -26,6 +26,10 @@ export class SentimentClassificationComponent implements OnInit {
   displayStatus = false;
   errMessage: string;
   isErrorAvailable: boolean;
+  doubleModel_isSuccess: any;
+  trainTrackerIdLength: any;
+  selectedIndex: number = null;
+  fileExtensionMessage: any;
 
   ngOnInit(): void {
 
@@ -37,39 +41,82 @@ export class SentimentClassificationComponent implements OnInit {
   runYourWorkflow() {
     const formData = new FormData();
     var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-     formData.append('trainingTracker_id', firstTrainTrackerId);
-     formData.append('input_text',this.workflowForm.value.input_text);
-  
-     this.spinnerActive = this.spinner.start();
-     this._caseStudyService.runWorkflow(formData)
-       .subscribe(
-         (data) => {
-          if (data) {
-            this.spinnerActive = this.spinner.stop();
-            if (data.response.Prediction) {
-              this.inputText = data.response.InputText;
-              this.prediction = data.response.Prediction;
-              this.displayStatus = true;
-              this.isErrorAvailable = false;
-            } else {
-              this.inputText = data.message;
-              this.prediction = data.status;
-              this.displayStatus = true;
-              this.isErrorAvailable = false;
-            }
-          }
-        
-         },
-         (errorResponse) => {
+    formData.append('trainingTracker_id', firstTrainTrackerId);
+    formData.append('input_text', this.workflowForm.value.input_text);
 
-           this.errMessage = 'Server Error, Please contact system administrator';
+    this.spinnerActive = this.spinner.start();
+    this._caseStudyService.runWorkflow(formData)
+      .subscribe(
+        (data) => {
+          if (this.trainTrackerIdLength <= 1) {
+
+            if (data) {
+              this.spinnerActive = this.spinner.stop();
+              if (data.response.Prediction) {
+                this.inputText = data.response.InputText;
+                this.prediction = data.response.Prediction;
+                this.displayStatus = true;
+                this.isErrorAvailable = false;
+              } else {
+                this.inputText = data.message;
+                this.prediction = data.status;
+                this.displayStatus = true;
+                this.isErrorAvailable = false;
+              }
+            }
+          } else {
+            console.log(this.Output_result);
+            console.log(data.response.error);
+            this.fileExtensionMessage = data.response.error;
+            this.spinnerActive = this.spinner.stop()
+            this.secondFlow(data.response)
+          }
+
+        },
+        (errorResponse) => {
+
+          this.errMessage = 'Server Error, Please contact system administrator';
           this.isErrorAvailable = true;
           this.displayStatus = false;
-           console.log('ERROR', errorResponse);
-           this.spinnerActive = this.spinner.stop()
-  
-         });
-     
+          console.log('ERROR', errorResponse);
+          this.spinnerActive = this.spinner.stop()
+
+        });
+
   }
+
+  secondFlow(firstflowResponse) {
+    const formData_new = new FormData();
+    var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+    formData_new.append('trainingTracker_id', secondTrainTrackerId);
+    formData_new.append('text', firstflowResponse);
+
+    formData_new.forEach((value, key) => {
+      console.log("formdata_second model", key + " " + value)
+    });
+
+
+    this._caseStudyService.runWorkflow(formData_new)
+      .subscribe(
+        (successResponse) => {
+          console.log('successResponse', successResponse)
+          this.doubleModel_isSuccess = true
+          this.isErrorAvailable = false;
+          this.Output_result = successResponse.response.Result
+          this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+          this.spinnerActive = this.spinner.stop()
+        },
+        (errorResponse) => {
+          this.toastService.showError(errorResponse.error.response);
+          console.log('ERROR', errorResponse);
+          this.doubleModel_isSuccess = false
+          this.isErrorAvailable = true;
+          //  this.errMessage = 'Server Error, Please contact system administrator';
+          this.errMessage = errorResponse.error.response
+          this.spinnerActive = this.spinner.stop()
+
+        });
+  }
+
 
 }

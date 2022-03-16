@@ -23,12 +23,17 @@ export class InvoiceExtractionComponent implements OnInit {
   isSuccess:any;
   isErrorAvailable:any;
   errMessage:any
+  firstTrainTrackerId: any;
+  trainTrackerIdLength: any;
+  doubleModel_isSuccess:any;
 
   ngOnInit(): void {
     this.workflowForm = this.formBuilder.group({
       file: '',
       input : ''
     })
+      // get train trackerId length
+      this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
   }
 
    // upload file 
@@ -40,8 +45,8 @@ export class InvoiceExtractionComponent implements OnInit {
 
 runYourWorkflow() {
   const formData = new FormData();
-  var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-   formData.append('trainingTracker_id', firstTrainTrackerId);
+   this.firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+   formData.append('trainingTracker_id', this.firstTrainTrackerId);
    formData.append('file', this.fileToUpload);
    formData.append('input', '');
 
@@ -49,12 +54,18 @@ runYourWorkflow() {
    this._caseStudyService.runWorkflow(formData)
      .subscribe(
        (successResponse) => {
+        if (this.trainTrackerIdLength <= 1) {
+
          console.log('successResponse', successResponse)
          this.Output_result = successResponse.response.result;
          this.isSuccess = true;
          this.isErrorAvailable = true;
          this.spinnerActive = this.spinner.stop()
-       
+        }else{
+          this.errMessage = successResponse.response.error;
+            this.spinnerActive = this.spinner.stop()
+            this.secondFlow(successResponse.response)
+        }
        },
        (errorResponse) => {
         this.errMessage = 'Server Error, Please contact system administrator';
@@ -65,6 +76,38 @@ runYourWorkflow() {
 
        });
    
+}
+secondFlow(firstflowResponse) {
+  const formData_new = new FormData();
+  var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+  formData_new.append('trainingTracker_id', secondTrainTrackerId);
+  formData_new.append('text', firstflowResponse);
+
+  formData_new.forEach((value, key) => {
+    console.log("formdata_second model", key + " " + value)
+  });
+
+
+  this._caseStudyService.runWorkflow(formData_new)
+    .subscribe(
+      (successResponse) => {
+        console.log('successResponse', successResponse)
+        this.doubleModel_isSuccess = true
+        this.isErrorAvailable = false;
+        this.Output_result = successResponse.response.Result
+        this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+        this.spinnerActive = this.spinner.stop()
+      },
+      (errorResponse) => {
+        this.toastService.showError(errorResponse.error.response);
+        console.log('ERROR', errorResponse);
+        this.doubleModel_isSuccess = false
+        this.isErrorAvailable = true;
+        //  this.errMessage = 'Server Error, Please contact system administrator';
+        this.errMessage = errorResponse.error.response
+        this.spinnerActive = this.spinner.stop()
+
+      });
 }
 
 

@@ -13,7 +13,7 @@ import { DesignWorkflowService } from '../../services/design-workflow.service';
   styleUrls: ['./classification.component.css']
 })
 export class ClassificationComponent implements OnInit {
-  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder,private designWorkflowService: DesignWorkflowService) { }
+  constructor(private _caseStudyService: CaseStudyService, private router: Router, private toastService: ToastrService, private spinner: SpinnerService, private formBuilder: FormBuilder, private designWorkflowService: DesignWorkflowService) { }
   // workflowForm: FormGroup;
   // Output_result:any
   // spinnerActive = false;
@@ -40,7 +40,10 @@ export class ClassificationComponent implements OnInit {
     passageId: [''],
   });
   formDataKeyArray = [];
-  checkboxData:any
+  checkboxData: any
+  doubleModel_isSuccess: any;
+  Output_result: any
+  trainTrackerIdLength: any;
 
   // checkboxData: Array<any> = [
   //   { name: 'Decision Tree', value: 'DecisionTree', checked: true },
@@ -57,112 +60,115 @@ export class ClassificationComponent implements OnInit {
   @ViewChild('fileId', { static: false }) fileId: ElementRef;
 
 
-//   ngOnInit(): void {
+  //   ngOnInit(): void {
 
-//     this.workflowForm = this.formBuilder.group({
-//       algorithmname: '',
-//       file: ''
-//     })
-//   }
+  //     this.workflowForm = this.formBuilder.group({
+  //       algorithmname: '',
+  //       file: ''
+  //     })
+  //   }
 
-//   // upload file 
-//   uploadFileInput(files: FileList) {
-//     this.fileToUpload = files.item(0);
-//     console.log(this.fileToUpload )
-// }
+  //   // upload file 
+  //   uploadFileInput(files: FileList) {
+  //     this.fileToUpload = files.item(0);
+  //     console.log(this.fileToUpload )
+  // }
 
-//   runYourWorkflow() {
-//     const formData = new FormData();
-//     var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-//      formData.append('trainingTracker_id', firstTrainTrackerId);
-//      formData.append('algorithmname', this.workflowForm.value.algorithmname);
-//     formData.append('file', this.fileToUpload);
-    
-//      this.spinnerActive = this.spinner.start();
-//      this._caseStudyService.runWorkflow(formData)
-//        .subscribe(
-//          (successResponse) => {
-//            console.log('successResponse', successResponse)
-//            this.Output_result = successResponse
-  
-         
-//          },
-//          (errorResponse) => {
-//            this.toastService.showError('Something went wrong');
-//            console.log('ERROR', errorResponse);
-//            this.spinnerActive = this.spinner.stop()
-  
-//          });
-     
-//   }
-ngOnInit() {
-  this.filterAlgorithumName ()
- }
+  //   runYourWorkflow() {
+  //     const formData = new FormData();
+  //     var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+  //      formData.append('trainingTracker_id', firstTrainTrackerId);
+  //      formData.append('algorithmname', this.workflowForm.value.algorithmname);
+  //     formData.append('file', this.fileToUpload);
 
-filterAlgorithumName () {
-  // this.checkboxData = [
-  //   { name: 'Isolation Forest', value: 'Isolationforest', checked:false, isDisabled: true },
-  // { name: 'Local Outlier Detection', value: 'Localoutlier', checked: false, isDisabled: true },
-  // { name: 'Elliptic Envelope', value: 'EllipticEnvelope', checked: false, isDisabled: true},
-  // { name: 'One Class SVM', value: 'OneclassSVM', checked: false, isDisabled: true},
-  // { name: 'DBCSAN', value: 'DBSCAN', checked: false, isDisabled: true},
-  // { name: 'KNN', value: 'Knn', checked: false, isDisabled: true }, 
-  // { name: 'Auto Encoder', value: 'Autoencoder', checked: false, isDisabled: true},
-  // ];
-  
-  this.checkboxData  = [
-    { name: 'Decision Tree', value: 'DecisionTree', checked:false, isDisabled: true },
-    { name: 'Logistic Regression', value: 'LogisticRegression', checked:false, isDisabled: true},
-    { name: 'Neural Network', value: 'Neural_Network', checked:false, isDisabled: true },
-    { name: 'Naive Bayes', value: 'Naive_Bayes',checked:false, isDisabled: true },
-    { name: 'Bagging', value: 'bagging', checked:false, isDisabled: true },
-    { name: 'Ada Boost', value: 'AdaBoostClassifier', checked:false, isDisabled: true},
-    { name: 'Random Forest', value: 'Random_Forest', checked:false, isDisabled: true },
-    { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked:false, isDisabled: true },
-    { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked:false, isDisabled: true },
-  ];
-
-//   var algorithum_array = []
-//  algorithum_array.push(localStorage.getItem('firstModel_algorithm_names'))
-//  console.log(algorithum_array)
-var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
- console.log(algorithum_name)
- var algorithum_array = algorithum_name.split(",");
- console.log(algorithum_array)
-
- for (let i = 0; i < algorithum_array.length; i++) {
-  console.log(algorithum_array[i])
-  if (algorithum_array[i] === 'DecisionTree' ) {
-    this.checkboxData[0] = { name: 'Decision Tree', value: 'DecisionTree', checked:true, isDisabled: false };
-  }
-  if (algorithum_array[i] === 'LogisticRegression' ) {
-    this.checkboxData[1] = { name: 'Logistic Regression', value: 'LogisticRegression', checked:true, isDisabled: false};
-  }
-  if (algorithum_array[i] === 'Neural_Network' ) {
-    this.checkboxData[2] =  { name: 'Neural Network', value: 'Neural_Network', checked:true, isDisabled: false};
-  }
-  if (algorithum_array[i] === 'Naive_Bayes') {
-    this.checkboxData[3] = { name: 'Naive Bayes', value: 'Naive_Bayes',checked:true, isDisabled: false };
-  }
-  if (algorithum_array[i] === 'bagging' ) {
-    this.checkboxData[4] = { name: 'Bagging', value: 'bagging', checked:true, isDisabled: false };
-  }
-  if (algorithum_array[i] === 'AdaBoostClassifier' ) {
-    this.checkboxData[5] = { name: 'Ada Boost', value: 'AdaBoostClassifier', checked:true, isDisabled: false};
-  }
-  if (algorithum_array[i] === 'Random_Forest' ) {
-    this.checkboxData[6] = { name: 'Random Forest', value: 'Random_Forest', checked:true, isDisabled: false };
-  }
-  if (algorithum_array[i] === 'Stochastic_Gradient_Descent' ) {
-    this.checkboxData[7] = { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked:true, isDisabled: false };
-  }
-  if (algorithum_array[i] === 'Support_Vector_Machine' ) {
-    this.checkboxData[8] = { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked:true, isDisabled: false };
-  }
-}
+  //      this.spinnerActive = this.spinner.start();
+  //      this._caseStudyService.runWorkflow(formData)
+  //        .subscribe(
+  //          (successResponse) => {
+  //            console.log('successResponse', successResponse)
+  //            this.Output_result = successResponse
 
 
-}
+  //          },
+  //          (errorResponse) => {
+  //            this.toastService.showError('Something went wrong');
+  //            console.log('ERROR', errorResponse);
+  //            this.spinnerActive = this.spinner.stop()
+
+  //          });
+
+  //   }
+  ngOnInit() {
+    this.filterAlgorithumName()
+
+    // get train trackerId length
+    this.trainTrackerIdLength = localStorage.getItem('trainTrackerIdLength')
+  }
+
+  filterAlgorithumName() {
+    // this.checkboxData = [
+    //   { name: 'Isolation Forest', value: 'Isolationforest', checked:false, isDisabled: true },
+    // { name: 'Local Outlier Detection', value: 'Localoutlier', checked: false, isDisabled: true },
+    // { name: 'Elliptic Envelope', value: 'EllipticEnvelope', checked: false, isDisabled: true},
+    // { name: 'One Class SVM', value: 'OneclassSVM', checked: false, isDisabled: true},
+    // { name: 'DBCSAN', value: 'DBSCAN', checked: false, isDisabled: true},
+    // { name: 'KNN', value: 'Knn', checked: false, isDisabled: true }, 
+    // { name: 'Auto Encoder', value: 'Autoencoder', checked: false, isDisabled: true},
+    // ];
+
+    this.checkboxData = [
+      { name: 'Decision Tree', value: 'DecisionTree', checked: false, isDisabled: true },
+      { name: 'Logistic Regression', value: 'LogisticRegression', checked: false, isDisabled: true },
+      { name: 'Neural Network', value: 'Neural_Network', checked: false, isDisabled: true },
+      { name: 'Naive Bayes', value: 'Naive_Bayes', checked: false, isDisabled: true },
+      { name: 'Bagging', value: 'bagging', checked: false, isDisabled: true },
+      { name: 'Ada Boost', value: 'AdaBoostClassifier', checked: false, isDisabled: true },
+      { name: 'Random Forest', value: 'Random_Forest', checked: false, isDisabled: true },
+      { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked: false, isDisabled: true },
+      { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked: false, isDisabled: true },
+    ];
+
+    //   var algorithum_array = []
+    //  algorithum_array.push(localStorage.getItem('firstModel_algorithm_names'))
+    //  console.log(algorithum_array)
+    var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
+    console.log(algorithum_name)
+    var algorithum_array = algorithum_name.split(",");
+    console.log(algorithum_array)
+
+    for (let i = 0; i < algorithum_array.length; i++) {
+      console.log(algorithum_array[i])
+      if (algorithum_array[i] === 'DecisionTree') {
+        this.checkboxData[0] = { name: 'Decision Tree', value: 'DecisionTree', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'LogisticRegression') {
+        this.checkboxData[1] = { name: 'Logistic Regression', value: 'LogisticRegression', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'Neural_Network') {
+        this.checkboxData[2] = { name: 'Neural Network', value: 'Neural_Network', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'Naive_Bayes') {
+        this.checkboxData[3] = { name: 'Naive Bayes', value: 'Naive_Bayes', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'bagging') {
+        this.checkboxData[4] = { name: 'Bagging', value: 'bagging', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'AdaBoostClassifier') {
+        this.checkboxData[5] = { name: 'Ada Boost', value: 'AdaBoostClassifier', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'Random_Forest') {
+        this.checkboxData[6] = { name: 'Random Forest', value: 'Random_Forest', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'Stochastic_Gradient_Descent') {
+        this.checkboxData[7] = { name: 'Stochastic Gradient Descent', value: 'Stochastic_Gradient_Descent', checked: true, isDisabled: false };
+      }
+      if (algorithum_array[i] === 'Support_Vector_Machine') {
+        this.checkboxData[8] = { name: 'Support Vector Machine', value: 'Support_Vector_Machine', checked: true, isDisabled: false };
+      }
+    }
+
+
+  }
   openDialog() {
     this.fileId.nativeElement.click();
   }
@@ -249,18 +255,21 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
       this.classificationForm.controls.passageId.enable();
     }
 
-   
-      // file upload
-        var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
-      formData.append('trainingTracker_id', firstTrainTrackerId);
-      formData.append('file', this.fileObj);
-      formData.append('algorithmname', algo);
 
-      this.isErrorAvailable = false;
-      this.spinneractive = this.spinner.start();
+    // file upload
+    var firstTrainTrackerId = localStorage.getItem('FirstModelTrainTrackerId')
+    formData.append('trainingTracker_id', firstTrainTrackerId);
+    formData.append('file', this.fileObj);
+    formData.append('algorithmname', algo);
 
-      this._caseStudyService.runWorkflow(formData).subscribe(
-        (response: any) => {
+    this.isErrorAvailable = false;
+    this.spinneractive = this.spinner.start();
+
+    this._caseStudyService.runWorkflow(formData).subscribe(
+      (response: any) => {
+
+        if (this.trainTrackerIdLength <= 1) {
+
           if (response.response.status === 'Success') {
             this.isResultAvailable = true;
             this.isErrorAvailable = false;
@@ -275,17 +284,59 @@ var algorithum_name = localStorage.getItem('firstModel_algorithm_names')
             this.errMessage = (response.response.message);
             console.log(response.response.message);
           }
-          this.spinneractive = this.spinner.stop();
-        },
-        (error) => {
-          console.log(error)
-          this.isResultAvailable = false;
-          this.isResultAvailable = false;
-          this.isErrorAvailable = true;
-          this.errMessage = 'Server Error, Please contact system administrator';
-          this.spinneractive = this.spinner.stop();
+        } else {
+          this.errMessage = response.response.error;
+          this.spinneractive = this.spinner.stop()
+          this.secondFlow(response.response)
         }
-      );
-    
+        this.spinneractive = this.spinner.stop();
+      },
+      (error) => {
+        console.log(error)
+        this.isResultAvailable = false;
+        this.isResultAvailable = false;
+        this.isErrorAvailable = true;
+        this.errMessage = 'Server Error, Please contact system administrator';
+        this.spinneractive = this.spinner.stop();
+      }
+    );
+
+  }
+
+
+
+  secondFlow(firstflowResponse) {
+    const formData_new = new FormData();
+    var secondTrainTrackerId = localStorage.getItem('SecondModelTrainTrackerId')
+    formData_new.append('trainingTracker_id', secondTrainTrackerId);
+    formData_new.append('text', firstflowResponse);
+    console.log("formData_new=",formData_new)
+
+    formData_new.forEach((value, key) => {
+      console.log("formdata_second model", key + " " + value)
+    });
+
+
+    this._caseStudyService.runWorkflow(formData_new)
+      .subscribe(
+        (successResponse) => {
+          console.log('successResponse', successResponse)
+          this.doubleModel_isSuccess = true
+          this.isErrorAvailable = false;
+          this.Output_result = successResponse.response.Result
+          this.toastService.showSuccess(ToastrCode.FlowRunSuccess);
+          this.spinneractive = this.spinner.stop()
+        },
+        (errorResponse) => {
+          this.toastService.showError(errorResponse.error.response);
+          console.log('ERROR', errorResponse);
+          this.doubleModel_isSuccess = false
+          this.isErrorAvailable = true;
+          //  this.errMessage = 'Server Error, Please contact system administrator';
+          this.spinneractive = this.spinner.stop()
+
+          this.errMessage = errorResponse.error.response
+          
+        });
   }
 }

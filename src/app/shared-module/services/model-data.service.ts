@@ -70,6 +70,11 @@ export class ModelDataService {
     return this.http.get(url);
   }
 
+  getModelData(trainTracker_id: any): Observable<any> {
+    const url: string = this.API_URL + '/api/traintracker?_id='+ trainTracker_id;
+    return this.http.get(url);
+  } 
+
   //Update the Selected Model List
   
     uploadData(fileData) {
