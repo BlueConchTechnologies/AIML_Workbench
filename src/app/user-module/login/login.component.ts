@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
     loggedUser:any
     newUser:any
     newUser1:any
+    fieldTextType: boolean;
     constructor(
         private _router: Router,
         private _loginService: LoginService,
@@ -70,8 +71,11 @@ export class LoginComponent implements OnInit {
         }
 
         this.model = this.formBuilder.group({
-            emailAddress: ['', [Validators.required] ],
-            password: ['', [Validators.required]],
+            //emailAddress: ['', [Validators.required] ],
+            //password: ['', [Validators.required]],
+
+            emailAddress: ['', [Validators.required,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+            password: ['', [Validators.required, Validators.minLength(8)]]
            
           });
 
@@ -140,4 +144,8 @@ export class LoginComponent implements OnInit {
         this.model.value.emailAddress = '';
         this.model.value.password = '';
     }
+
+    toggleFieldTextType() {
+        this.fieldTextType = !this.fieldTextType;
+      }
 }

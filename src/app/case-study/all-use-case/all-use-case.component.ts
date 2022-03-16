@@ -215,8 +215,6 @@ export class AllUseCaseComponent implements OnInit {
       }
     }
   }
-
-
   runMyUsecase(event) {
     var idAttr = event.srcElement.attributes.id;
     this.usecaseID = idAttr.nodeValue;
@@ -229,6 +227,30 @@ export class AllUseCaseComponent implements OnInit {
         var flow = this.mytUsecases[i].flow
         var usecaseUserId = this.mytUsecases[i].user_id
         // set workflow to localstorage
+        localStorage.setItem("usecaseId", this.usecaseID);
+        localStorage.setItem('usecaseUserId', usecaseUserId)
+        localStorage.setItem("workflow_to_nodered", JSON.stringify(flow));
+        // add flow to nodered
+        this.designWorkflowService.createFlow(flow).subscribe(data => {
+        });
+      }
+    }
+  }
+
+  deleteMyUsecase(event): void {
+    var idAttr = event.srcElement.attributes.id;
+    this.usecaseID = idAttr.nodeValue;
+    console.log('this.usecaseID', this.usecaseID);
+    for (var i = 0; i < this.mytUsecases.length; i--) {
+      if (this.mytUsecases[i]._id == this.usecaseID) {
+        console.log("use case flow", this.mytUsecases[i]);
+
+        this.display_myUseCase = false;
+        this.display_prebuiltUseCase = false;
+        var flow = this.mytUsecases[i].flow
+        var usecaseUserId = this.mytUsecases[i].user_id
+        // set workflow to localstorage
+
         localStorage.setItem("usecaseId", this.usecaseID);
         localStorage.setItem('usecaseUserId', usecaseUserId)
         localStorage.setItem("workflow_to_nodered", JSON.stringify(flow));
