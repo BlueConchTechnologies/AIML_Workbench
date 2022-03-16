@@ -25,6 +25,4 @@ export const environment = {
   // nodeRedUrl: 'https://172.26.21.9:1880/',
   // nodeRedUrl: 'http://localhost:1880/'
  
-  
-  
 };
