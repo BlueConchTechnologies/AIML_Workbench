@@ -109,7 +109,7 @@ export class ModelListComponent implements OnInit {
       (response: any) => {
         this.result = response.records;
         console.log("All model", this.result)
-        var trainedModel = []
+        // var trainedModel = []
         for (var i = 0; i < this.result.length; i++) {
           if (this.result[i].original_model_name == 'TimeSeries') { this.result[i].model_route = "time-series"; }
           else if (this.result[i].original_model_name == 'AnamolyDetection'){this.result[i].model_route = "anomaly-detection"; }
